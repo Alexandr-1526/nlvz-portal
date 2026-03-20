@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>НЛВЗ · Панель инструментов</title>
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Библиотеки для PDF (оставляем для будущего использования) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #1a2634;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .portal {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Шапка */
+        .portal-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1e2b37 100%);
+            border-radius: 30px 30px 20px 20px;
+            padding: 30px 40px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid #3e5569;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nlvz-logo {
+            background: #0047ab;
+            color: white;
+            font-weight: 800;
+            font-size: 28px;
+            padding: 12px 25px;
+            border-radius: 60px;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 0 #002b6a;
+            border: 2px solid white;
+        }
+
+        .title-box h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .title-box h1 span {
+            font-weight: 300;
+            color: #7fbcff;
+        }
+
+        .title-box p {
+            color: #b0c7db;
+            font-size: 16px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .system-badge {
+            background: #3a4e62;
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            border: 1px solid #5f7d9c;
+            box-shadow: 0 5px 0 #1f2b35;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Вкладки */
+        .tabs-container {
+            background: #2d3e4f;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
+            border: 1px solid #4e6b81;
+            border-bottom: none;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: #1f2e3a;
+            border-bottom: 2px solid #3f5568;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 18px 30px;
+            background: none;
+            border: none;
+            color: #b0c7db;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 1px solid #3f5568;
+        }
+
+        .tab-btn:hover {
+            background: #3a5068;
+            color: white;
+        }
+
+        .tab-btn.active {
+            background: #2d3e4f;
+            color: white;
+            position: relative;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: #2d3e4f;
+            border-radius: 0 0 20px 20px;
+            border: 1px solid #4e6b81;
+            border-top: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Карточки приложений */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .app-card {
+            background: #2d3e4f;
+            border-radius: 40px;
+            padding: 28px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border: 1px solid #4e6b81;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            border-color: #7aa5c2;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            opacity: 0.7;
+        }
+
+        .card-icon {
+            font-size: 60px;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 90px;
+            height: 90px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .app-card h2 {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .app-card h2 .version {
+            font-size: 16px;
+            background: #1e2f3a;
+            padding: 5px 15px;
+            border-radius: 30px;
+            color: #b0d4f0;
+            font-weight: 400;
+            border: 1px solid #3f5e74;
+        }
+
+        .app-desc {
+            color: #cbdbe9;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .features {
+            margin: 15px 0 20px;
+            list-style: none;
+        }
+
+        .features li {
+            color: #b8d4e3;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .features li i {
+            color: #2ecc71;
+            width: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex: 1 1 auto;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 5px 0 #1f618d;
+        }
+
+        .btn-primary:hover {
+            background: #5faee3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #1f618d;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            box-shadow: 0 5px 0 #1a6840;
+        }
+
+        .btn-success:hover {
+            background: #4abe7a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #1a6840;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            box-shadow: 0 5px 0 #a82315;
+        }
+
+        .btn-danger:hover {
+            background: #ec7063;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #a82315;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4e6b81;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: #3e5569;
+            border-color: #7aa5c2;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+            box-shadow: 0 5px 0 #b26b00;
+        }
+
+        .btn-warning:hover {
+            background: #f5b556;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #b26b00;
+        }
+
+        .btn-info {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 5px 0 #1f618d;
+        }
+
+        .btn-info:hover {
+            background: #5faee3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #1f618d;
+        }
+
+        /* Стили для отчётов */
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .report-title {
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .json-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .json-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            box-shadow: 0 3px 0 #b26b00;
+        }
+
+        .json-btn:hover {
+            background: #f5b556;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #b26b00;
+        }
+
+        .json-btn.import {
+            background: #27ae60;
+            box-shadow: 0 3px 0 #1a6840;
+        }
+
+        .json-btn.import:hover {
+            background: #4abe7a;
+            box-shadow: 0 5px 0 #1a6840;
+        }
+
+        .json-btn.danger {
+            background: #e74c3c;
+            box-shadow: 0 3px 0 #a82315;
+        }
+
+        .json-btn.danger:hover {
+            background: #ec7063;
+            box-shadow: 0 5px 0 #a82315;
+        }
+
+        .json-btn.info {
+            background: #3498db;
+            box-shadow: 0 3px 0 #1f618d;
+        }
+
+        .json-btn.info:hover {
+            background: #5faee3;
+            box-shadow: 0 5px 0 #1f618d;
+        }
+
+        /* Карточка сотрудника */
+        .employee-card {
+            background: #1f2e3a;
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #3f5568;
+        }
+
+        .employee-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3f5568;
+        }
+
+        .employee-header i {
+            font-size: 40px;
+            color: #3498db;
+        }
+
+        .employee-header h2 {
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .shift-card {
+            background: #2d3e4f;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 6px solid;
+        }
+
+        .shift-card.lubrication-shift {
+            border-left-color: #3498db;
+        }
+
+        .shift-card.servo-shift {
+            border-left-color: #27ae60;
+        }
+
+        .shift-card.both-shift {
+            border-left-color: #9b59b6;
+            background: linear-gradient(145deg, #2d3e4f 0%, #2a3a4a 100%);
+        }
+
+        .shift-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .shift-date {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shift-badge {
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge-s1 {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-s2 {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .shift-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-mini {
+            background: #1f2e3a;
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .stat-mini.lubrication {
+            border-left: 4px solid #3498db;
+        }
+
+        .stat-mini.servo {
+            border-left: 4px solid #27ae60;
+        }
+
+        .stat-mini h4 {
+            color: #a1bbd0;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-mini .value {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .details-btn {
+            background: transparent;
+            border: 2px solid #4e6b81;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .details-btn:hover {
+            background: #3e5569;
+            border-color: #7aa5c2;
+        }
+
+        .details-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #3f5568;
+        }
+
+        .details-content.active {
+            display: block;
+        }
+
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e0eaf2;
+            font-size: 14px;
+        }
+
+        .details-table th {
+            background: #1f2e3a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .details-table td {
+            padding: 8px;
+            border: 1px solid #3f5568;
+            text-align: center;
+        }
+
+        /* Админка */
+        .admin-panel {
+            background: #1f2e3a;
+            border-radius: 30px;
+            padding: 30px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: white;
+            border-bottom: 2px solid #3f5568;
+            padding-bottom: 20px;
+        }
+
+        .admin-header h2 {
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .employee-list {
+            background: #2d3e4f;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .employee-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #3f5568;
+            color: white;
+        }
+
+        .employee-item:last-child {
+            border-bottom: none;
+        }
+
+        .employee-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .employee-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-employee-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .add-employee-form input {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 1px solid #3f637c;
+            background: #2d3e4f;
+            color: white;
+            font-size: 16px;
+        }
+
+        .add-employee-form input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #3f5568;
+        }
+
+        .sync-info {
+            background: #2d3e4f;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #a1bbd0;
+            border-left: 6px solid #f39c12;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            background: #27ae60;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification.error {
+            background: #e74c3c;
+        }
+
+        .notification.warning {
+            background: #f39c12;
+        }
+
+        .notification.info {
+            background: #3498db;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .btn, .json-btn, .tab-btn {
+                padding: 8px 15px !important;
+                font-size: 13px !important;
+                min-width: auto !important;
+            }
+
+            .btn-group {
+                gap: 8px;
+            }
+
+            .json-actions {
+                gap: 5px;
+            }
+
+            .employee-card {
+                padding: 15px;
+            }
+
+            .shift-card {
+                padding: 12px;
+            }
+
+            .report-title {
+                font-size: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn, .json-btn {
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+            }
+
+            .report-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="portal">
+    <!-- Шапка -->
+    <header class="portal-header">
+        <div class="logo-area">
+            <div class="nlvz-logo">НЛВЗ</div>
+            <div class="title-box">
+                <h1>Панель инструментов <span>· Техническая диагностика</span></h1>
+                <p>
+                    <i class="fas fa-map-marker-alt"></i> НЛВЗ · ЛИНИЯ К 596-568
+                </p>
+            </div>
+        </div>
+        <div class="system-badge">
+            <i class="fas fa-microchip"></i> Portal v2.0
+        </div>
+    </header>
+
+    <!-- Вкладки -->
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="main">
+                <i class="fas fa-home"></i> Главная
+            </button>
+            <button class="tab-btn" data-tab="reports">
+                <i class="fas fa-chart-bar"></i> Отчёты
+            </button>
+            <button class="tab-btn" data-tab="admin">
+                <i class="fas fa-cog"></i> Администрирование
+            </button>
+        </div>
+
+        <!-- Главная -->
+        <div class="tab-content active" id="tabMain">
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="card-icon"><i class="fas fa-oil-can"></i></div>
+                    <h2>График смазки <span class="version">v7.0</span></h2>
+                    <div class="app-desc">Планирование и учёт смазки оборудования</div>
+                    <ul class="features">
+                        <li><i class="fas fa-calendar-check"></i> Календарь с цветовой индикацией</li>
+                        <li><i class="fas fa-history"></i> История выполнения</li>
+                    </ul>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="openApp('lubrication')">
+                            <i class="fas fa-play"></i> Открыть
+                        </button>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="card-icon"><i class="fas fa-microchip"></i></div>
+                    <h2>Сервоприводы <span class="version">v1.2</span></h2>
+                    <div class="app-desc">Диагностика AUTOCOL K747-965</div>
+                    <ul class="features">
+                        <li><i class="fas fa-tachometer-alt"></i> Контроль температуры, тока</li>
+                        <li><i class="fas fa-temperature-high"></i> Цветовая индикация</li>
+                    </ul>
+                    <div class="btn-group">
+                        <button class="btn btn-success" onclick="openApp('servo')">
+                            <i class="fas fa-play"></i> Открыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отчёты -->
+        <div class="tab-content" id="tabReports">
+            <div class="report-header">
+                <div class="report-title">
+                    <i class="fas fa-chart-pie" style="color: #3498db;"></i>
+                    <span>Полный отчёт по всем сотрудникам</span>
+                </div>
+                <div class="json-actions">
+                    <button class="json-btn" onclick="exportToJSON()">
+                        <i class="fas fa-download"></i> Экспорт в JSON
+                    </button>
+                    <button class="json-btn import" onclick="importFromJSON()">
+                        <i class="fas fa-upload"></i> Импорт из JSON
+                    </button>
+                    <button class="json-btn danger" onclick="clearAllHistory()">
+                        <i class="fas fa-trash"></i> Очистить историю
+                    </button>
+                    <button class="json-btn info" onclick="checkServoData()">
+                        <i class="fas fa-search"></i> Проверить данные
+                    </button>
+                    <button class="json-btn info" onclick="debugServoDisplay()">
+                        <i class="fas fa-bug"></i> Детальная диагностика
+                    </button>
+                </div>
+            </div>
+
+            <!-- Контейнер для отчёта -->
+            <div id="reportContainer">
+                <!-- Динамически заполняется -->
+            </div>
+        </div>
+
+        <!-- Администрирование -->
+        <div class="tab-content" id="tabAdmin">
+            <div class="admin-panel">
+                <div class="admin-header">
+                    <h2><i class="fas fa-users-cog"></i> Управление сотрудниками</h2>
+                    <div>
+                        <span class="btn btn-outline" onclick="syncEmployeesToApps()">
+                            <i class="fas fa-sync-alt"></i> Синхронизировать
+                        </span>
+                    </div>
+                </div>
+
+                <div class="add-employee-form">
+                    <input type="text" id="newEmployeeName" placeholder="Введите ФИО и должность сотрудника">
+                    <button class="btn btn-success" onclick="addEmployee()">
+                        <i class="fas fa-plus"></i> Добавить
+                    </button>
+                </div>
+
+                <div class="employee-list" id="employeeList"></div>
+
+                <div class="admin-actions">
+                    <button class="btn btn-primary" onclick="exportEmployees()">
+                        <i class="fas fa-download"></i> Экспорт сотрудников
+                    </button>
+                    <button class="btn btn-primary" onclick="importEmployees()">
+                        <i class="fas fa-upload"></i> Импорт сотрудников
+                    </button>
+                    <button class="btn btn-danger" onclick="resetToDefault()">
+                        <i class="fas fa-undo"></i> Сброс
+                    </button>
+                </div>
+
+                <div class="sync-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Единый список сотрудников</strong> — изменения автоматически применяются в приложениях.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя панель -->
+    <div style="background: #1f2e3a; border-radius: 20px; padding: 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <i class="fas fa-envelope" style="color: #f39c12; font-size: 24px;"></i>
+            <span style="color: #f1c40f; font-size: 18px;">teh1@nlvz.opvz.ru</span>
+        </div>
+        <div style="color: #a1bbd0;">
+            <i class="fas fa-database"></i> Данные из локального хранилища
+        </div>
+    </div>
+
+    <div class="footer-note">
+        © 2026 ОПВЗ НЛВЗ · Все права защищены · Версия портала 2.0.3
+    </div>
+</div>
+
+<script>
+    // ==================== НОРМАЛИЗАЦИЯ ИМЁН ====================
+    function normalizeName(name) {
+        if (!name) return '';
+        return name
+            .replace(/\s+/g, ' ')           // заменяем multiple пробелы на один
+            .replace(/\s*,\s*/g, ', ')       // форматируем запятые
+            .replace(/\s*\.\s*/g, '. ')      // форматируем точки
+            .trim();                         // убираем пробелы в начале и конце
+    }
+
+    // ==================== КОНФИГУРАЦИЯ ====================
+    const apps = {
+        lubrication: { name: 'График смазки', file: 'График-смазки7.html' },
+        servo: { name: 'Диагностика сервоприводов', file: 'Диагностика серво двигателей.html' }
+    };
+
+    // ==================== ИМЕНА ФАЙЛОВ ====================
+    const DB_FILE = 'db_portal.json';      // Основная база данных (смазка + сервоприводы)
+    const EMPLOYEES_FILE = 'data.json';    // Файл с сотрудниками
+
+    // ==================== МАШИНЫ И ТОЧКИ СМАЗКИ ====================
+    const machines = [
+        { name: "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384", points: [
+            { id: "depal_left", desc: "Планка пресс-маслёнки с лева" },
+            { id: "depal_right", desc: "Планка пресс-маслёнки с права" },
+            { id: "depal_chain", desc: "Приводные цепи" },
+            { id: "depal_bearings", desc: "Опорные подшипники" }
+        ]},
+        { name: "Транспортёр поддонов Palko S KR57 D 01", points: [
+            { id: "palko_chain_d1", desc: "Приводные цепи" },
+            { id: "palko_bearings_d1", desc: "Опорные подшипники" }
+        ]},
+        { name: "Блок розлива VOLUMETIC VOC K223-246", points: [
+            { id: "fill_distributor", desc: "Распределитель продукта" },
+            { id: "fill_red", desc: "Планка пресс-маслёнки красные" },
+            { id: "fill_air", desc: "Распределитель воздуха эл.шкаф верх" },
+            { id: "fill_yellow", desc: "Планка пресс-маслёнки желтые" },
+            { id: "fill_screw", desc: "Привод разделительного шнека" },
+            { id: "fill_mounts", desc: "Крепление, направляющие оснастки" },
+            { id: "fill_spindles", desc: "Шпиндели установки по высоте" },
+            { id: "fill_fingers", desc: "Пальцы кулачка подъёма конусов" },
+            { id: "fill_shafts", desc: "Шарнирные валы главного привода" },
+            { id: "fill_cip", desc: "Распределитель продукта (после CIP)" }
+        ]},
+        { name: "Укупор банок Ferrum F708G C10-809400", points: [
+            { id: "capper_level", desc: "Уровень масла" },
+            { id: "capper_refill", desc: "Доливка масла" },
+            { id: "capper_pressure", desc: "Давление масла" },
+            { id: "capper_stands", desc: "Смазка стоек домкратов" }
+        ]},
+        { name: "Узел подачи крышки CSW Mini-Multifeeder", points: [
+            { id: "feeder_linear", desc: "Линейные подшипники" },
+            { id: "feeder_bearings", desc: "Опорные подшипники" }
+        ]},
+        { name: "Пастеризатор LINAFLEX K578-031", points: [
+            { id: "pasteurizer_drive", desc: "Смазка главного привода" }
+        ]},
+        { name: "Этикетировочная машина AUTOCOL K747-965", points: [
+            { id: "label_red", desc: "Планка пресс-маслёнки красные" },
+            { id: "label_yellow", desc: "Планка пресс-маслёнки желтые" }
+        ]},
+        { name: "Упаковщик VARIOPAC PRO KR96-397", points: [
+            { id: "wrapper_former_level", desc: "Формирователь. Уровень масла" },
+            { id: "wrapper_former_refill", desc: "Формирователь. Доливка масла" },
+            { id: "wrapper_tunnel_level", desc: "Термотунель. Уровень масла" },
+            { id: "wrapper_tunnel_refill", desc: "Термотунель. Доливка масла" }
+        ]},
+        { name: "Транспортёр упаковки MULTICO S KR67C54", points: [
+            { id: "multico_divider", desc: "Делитель упаковки. Планка" },
+            { id: "multico_rods", desc: "Смазать несущие стержни" },
+            { id: "multico_divider_chain", desc: "Делитель упаковки. Приводные цепи" },
+            { id: "multico_bearings", desc: "Опорные подшипники" }
+        ]},
+        { name: "Паллетизатор MODULPAL 2AС KR63-617", points: [
+            { id: "pallet_auto_level", desc: "Автоматическая смазка (уровень)" },
+            { id: "pallet_auto_refill", desc: "Автоматическая смазка, доливка" }
+        ]},
+        { name: "Транспортёр поддонов Palko S KR57 D 02", points: [
+            { id: "palko_chain_d2", desc: "Приводные цепи" },
+            { id: "palko_bearings_d2", desc: "Опорные подшипники" }
+        ]},
+        { name: "Транспортёр ёмкостей SYNCO S K995RYS", points: [
+            { id: "synco_chain", desc: "Приводные цепи" },
+            { id: "synco_bearings", desc: "Опорные подшипники" }
+        ]}
+    ];
+
+    // ==================== УПРАВЛЕНИЕ СОТРУДНИКАМИ ====================
+    const STORAGE_KEY = 'nlvz_employees';
+    const DEFAULT_EMPLOYEES = [
+        "Майстренко Александр Александрович. Сервисный инженер",
+        "Токалов Антон Геннадьевич, старший наладчик оборудования",
+        "Чевордаев Сергей Александрович, старший наладчик оборудования",
+        "Гец Владислав Олегович, старший наладчик оборудования",
+        "Смольянинов Игорь Алексеевич, старший наладчик оборудования"
+    ];
+
+    let employees = [];
+
+    function loadEmployees() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        employees = saved ? JSON.parse(saved) : [...DEFAULT_EMPLOYEES];
+        employees = employees.map(normalizeName);
+        renderEmployeeList();
+    }
+
+    function saveEmployees() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+        renderEmployeeList();
+    }
+
+    function renderEmployeeList() {
+        const list = document.getElementById('employeeList');
+        if (!list) return;
+        if (employees.length === 0) {
+            list.innerHTML = '<div style="color: #a1bbd0; text-align: center; padding: 40px;">Список сотрудников пуст</div>';
+            return;
+        }
+        list.innerHTML = employees.map((emp, index) => `
+            <div class="employee-item">
+                <div class="employee-info">
+                    <i class="fas fa-user" style="color: #3498db;"></i>
+                    <span>${emp}</span>
+                </div>
+                <div class="employee-actions">
+                    <button class="btn btn-danger" style="padding: 8px 15px;" onclick="removeEmployee(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.addEmployee = function() {
+        const input = document.getElementById('newEmployeeName');
+        const name = input.value.trim();
+        if (!name) { alert('Введите ФИО сотрудника'); return; }
+        employees.push(normalizeName(name));
+        saveEmployees();
+        input.value = '';
+    };
+
+    window.removeEmployee = function(index) {
+        if (confirm('Удалить сотрудника из списка?')) {
+            employees.splice(index, 1);
+            saveEmployees();
+        }
+    };
+
+    window.resetToDefault = function() {
+        if (confirm('Восстановить стандартный список?')) {
+            employees = [...DEFAULT_EMPLOYEES].map(normalizeName);
+            saveEmployees();
+        }
+    };
+
+    window.exportEmployees = function() {
+        const data = employees;
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = EMPLOYEES_FILE;
+        a.click();
+        URL.revokeObjectURL(url);
+        showNotification(`Экспортировано в ${EMPLOYEES_FILE}`);
+    };
+
+    window.importEmployees = function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.name !== EMPLOYEES_FILE) {
+                if (!confirm(`Ожидается файл ${EMPLOYEES_FILE}. Загрузить ${file.name}?`)) {
+                    return;
+                }
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (Array.isArray(data)) {
+                        employees = data.map(normalizeName);
+                        saveEmployees();
+                        showNotification(`Загружено ${employees.length} сотрудников из ${file.name}`);
+                    } else {
+                        showNotification('Неверный формат файла', 'error');
+                    }
+                } catch (error) {
+                    showNotification('Ошибка при чтении файла', 'error');
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    };
+
+    window.syncEmployeesToApps = function() {
+        localStorage.setItem('portal_employees', JSON.stringify(employees));
+        showNotification('✅ Список сотрудников сохранён для приложений');
+    };
+
+    window.openApp = function(appId) {
+        const app = apps[appId];
+        if (!app) return;
+        syncEmployeesToApps();
+        const link = document.createElement('a');
+        link.href = app.file;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    // ==================== ДАННЫЕ ИЗ ПРИЛОЖЕНИЙ ====================
+    let lubricationData = {};
+    let servoData = [];
+
+    function loadDataFromApps() {
+        console.log('📥 Загрузка данных из localStorage...');
+        
+        try {
+            const lubricationHistory = localStorage.getItem('lubrication_history_v28');
+            if (lubricationHistory) {
+                lubricationData = JSON.parse(lubricationHistory);
+                console.log('✅ Загружено смен смазки:', Object.keys(lubricationData).length);
+            } else {
+                lubricationData = {};
+                console.log('ℹ️ Нет данных смазки');
+            }
+
+            const servoChecks = localStorage.getItem('servoChecks');
+            if (servoChecks) {
+                servoData = JSON.parse(servoChecks);
+                console.log('✅ Загружено проверок сервоприводов:', servoData.length);
+                if (servoData.length > 0) {
+                    console.log('📋 Пример первой записи:', servoData[0]);
+                }
+            } else {
+                servoData = [];
+                console.log('ℹ️ Нет данных сервоприводов');
+            }
+        } catch (e) {
+            console.error('❌ Ошибка загрузки данных:', e);
+        }
+    }
+
+    // ==================== ФУНКЦИЯ ПРОВЕРКИ ДАННЫХ ====================
+    window.checkServoData = function() {
+        console.log('🔍 Проверка данных сервоприводов:');
+        console.log('servoData (массив):', servoData);
+        console.log('Количество записей:', servoData.length);
+        
+        if (servoData.length > 0) {
+            console.log('Первая запись:', servoData[0]);
+            console.log('Поля первой записи:', Object.keys(servoData[0]));
+            
+            const requiredFields = ['id', 'date', 'inspector', 'servos'];
+            const missingFields = requiredFields.filter(f => !(f in servoData[0]));
+            if (missingFields.length > 0) {
+                console.warn('⚠️ Отсутствуют поля:', missingFields);
+            } else {
+                console.log('✅ Все обязательные поля присутствуют');
+                console.log('Количество сервоприводов в первой записи:', servoData[0].servos.length);
+            }
+        }
+        
+        const raw = localStorage.getItem('servoChecks');
+        console.log('📦 Данные в localStorage:', raw ? JSON.parse(raw) : 'пусто');
+        
+        alert(`В портале ${servoData.length} записей сервоприводов\n\nСмотрите консоль (F12) для деталей`);
+    };
+
+    // ==================== ДЕТАЛЬНАЯ ДИАГНОСТИКА ====================
+    window.debugServoDisplay = function() {
+        console.log('🔍 ДЕТАЛЬНАЯ ДИАГНОСТИКА');
+        console.log('1. Данные из localStorage:');
+        const raw = localStorage.getItem('servoChecks');
+        console.log('   сырые данные:', raw ? raw.substring(0, 200) + '...' : 'пусто');
+        
+        console.log('2. servoData в памяти:');
+        console.log('   длина:', servoData.length);
+        if (servoData.length > 0) {
+            console.log('   первая запись:', servoData[0]);
+            console.log('   поля:', Object.keys(servoData[0]));
+        }
+        
+        console.log('3. Сотрудники в портале (нормализованные):');
+        console.log('   список:', employees);
+        
+        console.log('4. Пытаемся найти совпадения:');
+        let matches = 0;
+        servoData.forEach(check => {
+            const normalizedInspector = normalizeName(check.inspector);
+            const employeeMatch = employees.some(emp => emp === normalizedInspector);
+            console.log(`   ${check.date} | ${check.inspector}`);
+            console.log(`      нормализовано: ${normalizedInspector}`);
+            console.log(`      совпадение: ${employeeMatch ? '✅' : '❌'}`);
+            if (employeeMatch) matches++;
+        });
+        console.log(`   Всего совпадений: ${matches} из ${servoData.length}`);
+        
+        console.log('5. Результат buildReportData():');
+        const report = buildReportData();
+        console.log('   отчёт содержит сотрудников:', report.length);
+        report.forEach(emp => {
+            console.log(`   👤 ${emp.name} | смен: ${emp.shifts.length}`);
+            emp.shifts.forEach(shift => {
+                console.log(`      📅 ${shift.date} | серво: ${shift.servo.exists ? '✅' : '❌'}`);
+            });
+        });
+    };
+
+    // ==================== СЛУШАТЕЛЬ ОБНОВЛЕНИЙ ====================
+    window.addEventListener('storage', (event) => {
+        console.log('📢 Событие storage:', event.key, '→', event.newValue ? event.newValue.substring(0, 50) + '...' : 'null');
+        
+        if (event.key === 'lubrication_data_updated') {
+            console.log('🔄 Данные смазки обновлены, перезагружаем...');
+            loadDataFromApps();
+            renderReport();
+            showNotification('📊 Данные смазки обновлены', 'info');
+        }
+        
+        if (event.key === 'servo_data_updated') {
+            console.log('🔄 Данные сервоприводов обновлены, перезагружаем...');
+            loadDataFromApps();
+            renderReport();
+            showNotification('🔧 Данные сервоприводов обновлены', 'info');
+        }
+    });
+
+    // ==================== ПОЛУЧЕНИЕ ОПИСАНИЯ ОПЕРАЦИИ ПО ID ====================
+    function getPointDescription(pointId) {
+        for (const machine of machines) {
+            const point = machine.points.find(p => p.id === pointId);
+            if (point) {
+                return {
+                    machine: machine.name,
+                    operation: point.desc
+                };
+            }
+        }
+        return { machine: 'Неизвестно', operation: pointId };
+    }
+
+    // ==================== ФОРМИРОВАНИЕ ДАННЫХ ОТЧЁТА ====================
+    function buildReportData() {
+        const report = [];
+
+        employees.forEach(employee => {
+            const normalizedEmp = normalizeName(employee);
+            const employeeData = {
+                name: employee,
+                shifts: []
+            };
+
+            const servoChecksForEmployee = servoData.filter(s => 
+                s && s.inspector && normalizeName(s.inspector) === normalizedEmp
+            );
+
+            const lubricationShifts = [];
+            Object.entries(lubricationData).forEach(([key, shift]) => {
+                if (shift && shift.employee === employee) {
+                    const [date, shiftKey] = key.split('_');
+                    const shiftNum = shiftKey === 'shift1' ? 1 : 2;
+                    lubricationShifts.push({ 
+                        date, 
+                        shift: shiftNum, 
+                        data: shift 
+                    });
+                }
+            });
+
+            const allDates = new Set();
+            lubricationShifts.forEach(d => d.date && allDates.add(d.date));
+            servoChecksForEmployee.forEach(s => s.date && allDates.add(s.date));
+
+            const sortedDates = Array.from(allDates).sort((a, b) => b.localeCompare(a));
+
+            sortedDates.forEach(date => {
+                const lubricationShift = lubricationShifts.find(d => d.date === date);
+                const servoCheck = servoChecksForEmployee.find(s => s.date === date);
+                const shiftNum = lubricationShift ? lubricationShift.shift : 1;
+
+                const operations = [];
+                let lubricationHours = [];
+                let lubricationCompleted = 0;
+                let lubricationTotal = 0;
+
+                if (lubricationShift) {
+                    const shift = lubricationShift.data;
+                    if (shift && shift.visiblePoints) {
+                        shift.visiblePoints.forEach(pointId => {
+                            const { machine, operation } = getPointDescription(pointId);
+                            const completed = shift.completed?.includes(pointId) || false;
+                            let status = completed ? '✅' : '❌';
+                            let details = '';
+
+                            if (pointId.includes('pressure')) {
+                                const inVal = shift.checks?.[`${pointId}_in`];
+                                const outVal = shift.checks?.[`${pointId}_out`];
+                                if (inVal || outVal) {
+                                    details = `${inVal || '—'}/${outVal || '—'} bar`;
+                                    if (parseFloat(inVal) < 4.5 || parseFloat(outVal) < 4.5) {
+                                        status = '⚠️';
+                                    }
+                                }
+                            }
+
+                            operations.push({
+                                machine,
+                                operation,
+                                status,
+                                details,
+                                comment: shift.comments?.[pointId] || shift.comments?.[`${pointId}_in`] || ''
+                            });
+                        });
+                    }
+
+                    const shiftKey = shiftNum === 1 ? 'shift1' : 'shift2';
+                    if (shift && shift.hours) {
+                        Object.entries(shift.hours).forEach(([key, value]) => {
+                            if (key.endsWith(`_${shiftKey}`)) {
+                                const machineName = key.replace(`_${shiftKey}`, '');
+                                lubricationHours.push({ machine: machineName, hours: value });
+                            }
+                        });
+                    }
+
+                    lubricationTotal = operations.length;
+                    lubricationCompleted = operations.filter(op => op.status === '✅').length;
+                }
+
+                employeeData.shifts.push({
+                    date,
+                    shift: shiftNum,
+                    lubrication: {
+                        exists: !!lubricationShift,
+                        operations,
+                        hours: lubricationHours,
+                        total: lubricationTotal,
+                        completed: lubricationCompleted
+                    },
+                    servo: servoCheck ? {
+                        exists: true,
+                        time: servoCheck.time || '',
+                        servos: servoCheck.servos || [],
+                        stats: {
+                            total: servoCheck.servos?.length || 0,
+                            normal: servoCheck.servos?.filter(s => s && s.status === 'normal').length || 0,
+                            warning: servoCheck.servos?.filter(s => s && s.status === 'warning').length || 0,
+                            critical: servoCheck.servos?.filter(s => s && s.status === 'critical').length || 0
+                        }
+                    } : { exists: false }
+                });
+            });
+
+            employeeData.shifts.sort((a, b) => b.date.localeCompare(a.date) || b.shift - a.shift);
+            
+            if (employeeData.shifts.length > 0) {
+                report.push(employeeData);
+            }
+        });
+
+        return report;
+    }
+
+    // ==================== ОТОБРАЖЕНИЕ ОТЧЁТА ====================
+    function renderReport() {
+        console.log('📊 Рендеринг отчёта...');
+        const reportData = buildReportData();
+        const container = document.getElementById('reportContainer');
+        
+        if (reportData.length === 0) {
+            container.innerHTML = `
+                <div style="background: #1f2e3a; border-radius: 25px; padding: 60px; text-align: center;">
+                    <i class="fas fa-database" style="font-size: 60px; color: #3498db; margin-bottom: 20px;"></i>
+                    <h3 style="color: white; margin-bottom: 10px;">Нет данных для отображения</h3>
+                    <p style="color: #a1bbd0;">Заполните данные в приложениях "График смазки" и "Диагностика сервоприводов"</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+
+        reportData.forEach(employee => {
+            html += `
+                <div class="employee-card">
+                    <div class="employee-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h2>${employee.name}</h2>
+                    </div>
+            `;
+
+            employee.shifts.forEach((shift) => {
+                const shiftType = shift.lubrication.exists && shift.servo.exists ? 'both-shift' :
+                                 shift.lubrication.exists ? 'lubrication-shift' : 'servo-shift';
+                const shiftText = shift.shift === 1 ? 'Смена 1 (08:00–20:00)' : 'Смена 2 (20:00–08:00)';
+                const badgeClass = shift.shift === 1 ? 'badge-s1' : 'badge-s2';
+
+                html += `
+                    <div class="shift-card ${shiftType}">
+                        <div class="shift-header">
+                            <div class="shift-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                ${shift.date} · ${shiftText}
+                                <span class="shift-badge ${badgeClass}">Смена ${shift.shift}</span>
+                            </div>
+                            <button class="details-btn" onclick="toggleDetails('${employee.name.replace(/'/g, "\\'")}', '${shift.date}', ${shift.shift})">
+                                <i class="fas fa-eye"></i> Показать детали
+                            </button>
+                        </div>
+
+                        <div class="shift-stats">
+                `;
+
+                if (shift.lubrication.exists) {
+                    html += `
+                        <div class="stat-mini lubrication">
+                            <h4>🛢️ Смазка</h4>
+                            <div class="value">${shift.lubrication.completed}/${shift.lubrication.total}</div>
+                            <div style="color: #a1bbd0; font-size: 12px;">выполнено операций</div>
+                        </div>
+                    `;
+                }
+
+                if (shift.servo.exists) {
+                    html += `
+                        <div class="stat-mini servo">
+                            <h4>⚙️ Сервоприводы</h4>
+                            <div class="value">${shift.servo.stats.normal}/${shift.servo.stats.warning}/${shift.servo.stats.critical}</div>
+                            <div style="color: #a1bbd0; font-size: 12px; display: flex; gap: 10px;">
+                                <span style="color: #27ae60;">✅ ${shift.servo.stats.normal}</span>
+                                <span style="color: #f39c12;">⚠️ ${shift.servo.stats.warning}</span>
+                                <span style="color: #e74c3c;">🔴 ${shift.servo.stats.critical}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`;
+
+                html += `<div id="details-${employee.name.replace(/\s/g, '_')}-${shift.date}-${shift.shift}" class="details-content"></div>`;
+
+                html += `</div>`;
+            });
+
+            html += `</div>`;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // ==================== ПОКАЗ ДЕТАЛЕЙ ====================
+    window.toggleDetails = function(employeeName, date, shift) {
+        const detailsId = `details-${employeeName.replace(/\s/g, '_')}-${date}-${shift}`;
+        const detailsDiv = document.getElementById(detailsId);
+        
+        if (detailsDiv.classList.contains('active')) {
+            detailsDiv.classList.remove('active');
+            detailsDiv.innerHTML = '';
+            return;
+        }
+
+        const reportData = buildReportData();
+        const employee = reportData.find(e => e.name === employeeName);
+        const shiftData = employee?.shifts.find(s => s.date === date && s.shift === shift);
+
+        if (!shiftData) return;
+
+        let html = '<div style="color: white;">';
+
+        if (shiftData.lubrication.exists && shiftData.lubrication.operations.length > 0) {
+            html += `
+                <h4 style="color: #3498db; margin: 15px 0 10px;">
+                    <i class="fas fa-oil-can"></i> Операции смазки
+                </h4>
+                <table class="details-table">
+                    <thead>
+                        <tr>
+                            <th>Машина</th>
+                            <th>Операция</th>
+                            <th>Статус</th>
+                            <th>Н/Ч</th>
+                            <th>Комментарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            shiftData.lubrication.operations.forEach(op => {
+                const hours = shiftData.lubrication.hours.find(h => h.machine === op.machine)?.hours || '';
+                html += `
+                    <tr>
+                        <td>${op.machine}</td>
+                        <td>${op.operation}</td>
+                        <td>${op.status} ${op.details}</td>
+                        <td>${hours}</td>
+                        <td>${op.comment}</td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+        }
+
+        if (shiftData.servo.exists && shiftData.servo.servos.length > 0) {
+            html += `
+                <h4 style="color: #27ae60; margin: 20px 0 10px;">
+                    <i class="fas fa-microchip"></i> Диагностика сервоприводов
+                </h4>
+                <table class="details-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Серийный</th>
+                            <th>Темп,°C</th>
+                            <th>Ток,мА</th>
+                            <th>Статус</th>
+                            <th>Примечания</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            shiftData.servo.servos.forEach(servo => {
+                let statusSymbol = '✅';
+                if (servo.status === 'warning') statusSymbol = '⚠️';
+                if (servo.status === 'critical') statusSymbol = '🔴';
+                
+                html += `
+                    <tr>
+                        <td>${servo.number}</td>
+                        <td>${servo.serial || '—'}</td>
+                        <td>${servo.temperature || '—'}</td>
+                        <td>${servo.current || '—'}</td>
+                        <td>${statusSymbol} ${servo.status}</td>
+                        <td>${servo.notes || ''}</td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+        }
+
+        html += '</div>';
+        detailsDiv.innerHTML = html;
+        detailsDiv.classList.add('active');
+    };
+
+    // ==================== ЭКСПОРТ JSON ====================
+    window.exportToJSON = function() {
+        // Загружаем последние данные из localStorage для экспорта
+        const lastCompleted = JSON.parse(localStorage.getItem('lubrication_last_v28') || '{}');
+        const shiftClosed = JSON.parse(localStorage.getItem('lubrication_closed_v27') || '{}');
+        
+        const exportData = {
+            version: "1.0",
+            exportDate: new Date().toISOString(),
+            employees: employees,
+            lubricationData: lubricationData,
+            lastCompleted: lastCompleted,
+            shiftClosed: shiftClosed,
+            servoData: servoData
+        };
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = DB_FILE;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        showNotification(`Данные экспортированы в ${DB_FILE}`);
+    };
+
+    // ==================== ИМПОРТ JSON (ИСПРАВЛЕННЫЙ) ====================
+    window.importFromJSON = function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ПЕРЕСЧЁТА lastCompleted =====
+                    function recalculateLastCompleted(shiftData) {
+                        const lastCompleted = {};
+                        Object.entries(shiftData).forEach(([key, shift]) => {
+                            const [date] = key.split('_');
+                            if (shift.completed && Array.isArray(shift.completed)) {
+                                shift.completed.forEach(pointId => {
+                                    if (!lastCompleted[pointId] || date > lastCompleted[pointId]) {
+                                        lastCompleted[pointId] = date;
+                                    }
+                                });
+                            }
+                        });
+                        return lastCompleted;
+                    }
+
+                    // ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ИНИЦИАЛИЗАЦИИ shiftClosed =====
+                    function initShiftClosed(shiftData) {
+                        const shiftClosed = {};
+                        Object.keys(shiftData).forEach(key => {
+                            shiftClosed[key] = false; // По умолчанию все смены открыты
+                        });
+                        return shiftClosed;
+                    }
+
+                    // ===== ФОРМАТ 1: ИЗ ГРАФИКА СМАЗКИ =====
+                    if (data.shifts) {
+                        console.log('📥 Загружен файл из графика смазки');
+                        
+                        // Основные данные смен
+                        lubricationData = data.shifts;
+                        localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
+                        
+                        // lastCompleted
+                        if (data.lastCompleted) {
+                            localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
+                            console.log('✅ Восстановлены lastCompleted из файла');
+                        } else {
+                            const lastCompleted = recalculateLastCompleted(lubricationData);
+                            localStorage.setItem('lubrication_last_v28', JSON.stringify(lastCompleted));
+                            console.log('✅ lastCompleted пересчитаны автоматически');
+                        }
+                        
+                        // shiftClosed
+                        if (data.shiftClosed) {
+                            localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
+                            console.log('✅ Восстановлены shiftClosed из файла');
+                        } else {
+                            const shiftClosed = initShiftClosed(lubricationData);
+                            localStorage.setItem('lubrication_closed_v27', JSON.stringify(shiftClosed));
+                            console.log('✅ shiftClosed инициализированы (все смены открыты)');
+                        }
+                        
+                        showNotification(`✅ Загружено ${Object.keys(lubricationData).length} смен из графика смазки`);
+                    }
+                    
+                    // ===== ФОРМАТ 2: ИЗ ПОРТАЛА =====
+                    else if (data.lubricationData || data.servoData) {
+                        console.log('📥 Загружен файл из портала');
+                        
+                        // Сотрудники
+                        if (data.employees && Array.isArray(data.employees)) {
+                            employees = data.employees.map(normalizeName);
+                            saveEmployees();
+                        }
+                        
+                        // Данные смазки
+                        if (data.lubricationData) {
+                            lubricationData = data.lubricationData;
+                            localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
+                            
+                            // lastCompleted
+                            if (data.lastCompleted) {
+                                localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
+                                console.log('✅ Восстановлены lastCompleted из файла');
+                            } else {
+                                const lastCompleted = recalculateLastCompleted(lubricationData);
+                                localStorage.setItem('lubrication_last_v28', JSON.stringify(lastCompleted));
+                                console.log('✅ lastCompleted пересчитаны автоматически');
+                            }
+                            
+                            // shiftClosed
+                            if (data.shiftClosed) {
+                                localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
+                                console.log('✅ Восстановлены shiftClosed из файла');
+                            } else {
+                                const shiftClosed = initShiftClosed(lubricationData);
+                                localStorage.setItem('lubrication_closed_v27', JSON.stringify(shiftClosed));
+                                console.log('✅ shiftClosed инициализированы (все смены открыты)');
+                            }
+                        }
+                        
+                        // Данные сервоприводов
+                        if (data.servoData) {
+                            servoData = data.servoData;
+                            localStorage.setItem('servoChecks', JSON.stringify(servoData));
+                        }
+                        
+                        showNotification(`
+                            ✅ Загружено из портала<br>
+                            📊 Смазка: ${Object.keys(lubricationData).length} смен<br>
+                            🔧 Серво: ${servoData.length} проверок
+                        `);
+                    }
+                    
+                    // ===== НЕИЗВЕСТНЫЙ ФОРМАТ =====
+                    else {
+                        showNotification('❌ Неизвестный формат файла', 'error');
+                        return;
+                    }
+                    
+                    // ===== ОБЩИЕ ДЕЙСТВИЯ =====
+                    renderReport();
+                    syncEmployeesToApps();
+                    
+                    // Уведомляем приложения
+                    localStorage.setItem('lubrication_data_updated', Date.now().toString());
+                    localStorage.setItem('servo_data_updated', Date.now().toString());
+                    
+                } catch (error) {
+                    console.error('Ошибка импорта:', error);
+                    showNotification('Ошибка при чтении файла', 'error');
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    };
+
+    // ==================== ОЧИСТКА ВСЕЙ ИСТОРИИ ====================
+    window.clearAllHistory = function() {
+        if (!confirm('⚠️ ВНИМАНИЕ!\n\nВы уверены, что хотите очистить ВСЮ историю?\n\nЭто удалит:\n• Все данные из графика смазки\n• Все данные из диагностики сервоприводов\n\nЭто действие нельзя отменить!')) {
+            return;
+        }
+
+        lubricationData = {};
+        servoData = [];
+        
+        localStorage.removeItem('lubrication_history_v28');
+        localStorage.removeItem('lubrication_last_v28');
+        localStorage.removeItem('lubrication_closed_v27');
+        localStorage.removeItem('servoChecks');
+        
+        localStorage.setItem('lubrication_data_updated', Date.now().toString());
+        localStorage.setItem('servo_data_updated', Date.now().toString());
+        
+        renderReport();
+        
+        showNotification('✅ Вся история полностью очищена');
+    };
+
+    // ==================== УВЕДОМЛЕНИЯ ====================
+    function showNotification(message, type = 'success') {
+        const notif = document.createElement('div');
+        notif.className = `notification ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : type === 'info' ? 'info' : ''}`;
+        notif.innerHTML = `<i class="fas ${type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-check-circle'}"></i> ${message}`;
+        document.body.appendChild(notif);
+        
+        setTimeout(() => {
+            notif.style.animation = 'slideOut 0.3s ease-out';
+            setTimeout(() => notif.remove(), 300);
+        }, 3000);
+    }
+
+    // ==================== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const tabId = btn.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            if (tabId === 'main') {
+                document.getElementById('tabMain').classList.add('active');
+            } else if (tabId === 'reports') {
+                document.getElementById('tabReports').classList.add('active');
+                loadDataFromApps();
+                renderReport();
+            } else if (tabId === 'admin') {
+                document.getElementById('tabAdmin').classList.add('active');
+                renderEmployeeList();
+            }
+        });
+    });
+
+    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+    window.addEventListener('load', () => {
+        loadEmployees();
+        loadDataFromApps();
+    });
+</script>
+</body>
+</html>

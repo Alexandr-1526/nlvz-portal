@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика сервоприводов</title>
+    <!-- Библиотека для создания скриншотов (оставляем для будущего использования) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Библиотека для PDF (оставляем для будущего использования) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        /* Стили для вкладок */
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .tabs-header {
+            display: flex;
+            background-color: #2c3e50;
+            border-bottom: 1px solid #1a252f;
+        }
+        
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Общие стили для контейнеров */
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .header h2 {
+            color: #e74c3c;
+            font-size: 18px;
+            font-weight: normal;
+        }
+        
+        .info-table {
+            width: 100%;
+            margin-bottom: 30px;
+            border-collapse: collapse;
+        }
+        
+        .info-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        .info-table tr:first-child td {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .info-table tr:last-child td {
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .main-table th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #1a252f;
+        }
+        
+        .main-table th:first-child {
+            width: 5%;
+        }
+        
+        .main-table th:nth-child(2) {
+            width: 15%;
+        }
+        
+        .main-table th:nth-child(3) {
+            width: 15%;
+        }
+        
+        .main-table th:nth-child(4) {
+            width: 15%;
+        }
+        
+        .main-table th:nth-child(5) {
+            width: 12%;
+        }
+        
+        .main-table th:nth-child(6) {
+            width: 18%;
+        }
+        
+        .main-table th:last-child {
+            width: 20%;
+        }
+        
+        .main-table td {
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+            height: 40px;
+        }
+        
+        .main-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .main-table tr:hover {
+            background-color: #f1f8ff;
+        }
+        
+        .number-cell {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .btn-group-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+            text-align: center;
+            display: none; /* Скрываем заголовки групп */
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            font-weight: 600;
+            min-width: 200px;
+        }
+        
+        .btn-sm {
+            padding: 12px 24px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: #27ae60;
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-purple {
+            background-color: #9b59b6;
+        }
+        
+        .btn-purple:hover {
+            background-color: #8e44ad;
+        }
+        
+        .btn-teal {
+            background-color: #1abc9c;
+        }
+        
+        .btn-teal:hover {
+            background-color: #16a085;
+        }
+        
+        .btn-indigo {
+            background-color: #3f51b5;
+        }
+        
+        .btn-indigo:hover {
+            background-color: #303f9f;
+        }
+        
+        .input-field, .select-field {
+            width: 100%;
+            border: 1px solid #ddd;
+            background: white;
+            text-align: center;
+            font-size: inherit;
+            font-family: inherit;
+            outline: none;
+            padding: 6px;
+            border-radius: 4px;
+        }
+        
+        .input-field:focus, .select-field:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .status-select {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .tabs-container {
+                box-shadow: none;
+                border: none;
+                padding: 10px;
+            }
+            
+            .tabs-header {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                padding: 0;
+            }
+            
+            .controls {
+                display: none;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        .temp-indicator {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .temp-green { background-color: #27ae60; }
+        .temp-yellow { background-color: #f39c12; }
+        .temp-red { background-color: #e74c3c; }
+        
+        .notes-field {
+            width: 100%;
+            min-height: 60px;
+            border: 1px solid #ddd;
+            background: white;
+            padding: 8px;
+            font-size: 12px;
+            resize: vertical;
+            border-radius: 4px;
+        }
+        
+        .notes-field:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Стили для печати в PDF */
+        .pdf-export {
+            display: none;
+        }
+        
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .pdf-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .pdf-header h2 {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-table th, .pdf-table td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: center;
+        }
+        
+        .pdf-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Скрытый input для загрузки файла */
+        .file-input {
+            display: none;
+        }
+        
+        /* Стили для уведомлений */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .notification-success {
+            background-color: #27ae60;
+            border-left: 4px solid #219653;
+        }
+        
+        .notification-error {
+            background-color: #e74c3c;
+            border-left: 4px solid #c0392b;
+        }
+        
+        .notification-warning {
+            background-color: #f39c12;
+            border-left: 4px solid #d35400;
+        }
+        
+        .notification-info {
+            background-color: #3498db;
+            border-left: 4px solid #2980b9;
+        }
+        
+        /* Стили для модального окна выбора листа */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        
+        .sheet-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .sheet-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .sheet-date {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .sheet-info {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .modal-btn-cancel {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .modal-btn-cancel:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Стили для истории */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .history-table th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #1a252f;
+        }
+        
+        .history-table td {
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+        }
+        
+        .history-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .history-table tr:hover {
+            background-color: #f1f8ff;
+            cursor: pointer;
+        }
+        
+        .empty-tab-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-tab-content h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .report-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .report-summary h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .summary-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .stat-normal { color: #27ae60; }
+        .stat-warning { color: #f39c12; }
+        .stat-critical { color: #e74c3c; }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab(1)">Инспекция</button>
+            <button class="tab-btn" onclick="switchTab(2)">История</button>
+        </div>
+        
+        <!-- Вкладка 1: Инспекция -->
+        <div class="tab-content active" id="tab1">
+            <div class="container" id="checklistContainer">
+                <div class="header">
+                    <div class="logo">AUTOCOL</div>
+                    <h1>ДИАГНОСТИКА СЕРВОПРИВОДОВ</h1>
+                    <h2>Этикетировочная машина AUTOCOL K747-965</h2>
+                </div>
+                
+                <table class="info-table">
+                    <tr>
+                        <td>Дата</td>
+                        <td>Время</td>
+                        <td>Ф.И.О.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="position: relative;">
+                                <input type="date" class="input-field" id="checkDate">
+                                <button class="auto-fill-btn" onclick="fillCurrentDate()">Сегодня</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="position: relative;">
+                                <input type="time" class="input-field" id="checkTime">
+                                <button class="auto-fill-btn" onclick="fillCurrentTime()">Сейчас</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-wrapper">
+                                <input type="text" class="input-field" id="inspectorName" list="employeeList">
+                                <datalist id="employeeList">
+                                    <!-- Список сотрудников будет заполнен через JS -->
+                                </datalist>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Напряжение, В</th>
+                            <th>Ток, мА</th>
+                            <th>Температура, °C</th>
+                            <th>Часы работы, ч</th>
+                            <th>Серийный номер</th>
+                            <th>Примечания / Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servoTableBody">
+                        <!-- Строки будут сгенерированы через JavaScript -->
+                    </tbody>
+                </table>
+                
+                <div class="controls">
+                    <!-- Сохранение в портал -->
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="saveToPortal()">
+                            <i class="fas fa-save"></i> Сохранить в портал
+                        </button>
+                        <button class="btn btn-teal btn-sm" onclick="document.getElementById('jsonFileInput').click()">
+                            <i class="fas fa-file-import"></i> Импорт из JSON
+                        </button>
+                    </div>
+                    
+                    <!-- Автозаполнение -->
+                    <div class="btn-group">
+                        <button class="btn btn-purple" onclick="autoFillSerialNumbers()">
+                            <i class="fas fa-hashtag"></i> Серийные номера
+                        </button>
+                        <button class="btn btn-indigo" onclick="autoFillHours()">
+                            <i class="fas fa-clock"></i> Часы работы
+                        </button>
+                    </div>
+                    
+                    <!-- Управление данными -->
+                    <div class="btn-group">
+                        <button class="btn btn-danger" onclick="clearAllData()">
+                            <i class="fas fa-trash"></i> Очистить форму
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Скрытый input для загрузки файлов -->
+                <input type="file" id="jsonFileInput" class="file-input" accept=".json,.txt" onchange="loadFromJSON(event)">
+                
+                <div class="footer">
+                    <div>ЧЛ-ДС-01</div>
+                    <div>Лист 1 из 1</div>
+                    <div id="currentDate"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка 2: История -->
+        <div class="tab-content" id="tab2">
+            <div class="container">
+                <div class="header">
+                    <div class="logo">AUTOCOL</div>
+                    <h1>ИСТОРИЯ ПРОВЕРОК СЕРВОПРИВОДОВ</h1>
+                    <h2>Архив всех сохраненных диагностик</h2>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="refreshHistory()">
+                        <i class="fas fa-sync-alt"></i> Обновить историю
+                    </button>
+                    <button class="btn btn-danger" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i> Очистить историю
+                    </button>
+                </div>
+                
+                <div id="historyContent">
+                    <!-- История будет загружена через JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Скрытый контейнер для PDF (оставляем для будущего использования) -->
+    <div id="pdfContainer" style="display: none; width: 210mm; padding: 20mm; background: white;">
+        <div class="pdf-header">
+            <h1>ДИАГНОСТИКА СЕРВОПРИВОДОВ</h1>
+            <h2>Этикетировочная машина AUTOCOL K747-965</h2>
+        </div>
+        
+        <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 5px; border: 1px solid #000; font-weight: bold;">Дата</td>
+                <td style="padding: 5px; border: 1px solid #000; font-weight: bold;">Время</td>
+                <td style="padding: 5px; border: 1px solid #000; font-weight: bold;">Ф.И.О.</td>
+            </tr>
+            <tr>
+                <td style="padding: 5px; border: 1px solid #000;" id="pdfDate"></td>
+                <td style="padding: 5px; border: 1px solid #000;" id="pdfTime"></td>
+                <td style="padding: 5px; border: 1px solid #000;" id="pdfInspector"></td>
+            </tr>
+        </table>
+        
+        <table class="pdf-table" id="pdfTable">
+            <!-- Таблица для PDF будет заполнена через JS -->
+        </table>
+        
+        <div style="margin-top: 20px; font-size: 10px;">
+            <div style="margin-bottom: 10px;">
+                <strong>Цветовая легенда температуры:</strong><br>
+                <span style="color: #27ae60;">■ 20-43°C - Норма</span> | 
+                <span style="color: #f39c12;">■ 45-50°C - Предупреждение</span> | 
+                <span style="color: #e74c3c;">■ 52-300°C - Критично</span>
+            </div>
+ 
+            <div style="margin-top: 20px; text-align: center; color: #666;">
+                Форма ЧЛ-ДС-01 | Дата создания: <span id="pdfReportDate"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Оверлей загрузки -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div id="loadingText">Обработка файла...</div>
+        <div style="font-size: 12px; margin-top: 10px;">Пожалуйста, подождите</div>
+    </div>
+
+    <script>
+        // ==================== СОТРУДНИКИ ИЗ ПОРТАЛА ====================
+        let employees = [
+            "Майстренко Александр Александрович. Сервисный инженер",
+            "Токалов Антон Геннадьевич, старший наладчик оборудования",
+            "Чевордаев Сергей Александрович, старший наладчик оборудования",
+            "Гец Владислав Олегович, старший наладчик оборудования",
+            "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+        ];
+
+        // Переменная для хранения флага загрузки из истории
+        let loadedFromHistory = null;
+
+        // Переменная для хранения всех проверок
+        let allChecksGlobal = [];
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            initEmployeeList();
+            generateEmptyServoTable();
+            loadLastCheckFromLocalStorage();
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ru-RU');
+        });
+        
+        // ============= СИСТЕМА ВКЛАДОК =============
+        
+        // Переключение вкладок
+        function switchTab(tabNumber) {
+            // Скрываем все вкладки
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Убираем активный класс со всех кнопок
+            const allButtons = document.querySelectorAll('.tab-btn');
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Показываем выбранную вкладку
+            const selectedTab = document.getElementById('tab' + tabNumber);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Активируем кнопку
+            const selectedButton = allButtons[tabNumber - 1];
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+            
+            // Если переключаемся на историю - обновляем её
+            if (tabNumber === 2) {
+                loadHistory();
+            }
+        }
+        
+        // ============= ФУНКЦИОНАЛ ИСТОРИИ =============
+        
+        // Загрузка истории проверок
+        function loadHistory() {
+            const historyContent = document.getElementById('historyContent');
+            if (!historyContent) return;
+            
+            const allChecks = getAllChecksFromLocalStorage();
+            allChecksGlobal = allChecks;
+            
+            if (allChecks.length === 0) {
+                historyContent.innerHTML = `
+                    <div class="empty-tab-content">
+                        <h3><i class="fas fa-history" style="font-size: 48px; color: #3498db; margin-bottom: 20px;"></i></h3>
+                        <h3>История проверок пуста</h3>
+                        <p>Выполните проверку сервоприводов и сохраните её, чтобы она появилась в истории.</p>
+                        <button class="btn btn-primary" onclick="switchTab(1)" style="margin-top: 20px;">
+                            <i class="fas fa-arrow-left"></i> Перейти к инспекции
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="report-summary">
+                    <h3><i class="fas fa-history"></i> Всего сохранено проверок: ${allChecks.length}</h3>
+                    <p>Последняя проверка: ${formatDate(allChecks[0].date)} ${allChecks[0].time || ''} (${allChecks[0].inspector || 'Не указан'})</p>
+                </div>
+                
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Инспектор</th>
+                            <th>Сервоприводов</th>
+                            <th>Норма</th>
+                            <th>Предупреждений</th>
+                            <th>Критично</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            allChecks.forEach((check, index) => {
+                const stats = calculateCheckStats(check);
+                
+                html += `
+                    <tr onclick="viewCheckDetails(${index})" title="Нажмите для просмотра деталей">
+                        <td>${formatDate(check.date)}</td>
+                        <td>${check.time || '-'}</td>
+                        <td>${check.inspector || 'Не указан'}</td>
+                        <td>${check.servos?.length || 0}</td>
+                        <td style="color: #27ae60;">${stats.normal}</td>
+                        <td style="color: #f39c12;">${stats.warning}</td>
+                        <td style="color: #e74c3c;">${stats.critical}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); loadCheckFromHistory(${index})" title="Загрузить в форму">
+                                <i class="fas fa-edit"></i> Загрузить
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteCheck(${index})" title="Удалить">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <p>Для просмотра деталей проверки нажмите на строку в таблице</p>
+                </div>
+            `;
+            
+            historyContent.innerHTML = html;
+        }
+        
+        // Загрузка проверки из истории в форму
+        function loadCheckFromHistory(index) {
+            const allChecks = getAllChecksFromLocalStorage();
+            if (allChecks[index]) {
+                loadCheckIntoForm(allChecks[index], true);
+                switchTab(1);
+                showNotification('Проверка загружена в форму!', 'success');
+            }
+        }
+        
+        // Обновить историю
+        function refreshHistory() {
+            loadHistory();
+            showNotification('История обновлена', 'success');
+        }
+        
+        // Просмотр деталей проверки
+        function viewCheckDetails(index) {
+            const allChecks = getAllChecksFromLocalStorage();
+            if (!allChecks[index]) return;
+            
+            const check = allChecks[index];
+            const stats = calculateCheckStats(check);
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            let detailsHtml = `
+                <div class="modal-content">
+                    <h3 style="margin-bottom: 20px; color: #2c3e50;">
+                        <i class="fas fa-info-circle"></i> Детали проверки
+                    </h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>Дата:</strong> ${formatDate(check.date)}</p>
+                        <p><strong>Время:</strong> ${check.time || 'Не указано'}</p>
+                        <p><strong>Инспектор:</strong> ${check.inspector || 'Не указан'}</p>
+                        <p><strong>Дата создания:</strong> ${new Date(check.created || check.id).toLocaleString('ru-RU')}</p>
+                    </div>
+                    
+                    <div class="summary-stats" style="margin-bottom: 20px;">
+                        <div class="stat-item">
+                            <div class="stat-value">${check.servos?.length || 0}</div>
+                            <div class="stat-label">Всего сервоприводов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value stat-normal">${stats.normal}</div>
+                            <div class="stat-label">Норма</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value stat-warning">${stats.warning}</div>
+                            <div class="stat-label">Предупреждений</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value stat-critical">${stats.critical}</div>
+                            <div class="stat-label">Критично</div>
+                        </div>
+                    </div>
+                    
+                    <div style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th style="padding: 8px; border: 1px solid #ddd;">№</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Серийный номер</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Температура</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Статус</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Примечания</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            check.servos?.forEach(servo => {
+                const statusText = getStatusText(servo.status);
+                let statusColor = '#666';
+                
+                if (servo.status === 'critical') statusColor = '#e74c3c';
+                else if (servo.status === 'warning') statusColor = '#f39c12';
+                else if (servo.status === 'normal') statusColor = '#27ae60';
+                
+                detailsHtml += `
+                    <tr>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${servo.number}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${servo.serial || '-'}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd;">${servo.temperature || '-'}°C</td>
+                        <td style="padding: 6px; border: 1px solid #ddd; color: ${statusColor};">${statusText}</td>
+                        <td style="padding: 6px; border: 1px solid #ddd; font-size: 11px;">${servo.notes || '-'}</td>
+                    </tr>
+                `;
+            });
+            
+            detailsHtml += `
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="modal-buttons">
+                        <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Закрыть</button>
+                        <button class="modal-btn" style="background-color: #3498db; color: white;" onclick="loadCheckFromHistory(${index}); closeModal();">
+                            <i class="fas fa-edit"></i> Загрузить в форму
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.innerHTML = detailsHtml;
+            document.body.appendChild(modal);
+            window.currentModal = modal;
+        }
+        
+        // Удаление проверки
+        function deleteCheck(index) {
+            if (!confirm('Вы уверены, что хотите удалить эту проверку из истории?')) {
+                return;
+            }
+            
+            const allChecks = getAllChecksFromLocalStorage();
+            if (allChecks[index]) {
+                allChecks.splice(index, 1);
+                localStorage.setItem('servoChecks', JSON.stringify(allChecks, null, 2));
+                
+                // Уведомляем портал об удалении
+                localStorage.setItem('servo_data_updated', Date.now().toString());
+                
+                loadHistory();
+                showNotification('Проверка удалена из истории', 'success');
+            }
+        }
+        
+        // Очистка истории
+        function clearHistory() {
+            if (!confirm('ВНИМАНИЕ!\n\nВы уверены, что хотите очистить ВСЮ историю проверок?\n\nЭто действие удалит все сохраненные проверки и не может быть отменено.')) {
+                return;
+            }
+            
+            localStorage.removeItem('servoChecks');
+            
+            // Уведомляем портал об очистке
+            localStorage.setItem('servo_data_updated', Date.now().toString());
+            
+            loadHistory();
+            showNotification('История проверок полностью очищена', 'success');
+        }
+        
+        // ============= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =============
+        
+        // Подсчет статистики для проверки
+        function calculateCheckStats(check) {
+            const stats = {
+                normal: 0,
+                warning: 0,
+                critical: 0,
+                maintenance: 0,
+                replaced: 0
+            };
+            
+            if (!check.servos) return stats;
+            
+            check.servos.forEach(servo => {
+                if (servo.status === 'normal') stats.normal++;
+                else if (servo.status === 'warning') stats.warning++;
+                else if (servo.status === 'critical') stats.critical++;
+                else if (servo.status === 'maintenance') stats.maintenance++;
+                else if (servo.status === 'replaced') stats.replaced++;
+            });
+            
+            return stats;
+        }
+        
+        const problemNames = {
+            temperature: 'Высокая температура',
+            vibration: 'Вибрация/шум',
+            wear: 'Износ деталей'
+        };
+        
+        // Заполнить текущей датой
+        function fillCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('checkDate').value = `${year}-${month}-${day}`;
+        }
+        
+        // Заполнить текущим временем
+        function fillCurrentTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('checkTime').value = `${hours}:${minutes}`;
+        }
+        
+        // Инициализация списка сотрудников
+        function initEmployeeList() {
+            const datalist = document.getElementById('employeeList');
+            datalist.innerHTML = '';
+            
+            employees.forEach(employee => {
+                const option = document.createElement('option');
+                option.value = employee;
+                datalist.appendChild(option);
+            });
+        }
+        
+        // Генерация пустой таблицы сервоприводов
+        function generateEmptyServoTable() {
+            const tableBody = document.getElementById('servoTableBody');
+            tableBody.innerHTML = '';
+            
+            for (let i = 1; i <= 21; i++) {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td class="number-cell">${i}</td>
+                    <td><input type="text" class="input-field" value="" data-type="voltage" oninput="validateVoltage(this)"></td>
+                    <td><input type="text" class="input-field" value="" data-type="current" oninput="validateCurrent(this)"></td>
+                    <td>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+                            <span class="temp-indicator temp-green"></span>
+                            <input type="text" class="input-field" value="" data-type="temp" oninput="updateTemperatureColor(this)" style="width: 80px;">
+                            <span>°C</span>
+                        </div>
+                    </td>
+                    <td><input type="text" class="input-field" value="" data-type="hours" oninput="validateHours(this)"></td>
+                    <td><input type="text" class="input-field" value="" data-type="serial"></td>
+                    <td>
+                        <textarea class="notes-field" oninput="autoSetStatus(this)"></textarea>
+                        <select class="status-select" style="margin-top: 5px; width: 100%;" onchange="updateStatusDisplay(this)">
+                            <option value="normal" selected>Норма</option>
+                            <option value="warning">Предупреждение</option>
+                            <option value="critical">Критично</option>
+                            <option value="maintenance">Требуется ТО</option>
+                            <option value="replaced">Заменен</option>
+                        </select>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+                
+                const statusSelect = row.querySelector('.status-select');
+                updateStatusDisplay(statusSelect);
+            }
+        }
+        
+        // ============= ФУНКЦИЯ АВТОЗАПОЛНЕНИЯ СЕРИЙНЫХ НОМЕРОВ =============
+        function autoFillSerialNumbers() {
+            const serialNumbers = [
+                '505220', '505420', '503920', '506220', '505920', '506420', '506720', '506320', '506820', '506020',
+                '506620', '506520', '506120', '505920', '505020', '505120', '505320', '505520', '505620', '504920',
+                '505720'
+            ];
+            
+            let filledCount = 0;
+            let skippedCount = 0;
+            
+            const rows = document.querySelectorAll('#servoTableBody tr');
+            
+            rows.forEach((row, index) => {
+                const serialInput = row.querySelector('input[data-type="serial"]');
+                
+                if (serialInput) {
+                    if (!serialInput.value.trim()) {
+                        if (index < serialNumbers.length) {
+                            serialInput.value = serialNumbers[index];
+                            filledCount++;
+                        }
+                    } else {
+                        skippedCount++;
+                    }
+                }
+            });
+            
+            if (filledCount > 0) {
+                showNotification(`Автозаполнение выполнено! Заполнено ${filledCount} серийных номеров. ${skippedCount > 0 ? `Пропущено ${skippedCount} уже заполненных полей.` : ''}`, 'success');
+            } else {
+                showNotification('Нет пустых полей для заполнения. Все серийные номера уже введены.', 'info');
+            }
+        }
+        
+        // ============= ФУНКЦИЯ АВТОЗАПОЛНЕНИЯ ЧАСОВ РАБОТЫ =============
+        function autoFillHours() {
+            const rows = document.querySelectorAll('#servoTableBody tr');
+            
+            const firstRow = rows[0];
+            if (!firstRow) {
+                showNotification('Ошибка: таблица не содержит строк', 'error');
+                return;
+            }
+            
+            const firstHoursInput = firstRow.querySelector('input[data-type="hours"]');
+            
+            if (!firstHoursInput) {
+                showNotification('Ошибка: не найдено поле "Часы работы" в первой строке', 'error');
+                return;
+            }
+            
+            const firstHoursValue = firstHoursInput.value.trim();
+            
+            if (!firstHoursValue) {
+                showNotification('Первая строка не заполнена. Заполните поле "Часы работы" в первой строке.', 'warning');
+                return;
+            }
+            
+            const numValue = parseInt(firstHoursValue);
+            if (isNaN(numValue) || numValue < 0 || numValue > 100000) {
+                showNotification('Некорректное значение в первой строке. Часы работы должны быть числом от 0 до 100000.', 'warning');
+                return;
+            }
+            
+            let filledCount = 0;
+            let skippedCount = 0;
+            
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const hoursInput = row.querySelector('input[data-type="hours"]');
+                
+                if (hoursInput) {
+                    if (!hoursInput.value.trim()) {
+                        hoursInput.value = firstHoursValue;
+                        filledCount++;
+                    } else {
+                        skippedCount++;
+                    }
+                }
+            }
+            
+            if (filledCount > 0) {
+                showNotification(`Автозаполнение выполнено! Заполнено ${filledCount} полей "Часы работы". ${skippedCount > 0 ? `Пропущено ${skippedCount} уже заполненных полей.` : ''}`, 'success');
+            } else {
+                showNotification('Нет пустых полей для заполнения. Все поля "Часы работы" уже введены.', 'info');
+            }
+        }
+        
+        // ============= ОСНОВНЫЕ ФУНКЦИИ =============
+        
+        // Получить цвет для температуры
+        function getTemperatureColor(temp) {
+            if (isNaN(temp) || temp === '') {
+                return 'temp-green';
+            }
+            
+            if (temp >= 20 && temp <= 43) {
+                return 'temp-green';
+            } else if (temp >= 45 && temp <= 50) {
+                return 'temp-yellow';
+            } else if (temp >= 52 && temp <= 300) {
+                return 'temp-red';
+            } else {
+                return 'temp-green';
+            }
+        }
+        
+        // Обновить цвет индикатора температуры
+        function updateTemperatureColor(input) {
+            const tempValue = input.value;
+            const temp = tempValue === '' ? 0 : parseFloat(tempValue);
+            const tempIndicator = input.parentNode.querySelector('.temp-indicator');
+            const colorClass = getTemperatureColor(temp);
+            
+            tempIndicator.classList.remove('temp-green', 'temp-yellow', 'temp-red');
+            tempIndicator.classList.add(colorClass);
+            
+            const notesField = input.closest('tr').querySelector('.notes-field');
+            autoSetStatus(notesField);
+        }
+        
+        // Автоматически установить статус на основе температуры
+        function autoSetStatus(notesField) {
+            const row = notesField.closest('tr');
+            const tempInput = row.querySelector('input[data-type="temp"]');
+            const statusSelect = row.querySelector('.status-select');
+            const tempValue = tempInput.value;
+            const temp = tempValue === '' ? 0 : parseFloat(tempValue);
+            
+            if (temp >= 52 && temp <= 300) {
+                statusSelect.value = 'critical';
+            } else if (temp >= 45 && temp <= 50) {
+                statusSelect.value = 'warning';
+            } else if (temp >= 20 && temp <= 43) {
+                statusSelect.value = 'normal';
+            } else {
+                statusSelect.value = 'normal';
+            }
+            updateStatusDisplay(statusSelect);
+        }
+        
+        // Обновить отображение статуса
+        function updateStatusDisplay(select) {
+            const value = select.value;
+            if (value === 'critical') {
+                select.style.backgroundColor = '#fadbd8';
+                select.style.color = '#c0392b';
+            } else if (value === 'warning') {
+                select.style.backgroundColor = '#fef9e7';
+                select.style.color = '#f39c12';
+            } else if (value === 'normal') {
+                select.style.backgroundColor = '#d5f4e6';
+                select.style.color = '#27ae60';
+            } else {
+                select.style.backgroundColor = '#ebf5fb';
+                select.style.color = '#3498db';
+            }
+        }
+        
+        // Валидация напряжения
+        function validateVoltage(input) {
+            const value = input.value;
+            if (value === '') {
+                return true;
+            }
+            
+            const numValue = parseFloat(value);
+            if (isNaN(numValue) || numValue < 0 || numValue > 500) {
+                return false;
+            }
+            return true;
+        }
+        
+        // Валидация тока
+        function validateCurrent(input) {
+            const value = input.value;
+            if (value === '') {
+                return true;
+            }
+            
+            const numValue = parseFloat(value);
+            if (isNaN(numValue) || numValue < 0 || numValue > 10000) {
+                return false;
+            }
+            return true;
+        }
+        
+        // Валидация часов работы
+        function validateHours(input) {
+            const value = input.value;
+            if (value === '') {
+                return true;
+            }
+            
+            const numValue = parseInt(value);
+            if (isNaN(numValue) || numValue < 0 || numValue > 100000) {
+                return false;
+            }
+            return true;
+        }
+        
+        // Сбор данных чек-листа
+        function collectChecklistData() {
+            const checklistData = {
+                id: new Date().getTime(),
+                date: document.getElementById('checkDate').value,
+                time: document.getElementById('checkTime').value,
+                inspector: document.getElementById('inspectorName').value,
+                created: new Date().toISOString(),
+                servos: []
+            };
+            
+            const rows = document.querySelectorAll('#servoTableBody tr');
+            rows.forEach((row, index) => {
+                const voltageInput = row.querySelector('input[data-type="voltage"]');
+                const currentInput = row.querySelector('input[data-type="current"]');
+                const tempInput = row.querySelector('input[data-type="temp"]');
+                const hoursInput = row.querySelector('input[data-type="hours"]');
+                const serialInput = row.querySelector('input[data-type="serial"]');
+                const notesField = row.querySelector('.notes-field');
+                const statusSelect = row.querySelector('.status-select');
+                
+                checklistData.servos.push({
+                    number: index + 1,
+                    voltage: voltageInput ? voltageInput.value : '',
+                    current: currentInput ? currentInput.value : '',
+                    temperature: tempInput ? tempInput.value : '',
+                    hours: hoursInput ? hoursInput.value : '',
+                    serial: serialInput ? serialInput.value : '',
+                    notes: notesField ? notesField.value : '',
+                    status: statusSelect ? statusSelect.value : ''
+                });
+            });
+            
+            return checklistData;
+        }
+        
+        // ============= ЗАГРУЗКА ПРОВЕРКИ В ФОРМУ (ИСПРАВЛЕНО) =============
+        function loadCheckIntoForm(check, fromHistory = false) {
+            clearAllDataWithoutConfirm();
+            
+            document.getElementById('checkDate').value = check.date || '';
+            document.getElementById('checkTime').value = check.time || '';
+            document.getElementById('inspectorName').value = check.inspector || '';
+            
+            // Запоминаем, что это загрузка из истории
+            if (fromHistory) {
+                loadedFromHistory = {
+                    originalId: check.id,
+                    date: check.date,
+                    inspector: check.inspector
+                };
+                console.log('📋 Загружена проверка из истории с ID:', check.id);
+            } else {
+                loadedFromHistory = null;
+            }
+            
+            if (check.servos && check.servos.length > 0) {
+                const rows = document.querySelectorAll('#servoTableBody tr');
+                
+                check.servos.forEach((servo, i) => {
+                    if (rows[i]) {
+                        const voltageInput = rows[i].querySelector('input[data-type="voltage"]');
+                        const currentInput = rows[i].querySelector('input[data-type="current"]');
+                        const tempInput = rows[i].querySelector('input[data-type="temp"]');
+                        const hoursInput = rows[i].querySelector('input[data-type="hours"]');
+                        const serialInput = rows[i].querySelector('input[data-type="serial"]');
+                        const notesField = rows[i].querySelector('.notes-field');
+                        const statusSelect = rows[i].querySelector('.status-select');
+                        
+                        if (voltageInput) voltageInput.value = servo.voltage || '';
+                        if (currentInput) currentInput.value = servo.current || '';
+                        if (tempInput) {
+                            tempInput.value = servo.temperature || '';
+                            updateTemperatureColor(tempInput);
+                        }
+                        if (hoursInput) hoursInput.value = servo.hours || '';
+                        if (serialInput) serialInput.value = servo.serial || '';
+                        if (notesField) notesField.value = servo.notes || '';
+                        if (statusSelect) {
+                            statusSelect.value = servo.status || 'normal';
+                            updateStatusDisplay(statusSelect);
+                        }
+                    }
+                });
+            }
+            
+            showNotification('Проверка загружена!', 'success');
+        }
+        
+        // ============= СОХРАНЕНИЕ В ПОРТАЛ (ИСПРАВЛЕНО) =============
+        function saveToPortal() {
+            const data = collectChecklistData();
+            
+            // Проверяем обязательные поля
+            if (!data.date) {
+                showNotification('Укажите дату проверки', 'warning');
+                return;
+            }
+            
+            if (!data.inspector) {
+                showNotification('Укажите ФИО инспектора', 'warning');
+                return;
+            }
+            
+            console.log('📝 Сохраняем данные в портал:', data);
+            
+            // Получаем существующие проверки из localStorage
+            let checks = [];
+            try {
+                const saved = localStorage.getItem('servoChecks');
+                if (saved) {
+                    checks = JSON.parse(saved);
+                    console.log('📥 Загружено существующих проверок:', checks.length);
+                }
+            } catch (e) {
+                console.error('Ошибка чтения localStorage', e);
+            }
+            
+            // ========== ВАЖНО: Всегда создаём новый ID ==========
+            data.id = Date.now();
+            data.created = new Date().toISOString();
+            
+            // Если это копия из истории, добавляем метку
+            if (loadedFromHistory) {
+                data.copiedFrom = loadedFromHistory.originalId;
+                console.log('📋 Создана копия проверки из истории, оригинальный ID:', loadedFromHistory.originalId);
+                loadedFromHistory = null; // Сбрасываем флаг
+            }
+            
+            // Проверяем на дубликат (по дате и инспектору)
+            const isDuplicate = checks.some(check => 
+                check.date === data.date && 
+                check.inspector === data.inspector &&
+                check.id !== data.id
+            );
+            
+            if (isDuplicate) {
+                if (!confirm('⚠️ Проверка за эту дату и инспектора уже существует.\n\nДобавить как новую запись?')) {
+                    return;
+                }
+            }
+            
+            // Добавляем новую проверку в начало массива
+            checks.unshift(data);
+            
+            // Ограничиваем количество (последние 500)
+            if (checks.length > 500) {
+                checks = checks.slice(0, 500);
+            }
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('servoChecks', JSON.stringify(checks));
+            console.log('💾 Сохранено проверок:', checks.length);
+            
+            // ========== УВЕДОМЛЯЕМ ПОРТАЛ ==========
+            localStorage.setItem('servo_data_updated', Date.now().toString());
+            console.log('📢 Уведомление порталу: данные сервоприводов обновлены');
+            
+            // Показываем уведомление
+            showNotification('✅ Проверка сохранена в портал');
+            
+            // Очищаем форму (опционально)
+            if (confirm('Очистить форму для следующей проверки?')) {
+                clearAllDataWithoutConfirm();
+            }
+        }
+        
+        // ============= JSON СИСТЕМА =============
+        
+        // Получение всех проверок из localStorage
+        function getAllChecksFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('servoChecks');
+                if (savedData) {
+                    return JSON.parse(savedData);
+                }
+            } catch (e) {
+                console.log('Ошибка чтения данных из localStorage:', e);
+            }
+            return [];
+        }
+        
+        // Загрузка последней проверки из localStorage
+        function loadLastCheckFromLocalStorage() {
+            try {
+                const allChecks = getAllChecksFromLocalStorage();
+                if (allChecks.length > 0) {
+                    if (confirm('Найдена последняя сохраненная проверка. Загрузить её?')) {
+                        loadCheckIntoForm(allChecks[0], false);
+                    }
+                }
+            } catch (e) {
+                console.log('Не удалось загрузить последнюю проверку:', e);
+            }
+        }
+        
+        // Загрузка из JSON файла
+        function loadFromJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            document.getElementById('loadingText').textContent = 'Чтение файла проверок...';
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const fileData = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(fileData)) {
+                        showNotification('Неверный формат файла. Должен быть массив проверок.', 'error');
+                        return;
+                    }
+                    
+                    const currentChecks = getAllChecksFromLocalStorage();
+                    const mergedChecks = mergeChecklists(currentChecks, fileData);
+                    
+                    localStorage.setItem('servoChecks', JSON.stringify(mergedChecks, null, 2));
+                    
+                    // Уведомляем портал об импорте
+                    localStorage.setItem('servo_data_updated', Date.now().toString());
+                    
+                    showChecksSelection(mergedChecks);
+                    
+                    event.target.value = '';
+                    
+                    showNotification(`Загружено ${fileData.length} проверок! Всего в базе: ${mergedChecks.length}`, 'success');
+                    
+                } catch (error) {
+                    console.error('Ошибка при чтении JSON файла:', error);
+                    showNotification('Ошибка при чтении JSON файла. Проверьте формат.', 'error');
+                } finally {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                }
+            };
+            
+            reader.onerror = function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                event.target.value = '';
+                showNotification('Ошибка при чтении файла', 'error');
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Объединение двух массивов проверок
+        function mergeChecklists(currentChecks, newChecks) {
+            const merged = [...currentChecks];
+            
+            newChecks.forEach(newCheck => {
+                // Создаём новый ID для каждой импортированной проверки
+                if (!newCheck.id) {
+                    newCheck.id = Date.now() + Math.floor(Math.random() * 1000);
+                }
+                
+                const exists = merged.some(existingCheck => 
+                    existingCheck.id === newCheck.id || 
+                    (existingCheck.date === newCheck.date && 
+                     existingCheck.time === newCheck.time && 
+                     existingCheck.inspector === newCheck.inspector)
+                );
+                
+                if (!exists) {
+                    merged.unshift(newCheck);
+                }
+            });
+            
+            merged.sort((a, b) => {
+                const dateA = new Date(a.created || a.id || 0);
+                const dateB = new Date(b.created || b.id || 0);
+                return dateB - dateA;
+            });
+            
+            return merged.slice(0, 500);
+        }
+        
+        // Показ списка проверок для выбора
+        function showChecksSelection(checks) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+            
+            const sortedChecks = [...checks].sort((a, b) => {
+                return new Date(b.created || b.id) - new Date(a.created || a.id);
+            });
+            
+            let html = `
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">Выберите проверку для загрузки</h3>
+                <p style="margin-bottom: 15px; color: #666;">Найдено ${sortedChecks.length} проверок:</p>
+                <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
+            `;
+            
+            sortedChecks.forEach((check, index) => {
+                const dateStr = check.date ? formatDate(check.date) : 'Без даты';
+                const timeStr = check.time || '';
+                const inspector = check.inspector || 'Не указан';
+                const createdDate = check.created ? new Date(check.created).toLocaleString('ru-RU') : '';
+                
+                html += `
+                    <div class="sheet-item" onclick="selectCheck(${index})">
+                        <div class="sheet-date">${dateStr} ${timeStr}</div>
+                        <div class="sheet-info">Инспектор: ${inspector}</div>
+                        <div class="sheet-info">Сервоприводов: ${check.servos?.length || 0}</div>
+                        ${createdDate ? `<div class="sheet-info">Создано: ${createdDate}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            html += `
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Отмена</button>
+                </div>
+            `;
+            
+            modalContent.innerHTML = html;
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            window.currentChecksData = sortedChecks;
+            window.currentModal = modal;
+        }
+        
+        // Выбор проверки
+        function selectCheck(index) {
+            if (window.currentChecksData && window.currentChecksData[index]) {
+                loadCheckIntoForm(window.currentChecksData[index], true);
+                closeModal();
+            }
+        }
+        
+        // Закрытие модального окна
+        function closeModal() {
+            if (window.currentModal) {
+                document.body.removeChild(window.currentModal);
+                delete window.currentChecksData;
+                delete window.currentModal;
+            }
+        }
+        
+        // ============= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =============
+        
+        // Функция для очистки данных без подтверждения
+        function clearAllDataWithoutConfirm() {
+            document.getElementById('checkDate').value = '';
+            document.getElementById('checkTime').value = '';
+            document.getElementById('inspectorName').value = '';
+            
+            const rows = document.querySelectorAll('#servoTableBody tr');
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    if (input.type === 'text' || input.tagName === 'TEXTAREA') {
+                        input.value = '';
+                    } else if (input.tagName === 'SELECT') {
+                        input.value = 'normal';
+                        updateStatusDisplay(input);
+                    }
+                });
+                
+                const tempIndicator = row.querySelector('.temp-indicator');
+                if (tempIndicator) {
+                    tempIndicator.className = 'temp-indicator temp-green';
+                }
+            });
+        }
+        
+        // Очистка всех данных
+        function clearAllData() {
+            if (confirm('Вы уверены, что хотите полностью очистить все данные формы? Это действие нельзя отменить.')) {
+                clearAllDataWithoutConfirm();
+                showNotification('Все данные формы очищены!', 'success');
+            }
+        }
+        
+        // Функция для отображения уведомлений
+        function showNotification(message, type = 'success') {
+            if (!document.querySelector('#slideOutStyle')) {
+                const style = document.createElement('style');
+                style.id = 'slideOutStyle';
+                style.textContent = `
+                    @keyframes slideOut {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+        
+        // Получить текстовое описание статуса
+        function getStatusText(status) {
+            const statusMap = {
+                'normal': 'Норма',
+                'warning': 'Предупреждение',
+                'critical': 'Критично',
+                'maintenance': 'Требуется ТО',
+                'replaced': 'Заменен'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // Форматирование даты
+        function formatDate(dateStr) {
+            if (!dateStr) return 'не указана';
+            try {
+                const date = new Date(dateStr);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}.${month}.${year}`;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+    </script>
+</body>
+</html>

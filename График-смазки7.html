@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>График смазки · История</title>
+    <!-- Библиотеки для PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!-- pdfmake (основной) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- xlsx для Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; }
+        
+        /* Светлая тема (по умолчанию) */
+        body.light-theme {
+            background: #eef2f7;
+            --bg-color: white;
+            --text-color: #333;
+            --header-bg: #2c3e50;
+            --header-text: white;
+            --card-bg: white;
+            --card-border: #b8d0ec;
+            --panel-bg: #f1f8ff;
+            --panel-border: #b3d1f2;
+            --input-bg: #f5faff;
+            --input-border: #acc3e3;
+            --machine-header-bg: #deecfd;
+            --machine-header-text: #003b70;
+            --point-row-bg: #f8fbfe;
+            --point-row-border: #becde0;
+            --missed-bg: #ffd6d6;
+            --missed-border: #c0392b;
+            --lastday-bg: #fff2b5;
+            --lastday-border: #e6a017;
+            --warning-bg: #ffe6e6;
+            --warning-text: #c0392b;
+            --btn-primary: #3498db;
+            --btn-primary-hover: #2980b9;
+            --btn-success: #27ae60;
+            --btn-success-hover: #1e8449;
+            --btn-danger: #e74c3c;
+            --btn-danger-hover: #c0392b;
+            --btn-purple: #9b59b6;
+            --btn-json: #f39c12;
+            --btn-excel: #217346;
+            --btn-pdf: #8e44ad;
+            --table-header-bg: #2c3e50;
+            --table-header-text: white;
+            --table-border: #ddd;
+            --modal-overlay: rgba(0,0,0,0.7);
+            --modal-bg: white;
+            --modal-border: #ddd;
+            --theme-btn-bg: #3498db;
+            --theme-btn-color: white;
+            --upcoming-bg: #fff8e7;
+            --upcoming-border: #f39c12;
+            --upcoming-text: #8a6d3b;
+        }
+
+        /* Тёмная тема */
+        body.dark-theme {
+            background: #1a1a1a;
+            --bg-color: #2d2d2d;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --header-text: #e0e0e0;
+            --card-bg: #363636;
+            --card-border: #4a4a4a;
+            --panel-bg: #2a2a2a;
+            --panel-border: #4a4a4a;
+            --input-bg: #3d3d3d;
+            --input-border: #5a5a5a;
+            --machine-header-bg: #3a3a3a;
+            --machine-header-text: #b0d0ff;
+            --point-row-bg: #333333;
+            --point-row-border: #5a5a5a;
+            --missed-bg: #4a2a2a;
+            --missed-border: #a33a3a;
+            --lastday-bg: #4a4a2a;
+            --lastday-border: #b8a03a;
+            --warning-bg: #4a2a2a;
+            --warning-text: #ff8a8a;
+            --btn-primary: #2c5a8c;
+            --btn-primary-hover: #1e4a7a;
+            --btn-success: #1e6a4a;
+            --btn-success-hover: #155a3a;
+            --btn-danger: #a33a3a;
+            --btn-danger-hover: #8a2a2a;
+            --btn-purple: #6a3a8a;
+            --btn-json: #b87a2a;
+            --btn-excel: #1a5a3a;
+            --btn-pdf: #6a3a8a;
+            --table-header-bg: #1e1e1e;
+            --table-header-text: #e0e0e0;
+            --table-border: #4a4a4a;
+            --modal-overlay: rgba(0,0,0,0.9);
+            --modal-bg: #363636;
+            --modal-border: #4a4a4a;
+            --theme-btn-bg: #2c5a8c;
+            --theme-btn-color: #e0e0e0;
+            --upcoming-bg: #3a3a2a;
+            --upcoming-border: #b87a2a;
+            --upcoming-text: #e0b87a;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .app {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-color);
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .tabs-container { width: 100%; }
+        .tabs-header {
+            display: flex;
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--card-border);
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            flex: 1 1 auto;
+            padding: 18px 25px;
+            background: none;
+            border: none;
+            color: var(--header-text);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            min-width: 120px;
+        }
+        .tab-btn:hover { background: rgba(255,255,255,0.1); }
+        .tab-btn.active {
+            background: var(--btn-primary);
+            color: white;
+            position: relative;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+        }
+
+        .theme-radio-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 50px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateX(calc(100% - 50px));
+            opacity: 0.5;
+        }
+
+        .theme-radio-container:hover {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .theme-radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 30px;
+            transition: 0.2s;
+            color: var(--text-color);
+        }
+
+        .theme-radio-item:hover {
+            background: var(--machine-header-bg);
+        }
+
+        .theme-radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--btn-primary);
+        }
+
+        .theme-radio-item span {
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .theme-radio-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0.3; } to { opacity: 1; } }
+
+        .container {
+            background: var(--bg-color);
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            padding: 25px;
+            border: 1px solid var(--card-border);
+        }
+
+        /* Календарь */
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--panel-bg);
+            border-radius: 40px;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: 1px solid var(--panel-border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .month-year {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+            min-width: 180px;
+            text-align: center;
+        }
+        .nav-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 30px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        .today-btn {
+            background: var(--btn-success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            gap: 5px;
+        }
+        .cal-day {
+            background: var(--point-row-bg);
+            border-radius: 12px;
+            padding: 10px 5px;
+            min-height: 70px;
+            border: 1px solid var(--point-row-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .cal-day.today { border: 3px solid var(--btn-purple); background: var(--machine-header-bg); }
+        .cal-day.selected { border: 3px solid var(--btn-success); background: var(--lastday-bg); }
+        .day-number {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-color);
+            width: 36px;
+            height: 36px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            border: 1px solid var(--input-border);
+        }
+        .badge {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .badge.green { background: #b9f5cf; color: #004d1a; }
+        .badge.yellow { background: #fff2b5; color: #664d00; }
+        .badge.red { background: #ffd6d6; color: #a10000; }
+        .badge.gray { background: #e4eaf2; color: #3f5568; }
+
+        /* Детальная панель */
+        .detail-panel {
+            margin-top: 20px;
+            background: var(--panel-bg);
+            border-radius: 30px;
+            padding: 20px;
+            border: 1px solid var(--panel-border);
+        }
+        .shifts-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .shift-card {
+            flex: 1 1 450px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--card-border);
+        }
+        .shift-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: var(--text-color);
+            border-bottom: 2px dashed var(--card-border);
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .employee-select {
+            padding: 10px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 0.95rem;
+            min-width: 250px;
+        }
+        .machine-group { margin: 20px 0; }
+        .machine-name-header {
+            font-weight: 600;
+            font-size: 1.1rem;
+            background: var(--machine-header-bg);
+            color: var(--machine-header-text);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .hours-input {
+            width: 80px;
+            padding: 8px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .hours-input[type=number] { -moz-appearance: textfield; }
+        .hours-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .copy-hours-btn {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .copy-hours-btn:hover { background: var(--btn-primary-hover); }
+        .points-list { display: flex; flex-direction: column; gap: 8px; }
+        .point-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--point-row-bg);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border-left: 6px solid var(--point-row-border);
+            flex-wrap: wrap;
+        }
+        .point-row.missed {
+            background: var(--missed-bg);
+            border-left-color: var(--missed-border);
+        }
+        .point-row.lastday {
+            background: var(--lastday-bg);
+            border-left-color: var(--lastday-border);
+        }
+        .point-desc { flex: 1; font-size: 1rem; }
+        .cb-point {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--btn-primary);
+        }
+        .pressure-input {
+            width: 80px;
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            text-align: center;
+        }
+        .pressure-input[type=number] { -moz-appearance: textfield; }
+        .pressure-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .comment-input {
+            width: 250px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        .warning-message {
+            color: var(--warning-text);
+            background: var(--warning-bg);
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--warning-text);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .shift-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .save-shift-btn {
+            background: var(--btn-primary);
+            color: white;
+            font-size: 1.1rem;
+            padding: 15px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 3px 0 var(--btn-primary-hover);
+            flex: 1;
+            min-width: 200px;
+        }
+        .save-shift-btn.shift2 { background: var(--btn-success); box-shadow: 0 3px 0 #1e8449; }
+        .close-shift-btn {
+            background: #7f8c8d;
+            color: white;
+            font-size: 1.1rem;
+            padding: 15px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 3px 0 #5a6b6c;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* История */
+        .history-controls {
+            background: var(--panel-bg);
+            border-radius: 40px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .employee-filter {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            min-width: 280px;
+            flex: 1;
+            font-size: 1rem;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--btn-primary);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            min-width: 140px;
+            justify-content: center;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-danger { background: var(--btn-danger); }
+        .btn-success { background: var(--btn-success); }
+        .btn-purple { background: var(--btn-purple); }
+        .btn-json { background: var(--btn-json); }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        .history-table th {
+            background: var(--table-header-bg);
+            color: var(--table-header-text);
+            padding: 15px;
+            text-align: center;
+        }
+        .history-table td {
+            padding: 12px;
+            border: 1px solid var(--table-border);
+            text-align: center;
+        }
+        .history-table tr:hover { background: var(--point-row-bg); cursor: pointer; }
+
+        /* Модальное окно загрузки данных */
+        .load-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+        }
+        .load-modal-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid var(--btn-json);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .load-modal-content h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--btn-json);
+        }
+        .load-modal-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .load-modal-content .filename {
+            font-family: monospace;
+            font-size: 20px;
+            font-weight: bold;
+            background: var(--panel-bg);
+            padding: 10px;
+            border-radius: 20px;
+            margin: 20px 0;
+            color: var(--text-color);
+            border: 1px solid var(--btn-json);
+        }
+        .load-modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .load-modal-buttons .btn {
+            min-width: 180px;
+            padding: 15px 25px;
+            font-size: 16px;
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-overlay);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+        .modal-content {
+            background: var(--modal-bg);
+            padding: 25px;
+            border-radius: 25px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--modal-border);
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 15px;
+            position: sticky;
+            bottom: 0;
+            background: var(--modal-bg);
+            padding: 12px 0;
+            border-top: 1px solid var(--modal-border);
+            z-index: 10;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 20000;
+            display: none;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0); } 360deg { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .app { border-radius: 20px; }
+            .tab-btn { padding: 15px 10px; font-size: 14px; }
+            .theme-radio-container { top: 10px; right: 10px; padding: 8px; transform: translateX(calc(100% - 40px)); }
+            .container { padding: 15px; }
+            .calendar-header { flex-direction: column; }
+            .shift-card { padding: 15px; }
+            .shift-title { flex-direction: column; align-items: flex-start; }
+            .employee-select { width: 100%; }
+            .machine-name-header { flex-direction: column; align-items: flex-start; }
+            .hours-input { width: 100%; }
+            .point-row { flex-direction: column; align-items: flex-start; }
+            .shift-buttons { flex-direction: column; }
+            .history-controls { flex-direction: column; }
+            .employee-filter { width: 100%; }
+            .btn { width: 100%; }
+            .history-table { display: block; overflow-x: auto; }
+            .modal-content { padding: 15px; }
+            .modal-buttons { flex-direction: column; }
+            .load-modal-content { padding: 20px; }
+            .load-modal-content h3 { font-size: 22px; }
+            .load-modal-content p { font-size: 16px; }
+            .load-modal-buttons { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .tab-btn { font-size: 12px; }
+            .month-year { font-size: 1.2rem; }
+            .cal-day { min-height: 50px; }
+            .day-number { width: 25px; height: 25px; font-size: 0.9rem; }
+            .badge { font-size: 0.6rem; }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="theme-radio-container" id="themeRadioContainer">
+        <label class="theme-radio-item">
+            <input type="radio" name="theme" value="light" checked onchange="setTheme('light')">
+            <i class="fas fa-sun"></i>
+            <span>Светлая</span>
+        </label>
+        <label class="theme-radio-item">
+            <input type="radio" name="theme" value="dark" onchange="setTheme('dark')">
+            <i class="fas fa-moon"></i>
+            <span>Тёмная</span>
+        </label>
+    </div>
+
+<div class="app">
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="calendar">📅 График смазки</button>
+            <button class="tab-btn" data-tab="history">📋 История</button>
+        </div>
+
+        <!-- ВКЛАДКА ГРАФИК СМАЗКИ -->
+        <div class="tab-content active" id="tabCalendar">
+            <div class="container">
+                <div class="calendar-header">
+                    <button class="nav-btn" id="prevMonthBtn">←</button>
+                    <span class="month-year" id="monthYearDisplay">Март 2026</span>
+                    <button class="nav-btn" id="nextMonthBtn">→</button>
+                    <button class="today-btn" id="todayBtn">📅 Сегодня</button>
+                </div>
+                <div class="weekdays"><div>ПН</div><div>ВТ</div><div>СР</div><div>ЧТ</div><div>ПТ</div><div>СБ</div><div>ВС</div></div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+                <div class="detail-panel" id="detailPanel" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА ИСТОРИЯ -->
+        <div class="tab-content" id="tabHistory">
+            <div class="container">
+                <div class="history-controls">
+                    <select class="employee-filter" id="historyEmployeeFilter">
+                        <option value="all">Все сотрудники</option>
+                    </select>
+                    <button class="btn btn-purple" onclick="window.loadHistory()"><i class="fas fa-sync-alt"></i> Обновить</button>
+                    <button class="btn btn-json" onclick="window.exportToJSON()"><i class="fas fa-file-code"></i> Сохранить в JSON</button>
+                    <button class="btn btn-success" onclick="window.importFromJSON()"><i class="fas fa-file-import"></i> Загрузить из JSON</button>
+                    <button class="btn btn-danger" onclick="window.clearHistory()"><i class="fas fa-trash"></i> Очистить историю</button>
+                </div>
+                <div id="historyContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div>Загрузка...</div></div>
+
+<script>
+    // Переменная для хранения состояния авторизации (больше не используется)
+    let isAdminAuthenticated = false;
+
+    // Функция установки темы
+    function setTheme(theme) {
+        const body = document.body;
+        const lightRadio = document.querySelector('input[value="light"]');
+        const darkRadio = document.querySelector('input[value="dark"]');
+        
+        if (theme === 'dark') {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            darkRadio.checked = true;
+            lightRadio.checked = false;
+        } else {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            lightRadio.checked = true;
+            darkRadio.checked = false;
+        }
+        
+        localStorage.setItem('theme', theme);
+    }
+
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            setTheme('light');
+        }
+    }
+
+    function showLoadDataModal() {
+        if (document.getElementById('loadDataModal')) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'load-modal';
+        modal.id = 'loadDataModal';
+        modal.innerHTML = `
+            <div class="load-modal-content">
+                <h3>📂 Загрузка данных</h3>
+                <p>В истории нет данных.</p>
+                <p>Для соблюдения времени и периодичности<br>выполнения процедур смазывания</p>
+                <p>загрузите файл</p>
+                <div class="filename">lubrication_data.json</div>
+                <p>в историю.</p>
+                <div class="load-modal-buttons">
+                    <button class="btn btn-json" onclick="selectInitialJSONFile()">
+                        <i class="fas fa-file-import"></i> Выбрать файл
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeLoadDataModal()">
+                        <i class="fas fa-times"></i> Пропустить
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    window.closeLoadDataModal = function() {
+        const modal = document.getElementById('loadDataModal');
+        if (modal) {
+            modal.remove();
+        }
+    };
+
+    loadTheme();
+
+(function() {
+    // ---------- СОТРУДНИКИ ----------
+    const DEFAULT_EMPLOYEES = [
+        "Майстренко Александр Александрович. Сервисный инженер",
+        "Токалов Антон Геннадьевич, старший наладчик оборудования",
+        "Чевордаев Сергей Александрович, старший наладчик оборудования",
+        "Гец Владислав Олегович, старший наладчик оборудования",
+        "Смольянинов Игорь Алексеевич, старший наладчик оборудования"
+    ];
+
+    let employees = [];
+    const STORAGE_EMPLOYEES = 'lubrication_employees_v14';
+
+    function loadEmployees() {
+        try {
+            const saved = localStorage.getItem(STORAGE_EMPLOYEES);
+            employees = saved ? JSON.parse(saved) : [...DEFAULT_EMPLOYEES];
+        } catch (e) {
+            employees = [...DEFAULT_EMPLOYEES];
+        }
+    }
+    
+    function saveEmployees() {
+        localStorage.setItem(STORAGE_EMPLOYEES, JSON.stringify(employees));
+    }
+
+    // ---------- МАШИНЫ ----------
+    const machines = [
+        { name: "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384", points: [
+            { id: "depal_left", desc: "Планка пресс-маслёнки с лева", period: "weekly" },
+            { id: "depal_right", desc: "Планка пресс-маслёнки с права", period: "weekly" },
+            { id: "depal_chain", desc: "Приводные цепи", period: "monthly" },
+            { id: "depal_bearings", desc: "Опорные подшипники", period: "monthly" }
+        ]},
+        { name: "Транспортёр поддонов Palko S KR57 D 01", points: [
+            { id: "palko_chain_d1", desc: "Приводные цепи", period: "monthly" },
+            { id: "palko_bearings_d1", desc: "Опорные подшипники", period: "monthly" }
+        ]},
+        { name: "Блок розлива VOLUMETIC VOC K223-246", points: [
+            { id: "fill_distributor", desc: "Распределитель продукта", period: "shift" },
+            { id: "fill_red", desc: "Планка пресс-маслёнки красные", period: "shift" },
+            { id: "fill_air", desc: "Распределитель воздуха эл.шкаф верх", period: "weekly" },
+            { id: "fill_yellow", desc: "Планка пресс-маслёнки желтые", period: "weekly" },
+            { id: "fill_screw", desc: "Привод разделительного шнека", period: "weekly" },
+            { id: "fill_mounts", desc: "Крепление, направляющие оснастки", period: "monthly" },
+            { id: "fill_spindles", desc: "Шпиндели установки по высоте", period: "monthly" },
+            { id: "fill_fingers", desc: "Пальцы кулачка подъёма конусов", period: "monthly" },
+            { id: "fill_shafts", desc: "Шарнирные валы главного привода", period: "monthly" },
+            { id: "fill_cip", desc: "Распределитель продукта (после CIP)", period: "cip" }
+        ]},
+        { name: "Укупор банок Ferrum F708G C10-809400", points: [
+            { id: "capper_level", desc: "Уровень масла", period: "shift" },
+            { id: "capper_refill", desc: "Доливка масла", period: "shift" },
+            { id: "capper_pressure", desc: "Давление масла (не ниже 4 bar)", period: "pressure" },
+            { id: "capper_stands", desc: "Смазка стоек домкратов и центрального вала", period: "biweekly" }
+        ]},
+        { name: "Узел подачи крышки CSW Mini-Multifeeder", points: [
+            { id: "feeder_linear", desc: "Линейные подшипники и направляющие", period: "monthly" },
+            { id: "feeder_bearings", desc: "Опорные подшипники", period: "monthly" }
+        ]},
+        { name: "Пастеризатор LINAFLEX K578-031", points: [
+            { id: "pasteurizer_drive", desc: "Смазка главного привода слева/справа", period: "shift" }
+        ]},
+        { name: "Этикетировочная машина AUTOCOL K747-965", points: [
+            { id: "label_red", desc: "Планка пресс-маслёнки красные", period: "shift" },
+            { id: "label_yellow", desc: "Планка пресс-маслёнки желтые", period: "weekly" }
+        ]},
+        { name: "Упаковщик VARIOPAC PRO KR96-397", points: [
+            { id: "wrapper_former_level", desc: "Формирователь. Уровень масла", period: "shift" },
+            { id: "wrapper_former_refill", desc: "Формирователь. Доливка масла", period: "shift" },
+            { id: "wrapper_tunnel_level", desc: "Термотунель. Уровень масла", period: "shift" },
+            { id: "wrapper_tunnel_refill", desc: "Термотунель. Доливка масла", period: "shift" }
+        ]},
+        { name: "Транспортёр упаковки MULTICO S KR67C54", points: [
+            { id: "multico_divider", desc: "Делитель упаковки. Планка", period: "shift" },
+            { id: "multico_rods", desc: "Смазать несущие стержни", period: "shift" },
+            { id: "multico_divider_chain", desc: "Делитель упаковки. Приводные цепи", period: "monthly" },
+            { id: "multico_bearings", desc: "Опорные подшипники", period: "monthly" }
+        ]},
+        { name: "Паллетизатор MODULPAL 2AС KR63-617", points: [
+            { id: "pallet_auto_level", desc: "Автоматическая смазка (уровень)", period: "shift" },
+            { id: "pallet_auto_refill", desc: "Автоматическая смазка, дополнить до max", period: "shift" }
+        ]},
+        { name: "Транспортёр поддонов Palko S KR57 D 02", points: [
+            { id: "palko_chain_d2", desc: "Приводные цепи", period: "monthly" },
+            { id: "palko_bearings_d2", desc: "Опорные подшипники", period: "monthly" }
+        ]},
+        { name: "Транспортёр ёмкостей SYNCO S K995RYS", points: [
+            { id: "synco_chain", desc: "Приводные цепи", period: "monthly" },
+            { id: "synco_bearings", desc: "Опорные подшипники", period: "monthly" }
+        ]}
+    ];
+
+    // ---------- ХРАНИЛИЩЕ ----------
+    let shiftHistory = {};
+    let lastCompleted = {};
+    let shiftClosed = {};
+    let tempShiftState = {};
+    let machineHours = {};
+    
+    const STORAGE_HISTORY = 'lubrication_history_v28';
+    const STORAGE_LAST = 'lubrication_last_v28';
+    const STORAGE_CLOSED = 'lubrication_closed_v27';
+
+    function loadStorage() {
+        try {
+            const h = localStorage.getItem(STORAGE_HISTORY);
+            if (h) shiftHistory = JSON.parse(h);
+            const l = localStorage.getItem(STORAGE_LAST);
+            if (l) lastCompleted = JSON.parse(l);
+            const c = localStorage.getItem(STORAGE_CLOSED);
+            if (c) shiftClosed = JSON.parse(c);
+        } catch (e) {}
+    }
+    
+    function saveStorage() {
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(shiftHistory));
+        localStorage.setItem(STORAGE_LAST, JSON.stringify(lastCompleted));
+        localStorage.setItem(STORAGE_CLOSED, JSON.stringify(shiftClosed));
+    }
+
+    // ---------- УТИЛИТЫ ----------
+    function formatYMD(d) { 
+        const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0'); 
+        return `${y}-${m}-${day}`; 
+    }
+    function parseYMD(s) { 
+        const [y,m,d]=s.split('-').map(Number); 
+        return new Date(y,m-1,d); 
+    }
+    function daysBetween(from, to) { 
+        return Math.round((parseYMD(to)-parseYMD(from))/86400000); 
+    }
+    
+    function getPeriodDays(period) {
+        switch(period) {
+            case 'weekly': return 5;
+            case 'biweekly': return 14;
+            case 'monthly': return 30;
+            default: return 0;
+        }
+    }
+
+    function getUpcomingProcedures(dateStr) {
+        const upcoming = [];
+        const today = parseYMD(dateStr);
+        
+        machines.forEach(machine => {
+            machine.points.forEach(point => {
+                if (!['weekly', 'biweekly', 'monthly'].includes(point.period)) return;
+                
+                const need = getPeriodDays(point.period);
+                const last = lastCompleted[point.id];
+                
+                let nextDate;
+                if (!last) {
+                    const startDate = new Date(2026, 0, 1);
+                    nextDate = new Date(startDate.getTime() + need * 86400000);
+                } else {
+                    nextDate = new Date(parseYMD(last).getTime() + need * 86400000);
+                }
+                
+                const daysUntil = Math.ceil((nextDate - today) / 86400000);
+                
+                let showThreshold = 0;
+                switch(point.period) {
+                    case 'weekly': showThreshold = 2; break;
+                    case 'biweekly': showThreshold = 3; break;
+                    case 'monthly': showThreshold = 5; break;
+                }
+                
+                if (daysUntil > 0 && daysUntil <= showThreshold) {
+                    const completedToday = shiftHistory[`${dateStr}_shift1`]?.completed?.includes(point.id) || 
+                                          shiftHistory[`${dateStr}_shift2`]?.completed?.includes(point.id);
+                    
+                    if (!completedToday) {
+                        upcoming.push({
+                            machine: machine.name,
+                            point: point.desc,
+                            period: point.period,
+                            startDate: nextDate,
+                            daysUntil
+                        });
+                    }
+                }
+            });
+        });
+        
+        return upcoming.sort((a, b) => {
+            if (a.machine < b.machine) return -1;
+            if (a.machine > b.machine) return 1;
+            return a.daysUntil - b.daysUntil;
+        });
+    }
+
+    // ---------- КАЛЕНДАРЬ ----------
+    let currentDate = new Date();
+    let selectedDateStr = null;
+
+    function getDayStatus(dateStr) {
+        let hasOverdue = false;
+        for (let m of machines) {
+            for (let p of m.points) {
+                if (!['weekly','monthly','biweekly'].includes(p.period)) continue;
+                
+                const completedToday = shiftHistory[`${dateStr}_shift1`]?.completed?.includes(p.id) || 
+                                      shiftHistory[`${dateStr}_shift2`]?.completed?.includes(p.id);
+                if (completedToday) continue;
+                
+                const last = lastCompleted[p.id];
+                if (!last) {
+                    const startDate = new Date(2026, 0, 1);
+                    if (daysBetween(formatYMD(startDate), dateStr) > getPeriodDays(p.period)) {
+                        hasOverdue = true;
+                        break;
+                    }
+                    continue;
+                }
+                
+                const need = getPeriodDays(p.period);
+                if (daysBetween(last, dateStr) > need) {
+                    hasOverdue = true;
+                    break;
+                }
+            }
+            if (hasOverdue) break;
+        }
+        
+        if (hasOverdue) return 'red';
+        
+        const hasShift1 = shiftHistory[`${dateStr}_shift1`];
+        const hasShift2 = shiftHistory[`${dateStr}_shift2`];
+        
+        if (hasShift1 && hasShift2) return 'green';
+        if (hasShift1 || hasShift2) return 'yellow';
+        return 'gray';
+    }
+
+    function renderCalendar() {
+        const y = currentDate.getFullYear(), m = currentDate.getMonth();
+        const monthNames = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+        document.getElementById('monthYearDisplay').innerText = `${monthNames[m]} ${y}`;
+        
+        const first = new Date(y, m, 1);
+        let startOff = first.getDay() - 1;
+        if (startOff < 0) startOff = 6;
+        
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const prevDays = new Date(y, m, 0).getDate();
+        
+        let days = [];
+        
+        for (let i = 0; i < startOff; i++) {
+            days.push({
+                day: prevDays - startOff + i + 1,
+                year: y,
+                month: m - 1,
+                current: false
+            });
+        }
+        
+        for (let d = 1; d <= daysInMonth; d++) {
+            days.push({
+                day: d,
+                year: y,
+                month: m,
+                current: true
+            });
+        }
+        
+        let nextMonthDay = 1;
+        for (let i = days.length; i < 42; i++) {
+            days.push({
+                day: nextMonthDay++,
+                year: y,
+                month: m + 1,
+                current: false
+            });
+        }
+
+        const grid = document.getElementById('calendarGrid'); 
+        grid.innerHTML = '';
+        const todayStr = formatYMD(new Date());
+        
+        days.forEach(dayInfo => {
+            const dObj = new Date(dayInfo.year, dayInfo.month, dayInfo.day);
+            const ds = formatYMD(dObj);
+            const cell = document.createElement('div'); 
+            cell.className = 'cal-day';
+            if (ds === todayStr) cell.classList.add('today');
+            if (ds === selectedDateStr) cell.classList.add('selected');
+            const status = getDayStatus(ds);
+            const icons = {green:'✅', yellow:'🟡', red:'⚠️', gray:'⚪'};
+            cell.innerHTML = `<div class="day-number">${dayInfo.day}</div><span class="badge ${status}">${icons[status]}</span>`;
+            cell.onclick = () => { 
+                if (ds === selectedDateStr) {
+                    document.getElementById('detailPanel').style.display = 'none';
+                    selectedDateStr = null;
+                } else {
+                    selectedDateStr = ds; 
+                    renderDetailPanel(ds);
+                }
+                renderCalendar(); 
+            };
+            grid.appendChild(cell);
+        });
+    }
+
+    function isPointVisibleForDate(dateStr, point) {
+        if (point.period === 'shift' || point.period === 'cip' || point.period === 'pressure') return true;
+        
+        const need = getPeriodDays(point.period);
+        const last = lastCompleted[point.id];
+        
+        if (!last) {
+            const startDate = new Date(2026, 0, 1);
+            return daysBetween(formatYMD(startDate), dateStr) >= need;
+        }
+        return daysBetween(last, dateStr) >= need;
+    }
+
+    function shouldPointBeVisible(dateStr, shift, point) {
+        if (shiftClosed[`${dateStr}_${shift}`]) return false;
+        
+        if (point.period === 'shift' || point.period === 'cip' || point.period === 'pressure') return true;
+        
+        const completedInShift1 = shiftHistory[`${dateStr}_shift1`]?.completed?.includes(point.id);
+        const completedInShift2 = shiftHistory[`${dateStr}_shift2`]?.completed?.includes(point.id);
+        
+        if (completedInShift1 || completedInShift2) {
+            return false;
+        }
+        
+        return isPointVisibleForDate(dateStr, point);
+    }
+
+    function renderDetailPanel(dateStr) {
+        const panel = document.getElementById('detailPanel');
+        panel.style.display = 'block';
+        
+        if (!tempShiftState[dateStr]) {
+            tempShiftState[dateStr] = {
+                shift1: { employee: shiftHistory[`${dateStr}_shift1`]?.employee || '', checks: {}, completed: [], comments: {}, visiblePoints: [] },
+                shift2: { employee: shiftHistory[`${dateStr}_shift2`]?.employee || '', checks: {}, completed: [], comments: {}, visiblePoints: [] }
+            };
+        }
+        if (!machineHours[dateStr]) machineHours[dateStr] = {};
+
+        let html = `<div style="font-size:1.8rem; margin-bottom:15px;">${parseYMD(dateStr).toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})}</div>`;
+        html += `<div class="shifts-container">`;
+        
+        ['shift1','shift2'].forEach((shift, idx) => {
+            const title = idx === 0 ? 'СМЕНА 1 (08:00–20:00)' : 'СМЕНА 2 (20:00–08:00)';
+            const isClosed = shiftClosed[`${dateStr}_${shift}`];
+            const empVal = isClosed ? shiftHistory[`${dateStr}_${shift}`]?.employee : (tempShiftState[dateStr][shift].employee || '');
+            
+            html += `<div class="shift-card">`;
+            html += `<div class="shift-title">${title} `;
+            
+            if (!isClosed) {
+                html += `<select class="employee-select" data-shift="${shift}" data-date="${dateStr}">`;
+                html += `<option value="">-- Выберите --</option>`;
+                employees.forEach(e => html += `<option value="${e}" ${e === empVal ? 'selected' : ''}>${e}</option>`);
+                html += `</select>`;
+            } else {
+                html += `<span>${empVal}</span>`;
+            }
+            html += `</div>`;
+
+            let allVisiblePoints = [];
+            
+            machines.forEach(machine => {
+                const visible = machine.points.filter(p => shouldPointBeVisible(dateStr, shift, p));
+                if (!visible.length && !isClosed) return;
+                
+                visible.forEach(p => allVisiblePoints.push(p.id));
+                
+                const hoursKey = `${machine.name}_${shift}`;
+                const hoursValue = machineHours[dateStr][hoursKey] || '';
+                
+                html += `<div class="machine-group">`;
+                html += `<div class="machine-name-header">`;
+                html += `<span>${machine.name}</span>`;
+                
+                if (!isClosed) {
+                    html += `<input type="number" class="hours-input" data-machine="${machine.name}" data-shift="${shift}" data-date="${dateStr}" value="${hoursValue}" placeholder="н/ч" min="0" step="0.1">`;
+                    
+                    if (machine.name === "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384") {
+                        html += `<button class="copy-hours-btn" data-source-machine="${machine.name}" data-target-machine="Транспортёр поддонов Palko S KR57 D 01" data-shift="${shift}" data-date="${dateStr}" title="Копировать в D01">📋 D01</button>`;
+                    }
+                    
+                    if (machine.name === "Блок розлива VOLUMETIC VOC K223-246") {
+                        html += `<button class="copy-hours-btn" data-source-machine="${machine.name}" data-target-machines='["Укупор банок Ferrum F708G C10-809400","Узел подачи крышки CSW Mini-Multifeeder","Транспортёр ёмкостей SYNCO S K995RYS"]' data-shift="${shift}" data-date="${dateStr}" title="Копировать в несколько машин">📋 3→</button>`;
+                    }
+                    
+                    if (machine.name === "Упаковщик VARIOPAC PRO KR96-397") {
+                        html += `<button class="copy-hours-btn" data-source-machine="${machine.name}" data-target-machine="Транспортёр упаковки MULTICO S KR67C54" data-shift="${shift}" data-date="${dateStr}" title="Копировать в MULTICO">📋 MULTI</button>`;
+                    }
+                    
+                    if (machine.name === "Паллетизатор MODULPAL 2AС KR63-617") {
+                        html += `<button class="copy-hours-btn" data-source-machine="${machine.name}" data-target-machine="Транспортёр поддонов Palko S KR57 D 02" data-shift="${shift}" data-date="${dateStr}" title="Копировать в D02">📋 D02</button>`;
+                    }
+                } else if (hoursValue) {
+                    html += `<span>${hoursValue} н/ч</span>`;
+                }
+                
+                html += `</div><div class="points-list">`;
+                
+                if (isClosed) {
+                    const history = shiftHistory[`${dateStr}_${shift}`];
+                    if (history) {
+                        machine.points.forEach(p => {
+                            if (history.completed.includes(p.id)) {
+                                html += `<div class="point-row">`;
+                                html += `<span class="point-desc">${p.desc}</span>`;
+                                if (p.period === 'pressure') {
+                                    const inVal = history.checks?.[`${p.id}_in`] || '—';
+                                    const outVal = history.checks?.[`${p.id}_out`] || '—';
+                                    html += `<span>${inVal}/${outVal} bar</span>`;
+                                } else {
+                                    html += `<span style="color:#4CAF50;">✅</span>`;
+                                }
+                                const comment = history.comments?.[p.id];
+                                if (comment) html += `<span class="point-comment" title="${comment}">💬</span>`;
+                                html += `</div>`;
+                            }
+                        });
+                    }
+                } else {
+                    visible.forEach(p => {
+                        let rowClass = 'point-row';
+                        
+                        if (p.period === 'weekly' || p.period === 'monthly' || p.period === 'biweekly') {
+                            const last = lastCompleted[p.id];
+                            if (last) {
+                                const passed = daysBetween(last, dateStr);
+                                if (passed > getPeriodDays(p.period)) rowClass += ' missed';
+                                else if (passed === getPeriodDays(p.period)) rowClass += ' lastday';
+                            } else {
+                                const startDate = new Date(2026, 0, 1);
+                                if (daysBetween(formatYMD(startDate), dateStr) > getPeriodDays(p.period)) {
+                                    rowClass += ' missed';
+                                }
+                            }
+                        }
+                        
+                        html += `<div class="${rowClass}">`;
+                        html += `<span class="point-desc">${p.desc}</span>`;
+                        
+                        if (p.period === 'pressure') {
+                            const inVal = tempShiftState[dateStr][shift].checks?.[`${p.id}_in`] || '';
+                            const outVal = tempShiftState[dateStr][shift].checks?.[`${p.id}_out`] || '';
+                            html += `<div style="display:flex;gap:5px;align-items:center; flex-wrap:wrap;">`;
+                            html += `<input class="pressure-input" type="number" step="0.1" value="${inVal}" data-point-id="${p.id}_in" data-shift="${shift}" data-date="${dateStr}" placeholder="вх" min="0">`;
+                            html += `<input class="pressure-input" type="number" step="0.1" value="${outVal}" data-point-id="${p.id}_out" data-shift="${shift}" data-date="${dateStr}" placeholder="вых" min="0">`;
+                            html += `</div>`;
+                            
+                            if (inVal && parseFloat(inVal) < 4.5) {
+                                const comment = tempShiftState[dateStr][shift].comments?.[`${p.id}_in`] || '';
+                                html += `<div class="warning-message">`;
+                                html += `<i class="fas fa-exclamation-triangle"></i> Давление на входе ниже нормы!`;
+                                html += `<input type="text" class="comment-input" value="${comment}" data-point-id="${p.id}_in" data-shift="${shift}" data-date="${dateStr}" placeholder="Комментарий...">`;
+                                html += `</div>`;
+                            }
+                            if (outVal && parseFloat(outVal) < 4.5) {
+                                const comment = tempShiftState[dateStr][shift].comments?.[`${p.id}_out`] || '';
+                                html += `<div class="warning-message">`;
+                                html += `<i class="fas fa-exclamation-triangle"></i> Давление на выходе ниже нормы!`;
+                                html += `<input type="text" class="comment-input" value="${comment}" data-point-id="${p.id}_out" data-shift="${shift}" data-date="${dateStr}" placeholder="Комментарий...">`;
+                                html += `</div>`;
+                            }
+                        } else {
+                            const completed = tempShiftState[dateStr][shift].completed.includes(p.id);
+                            html += `<input type="checkbox" class="cb-point" data-point-id="${p.id}" data-shift="${shift}" data-date="${dateStr}" ${completed ? 'checked' : ''}>`;
+                        }
+                        html += `</div>`;
+                    });
+                }
+                html += `</div></div>`;
+            });
+            
+            tempShiftState[dateStr][shift].visiblePoints = allVisiblePoints;
+            
+            if (!isClosed) {
+                html += `<div class="shift-buttons">`;
+                html += `<button class="save-shift-btn ${shift === 'shift2' ? 'shift2' : ''}" data-shift="${shift}" data-date="${dateStr}">💾 СОХРАНИТЬ</button>`;
+                html += `<button class="close-shift-btn" data-shift="${shift}" data-date="${dateStr}">🔒 ЗАКРЫТЬ</button>`;
+                html += `</div>`;
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+        
+        const upcomingProcedures = getUpcomingProcedures(dateStr);
+        tempShiftState[dateStr].upcomingProcedures = upcomingProcedures;
+        
+        if (upcomingProcedures.length > 0) {
+            html += `<div style="margin-top: 30px; padding: 20px; background: var(--upcoming-bg); border-radius: 20px; border: 2px dashed var(--upcoming-border);">`;
+            html += `<div style="font-size: 1.3rem; font-weight: 600; color: var(--upcoming-text); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">`;
+            html += `<i class="fas fa-calendar-alt" style="color: var(--upcoming-border);"></i>`;
+            html += `ПРЕДСТОЯЩИЕ ПРОЦЕДУРЫ`;
+            html += `</div>`;
+            
+            let currentMachine = '';
+            upcomingProcedures.forEach(item => {
+                if (currentMachine !== item.machine) {
+                    if (currentMachine !== '') {
+                        html += `</div>`;
+                    }
+                    currentMachine = item.machine;
+                    html += `<div style="margin: 10px 0 5px 0;">`;
+                    html += `<div style="font-weight: 600; color: var(--text-color); font-size: 1.1rem;">${item.machine}</div>`;
+                    html += `<div style="margin-left: 20px;">`;
+                }
+                
+                const startDateStr = item.startDate.toLocaleDateString('ru-RU', {day:'numeric', month:'numeric'});
+                let periodText = '';
+                switch(item.period) {
+                    case 'weekly': periodText = 'еженед.'; break;
+                    case 'biweekly': periodText = '14 дн.'; break;
+                    case 'monthly': periodText = 'мес.'; break;
+                }
+                
+                html += `<div style="display: flex; align-items: center; gap: 10px; padding: 5px 0; color: var(--upcoming-text);">`;
+                html += `<i class="far fa-clock" style="color: var(--upcoming-border);"></i>`;
+                html += `<span>${item.point} (${periodText}) — через ${item.daysUntil} дн. (начнётся ${startDateStr})</span>`;
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+        }
+        
+        panel.innerHTML = html;
+
+        // ========== ИСПРАВЛЕННЫЙ КОД ==========
+        if (!shiftClosed[`${dateStr}_shift1`] || !shiftClosed[`${dateStr}_shift2`]) {
+            panel.querySelectorAll('.employee-select').forEach(sel => {
+                sel.addEventListener('change', e => {
+                    const d = e.target.dataset.date;
+                    const s = e.target.dataset.shift;
+                    tempShiftState[d][s].employee = e.target.value;
+                });
+            });
+            
+            panel.querySelectorAll('.hours-input').forEach(field => {
+                field.addEventListener('input', e => {
+                    const d = e.target.dataset.date;
+                    const s = e.target.dataset.shift;
+                    const m = e.target.dataset.machine;
+                    if (!machineHours[d]) machineHours[d] = {};
+                    machineHours[d][`${m}_${s}`] = e.target.value;
+                });
+            });
+            
+            panel.querySelectorAll('.copy-hours-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const date = this.dataset.date;
+                    const shift = this.dataset.shift;
+                    const sourceMachine = this.dataset.sourceMachine;
+                    
+                    const sourceKey = `${sourceMachine}_${shift}`;
+                    const sourceValue = machineHours[date]?.[sourceKey] || '';
+                    
+                    if (!machineHours[date]) machineHours[date] = {};
+                    
+                    if (this.dataset.targetMachine) {
+                        const targetMachine = this.dataset.targetMachine;
+                        const targetKey = `${targetMachine}_${shift}`;
+                        machineHours[date][targetKey] = sourceValue;
+                        
+                        const targetField = Array.from(panel.querySelectorAll('.hours-input')).find(
+                            field => field.dataset.machine === targetMachine && 
+                                   field.dataset.shift === shift && 
+                                   field.dataset.date === date
+                        );
+                        
+                        if (targetField) targetField.value = sourceValue;
+                        alert(`Значение ${sourceValue || '0'} скопировано в ${targetMachine}`);
+                    }
+                    
+                    if (this.dataset.targetMachines) {
+                        const targetMachines = JSON.parse(this.dataset.targetMachines);
+                        let copiedCount = 0;
+                        
+                        targetMachines.forEach(targetMachine => {
+                            const targetKey = `${targetMachine}_${shift}`;
+                            machineHours[date][targetKey] = sourceValue;
+                            
+                            const targetField = Array.from(panel.querySelectorAll('.hours-input')).find(
+                                field => field.dataset.machine === targetMachine && 
+                                       field.dataset.shift === shift && 
+                                       field.dataset.date === date
+                            );
+                            
+                            if (targetField) {
+                                targetField.value = sourceValue;
+                                copiedCount++;
+                            }
+                        });
+                        
+                        alert(`Значение ${sourceValue || '0'} скопировано в ${copiedCount} машин`);
+                    }
+                });
+            });
+            
+            panel.querySelectorAll('.pressure-input').forEach(inp => {
+                inp.addEventListener('input', e => {
+                    const d = e.target.dataset.date;
+                    const s = e.target.dataset.shift;
+                    const pid = e.target.dataset.pointId;
+                    if (!tempShiftState[d][s].checks) tempShiftState[d][s].checks = {};
+                    tempShiftState[d][s].checks[pid] = e.target.value;
+                    renderDetailPanel(d);
+                });
+            });
+            
+            panel.querySelectorAll('.comment-input').forEach(inp => {
+                inp.addEventListener('input', e => {
+                    const d = e.target.dataset.date;
+                    const s = e.target.dataset.shift;
+                    const pid = e.target.dataset.pointId;
+                    if (!tempShiftState[d][s].comments) tempShiftState[d][s].comments = {};
+                    tempShiftState[d][s].comments[pid] = e.target.value;
+                });
+            });
+            
+            panel.querySelectorAll('.cb-point').forEach(cb => {
+                cb.addEventListener('change', function(e) {
+                    const d = this.dataset.date;
+                    const s = this.dataset.shift;
+                    const pid = this.dataset.pointId;
+                    if (!tempShiftState[d][s].completed) tempShiftState[d][s].completed = [];
+                    if (this.checked) {
+                        if (!tempShiftState[d][s].completed.includes(pid)) {
+                            tempShiftState[d][s].completed.push(pid);
+                        }
+                    } else {
+                        tempShiftState[d][s].completed = tempShiftState[d][s].completed.filter(id => id !== pid);
+                    }
+                });
+            });
+            
+            // ========== ИСПРАВЛЕННАЯ КНОПКА СОХРАНЕНИЯ ==========
+            panel.querySelectorAll('.save-shift-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const d = this.dataset.date;
+                    const s = this.dataset.shift;
+                    
+                    if (!tempShiftState[d]?.[s]?.employee) {
+                        alert('Выберите сотрудника!');
+                        return;
+                    }
+                    
+                    const current = tempShiftState[d][s];
+                    const key = `${d}_${s}`;
+                    const existing = shiftHistory[key] || { 
+                        employee: current.employee, 
+                        completed: [], 
+                        checks: {}, 
+                        comments: {}, 
+                        hours: {}, 
+                        saves: [],
+                        visiblePoints: [],
+                        upcomingProcedures: []
+                    };
+                    
+                    existing.employee = current.employee;
+                    
+                    if (machineHours[d]) {
+                        Object.entries(machineHours[d]).forEach(([k, v]) => {
+                            if (k.endsWith(`_${s}`)) existing.hours[k] = v;
+                        });
+                    }
+                    
+                    const newCompleted = current.completed.filter(id => !existing.completed.includes(id));
+                    existing.checks = { ...existing.checks, ...current.checks };
+                    existing.comments = { ...existing.comments, ...current.comments };
+                    existing.completed = [...new Set([...existing.completed, ...current.completed])];
+                    
+                    const existingVisible = existing.visiblePoints || [];
+                    const currentVisible = current.visiblePoints || [];
+                    existing.visiblePoints = [...new Set([...existingVisible, ...currentVisible])];
+                    
+                    existing.upcomingProcedures = tempShiftState[d].upcomingProcedures || [];
+                    
+                    existing.saves.push({ timestamp: new Date().toISOString() });
+                    
+                    shiftHistory[key] = existing;
+                    
+                    newCompleted.forEach(pid => {
+                        const point = machines.flatMap(m => m.points).find(p => p.id === pid);
+                        if (point && ['weekly','monthly','biweekly'].includes(point.period)) {
+                            lastCompleted[pid] = d;
+                        }
+                    });
+                    
+                    saveStorage();
+                    
+                    // ========== УВЕДОМЛЯЕМ ПОРТАЛ ==========
+                    localStorage.setItem('lubrication_data_updated', Date.now().toString());
+                    console.log('📢 Уведомление порталу: данные смазки обновлены');
+                    
+                    renderDetailPanel(d);
+                    renderCalendar();
+                    
+                    alert(`Смена ${s === 'shift1' ? '1' : '2'} сохранена. Добавлено ${newCompleted.length} новых процедур.`);
+                });
+            });
+            
+            // ========== ИСПРАВЛЕННАЯ КНОПКА ЗАКРЫТИЯ ==========
+            panel.querySelectorAll('.close-shift-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const d = this.dataset.date;
+                    const s = this.dataset.shift;
+                    
+                    if (!shiftHistory[`${d}_${s}`]) {
+                        alert('Сначала сохраните смену!');
+                        return;
+                    }
+                    
+                    const record = shiftHistory[`${d}_${s}`];
+                    const allPoints = machines.flatMap(m => m.points);
+                    let totalVisible = 0;
+                    let completedVisible = 0;
+                    
+                    allPoints.forEach(p => {
+                        const shouldBeVisible = (() => {
+                            if (p.period === 'shift' || p.period === 'cip' || p.period === 'pressure') return true;
+                            
+                            const completedToday = shiftHistory[`${d}_shift1`]?.completed?.includes(p.id) || 
+                                                  shiftHistory[`${d}_shift2`]?.completed?.includes(p.id);
+                            if (completedToday) return false;
+                            
+                            const need = getPeriodDays(p.period);
+                            const last = lastCompleted[p.id];
+                            if (!last) return daysBetween('2026-01-01', d) >= need;
+                            return daysBetween(last, d) >= need;
+                        })();
+                        
+                        if (shouldBeVisible) {
+                            totalVisible++;
+                            if (record.completed.includes(p.id)) completedVisible++;
+                        }
+                    });
+                    
+                    if (confirm(`Закрыть смену ${s === 'shift1' ? '1' : '2'}?\n\n✅ Выполнено: ${completedVisible}/${totalVisible}\n❌ Пропущено: ${totalVisible - completedVisible}\n\nПосле закрытия нельзя будет вносить изменения.`)) {
+                        shiftClosed[`${d}_${s}`] = true;
+                        saveStorage();
+                        
+                        // ========== УВЕДОМЛЯЕМ ПОРТАЛ ==========
+                        localStorage.setItem('lubrication_data_updated', Date.now().toString());
+                        console.log('📢 Уведомление порталу: смена закрыта');
+                        
+                        renderDetailPanel(d);
+                        renderCalendar();
+                    }
+                });
+            });
+        }
+    }
+
+    function getAllShiftData() {
+        let arr = [];
+        Object.entries(shiftHistory).forEach(([key, record]) => {
+            const [date, shift] = key.split('_');
+            const shiftNum = shift === 'shift1' ? 1 : 2;
+            let operations = [];
+            
+            machines.forEach(m => {
+                m.points.forEach(p => {
+                    if (!record.visiblePoints || !record.visiblePoints.includes(p.id)) return;
+                    
+                    let status = '❌';
+                    let details = '';
+                    
+                    if (p.period === 'pressure') {
+                        const inVal = record.checks?.[`${p.id}_in`] || '—';
+                        const outVal = record.checks?.[`${p.id}_out`] || '—';
+                        status = `${inVal}/${outVal} bar`;
+                        details = `вх:${inVal} вых:${outVal}`;
+                    } else if (record.completed.includes(p.id)) {
+                        status = '✅';
+                    }
+                    
+                    operations.push({
+                        machine: m.name,
+                        point: p.desc,
+                        status: status,
+                        details: details,
+                        isCompleted: record.completed.includes(p.id)
+                    });
+                });
+            });
+            
+            arr.push({
+                date: date,
+                shift: shiftNum,
+                employee: record.employee,
+                operations: operations,
+                completedCount: operations.filter(op => op.isCompleted).length,
+                totalCount: operations.length,
+                id: key,
+                saves: record.saves?.length || 1,
+                isClosed: shiftClosed[key] || false,
+                hours: record.hours || {},
+                upcomingProcedures: record.upcomingProcedures || []
+            });
+        });
+        return arr.sort((a,b) => b.date.localeCompare(a.date) || b.shift - a.shift);
+    }
+
+    window.loadHistory = function() {
+        const allData = getAllShiftData();
+        const empFilter = document.getElementById('historyEmployeeFilter').value;
+        
+        const cont = document.getElementById('historyContent');
+        if (!allData.length) {
+            cont.innerHTML = '<div style="padding:60px;text-align:center;">История пуста</div>';
+            return;
+        }
+        
+        let filtered = empFilter === 'all' ? allData : allData.filter(item => item.employee === empFilter);
+        
+        let html = '<table class="history-table"><tr><th>Дата</th><th>Смена</th><th>Сотрудник</th><th>Операций</th><th>Статус</th></tr>';
+        filtered.forEach(item => {
+            html += `<tr onclick="window.showDetails('${item.date}',${item.shift})">
+                <td>${item.date}</td><td>${item.shift}</td><td>${item.employee}</td>
+                <td>${item.completedCount}/${item.totalCount}</td>
+                <td>${item.isClosed ? '🔒' : '✓'}</td>
+            </tr>`;
+        });
+        html += '</table>';
+        cont.innerHTML = html;
+    };
+
+    window.showDetails = function(date, shiftNum) {
+        const shift = shiftNum === 1 ? 'shift1' : 'shift2';
+        const key = `${date}_${shift}`;
+        const record = shiftHistory[key];
+        if (!record) return;
+        
+        let html = `<h3>${date} | Смена ${shiftNum}</h3><p>${record.employee}</p>`;
+        
+        if (record.saves && record.saves.length > 0) {
+            html += `<p><small>Сохранений: ${record.saves.length}</small></p>`;
+        }
+        if (shiftClosed[key]) {
+            html += `<p><small>🔒 Смена закрыта</small></p>`;
+        }
+        
+        let byMachine = {};
+        
+        machines.forEach(m => {
+            m.points.forEach(p => {
+                if (!record.visiblePoints || !record.visiblePoints.includes(p.id)) return;
+                
+                if (!byMachine[m.name]) byMachine[m.name] = [];
+                
+                let status = '❌';
+                let details = '';
+                
+                if (p.period === 'pressure') {
+                    const inVal = record.checks?.[`${p.id}_in`] || '—';
+                    const outVal = record.checks?.[`${p.id}_out`] || '—';
+                    status = `${inVal}/${outVal} bar`;
+                    details = `вх:${inVal} вых:${outVal}`;
+                    
+                    let warnings = [];
+                    if (inVal && parseFloat(inVal) < 4.5) warnings.push("Давление на входе ниже нормы!");
+                    if (outVal && parseFloat(outVal) < 4.5) warnings.push("Давление на выходе ниже нормы!");
+                    if (warnings.length > 0) details += '\n⚠️ ' + warnings.join('\n⚠️ ');
+                } else if (record.completed.includes(p.id)) {
+                    status = '✅';
+                }
+                
+                let statusText = p.desc + ' — ' + status;
+                if (details) statusText += ` (${details})`;
+                
+                const comment = record.comments?.[p.id] || record.comments?.[`${p.id}_in`] || record.comments?.[`${p.id}_out`];
+                if (comment) statusText += ' 💬 ' + comment;
+                
+                byMachine[m.name].push(statusText);
+            });
+        });
+        
+        for (let [machine, ops] of Object.entries(byMachine)) {
+            const hoursKey = `${machine}_${shift}`;
+            const hoursValue = record.hours?.[hoursKey];
+            
+            html += `<div style="margin:15px 0;">`;
+            html += `<strong>${machine}${hoursValue ? ` [${hoursValue} н/ч]` : ''}</strong>`;
+            html += `<ul style="list-style-type:none; padding-left:10px;">`;
+            
+            ops.forEach(op => {
+                html += `<li>${op}</li>`;
+            });
+            
+            html += `</ul></div>`;
+        }
+        
+        const total = Object.values(byMachine).flat().length;
+        const completedTotal = record.completed.length;
+        
+        html += `<div><strong>Всего операций:</strong> ${completedTotal}/${total}</div>`;
+        
+        if (record.upcomingProcedures && record.upcomingProcedures.length > 0) {
+            html += `<div style="margin-top: 30px; padding: 20px; background: var(--upcoming-bg); border-radius: 20px; border: 2px dashed var(--upcoming-border);">`;
+            html += `<div style="font-size: 1.2rem; font-weight: 600; color: var(--upcoming-text); margin-bottom: 15px;">`;
+            html += `<i class="fas fa-calendar-alt"></i> Предстоящие процедуры (на момент смены)`;
+            html += `</div>`;
+            
+            let currentMachine = '';
+            record.upcomingProcedures.forEach(item => {
+                if (currentMachine !== item.machine) {
+                    if (currentMachine !== '') {
+                        html += `</div>`;
+                    }
+                    currentMachine = item.machine;
+                    html += `<div style="margin: 10px 0 5px 0;">`;
+                    html += `<div style="font-weight: 600; color: var(--text-color);">${item.machine}</div>`;
+                    html += `<div style="margin-left: 20px;">`;
+                }
+                
+                const startDateStr = item.startDate.toLocaleDateString('ru-RU', {day:'numeric', month:'numeric'});
+                let periodText = '';
+                switch(item.period) {
+                    case 'weekly': periodText = 'еженед.'; break;
+                    case 'biweekly': periodText = '14 дн.'; break;
+                    case 'monthly': periodText = 'мес.'; break;
+                }
+                
+                html += `<div style="display: flex; align-items: center; gap: 10px; padding: 5px 0; color: var(--upcoming-text);">`;
+                html += `<i class="far fa-clock"></i>`;
+                html += `<span>${item.point} (${periodText}) — должно начаться через ${item.daysUntil} дн. (${startDateStr})</span>`;
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+        }
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `<div class="modal-content">${html}<div class="modal-buttons">
+            <button class="btn" onclick="window.exportPdfmakeDetails('${date}',${shiftNum})">📄 PDF</button>
+            <button class="btn btn-danger" onclick="window.closeModal()">Закрыть</button>
+        </div></div>`;
+        document.body.appendChild(modal);
+        window.currentModal = modal;
+    };
+
+    window.exportPdfmakeDetails = function(date, shiftNum) {
+        const shift = shiftNum === 1 ? 'shift1' : 'shift2';
+        const key = `${date}_${shift}`;
+        const record = shiftHistory[key];
+        if (!record) return;
+        
+        const content = [];
+        content.push({ text: `${date} | Смена ${shiftNum}`, style: 'mainHeader' });
+        content.push({ text: record.employee, style: 'employee', margin: [0,5,0,15] });
+        
+        if (record.saves && record.saves.length > 0) {
+            content.push({ text: `Количество сохранений: ${record.saves.length}`, style: 'small', margin: [0,0,0,10] });
+        }
+        
+        const machinesData = {};
+        machines.forEach(m => {
+            const machinePoints = [];
+            let machineHoursText = '';
+            
+            const hoursKey = `${m.name}_${shift}`;
+            const hoursValue = record.hours?.[hoursKey];
+            if (hoursValue) {
+                machineHoursText = ` [${hoursValue} н/ч]`;
+            }
+            
+            m.points.forEach(p => {
+                if (!record.visiblePoints || !record.visiblePoints.includes(p.id)) return;
+                
+                let status = '❌';
+                let details = '';
+                let statusColor = null;
+                
+                if (p.period === 'pressure') {
+                    const inVal = record.checks?.[`${p.id}_in`] || '—';
+                    const outVal = record.checks?.[`${p.id}_out`] || '—';
+                    status = `${inVal}/${outVal} bar`;
+                    statusColor = '#000000';
+                } else if (record.completed.includes(p.id)) {
+                    status = '✅';
+                    statusColor = '#4CAF50';
+                } else {
+                    status = '❌';
+                    statusColor = '#f44336';
+                }
+                
+                const comment = record.comments?.[p.id] || record.comments?.[`${p.id}_in`] || record.comments?.[`${p.id}_out`];
+                
+                machinePoints.push({
+                    desc: p.desc,
+                    status: status,
+                    statusColor: statusColor,
+                    comment: comment || ''
+                });
+            });
+            
+            if (machinePoints.length > 0) {
+                machinesData[m.name + machineHoursText] = machinePoints;
+            }
+        });
+        
+        Object.entries(machinesData).forEach(([machineName, points]) => {
+            content.push({ text: machineName, style: 'machineHeader', margin: [0,10,0,5] });
+            
+            const tableBody = [];
+            tableBody.push([
+                { text: 'Операция', style: 'tableHeader' },
+                { text: 'Статус', style: 'tableHeader' },
+                { text: 'Комментарий', style: 'tableHeader' }
+            ]);
+            
+            points.forEach(p => {
+                const statusCell = p.statusColor === '#4CAF50' || p.statusColor === '#f44336'
+                    ? { text: '', fillColor: p.statusColor, alignment: 'center' }
+                    : { text: p.status, alignment: 'center' };
+                
+                tableBody.push([
+                    { text: p.desc },
+                    statusCell,
+                    { text: p.comment || '' }
+                ]);
+            });
+            
+            const totalInMachine = points.length;
+            const completedInMachine = points.filter(p => p.statusColor === '#4CAF50' || p.status === '✅').length;
+            
+            tableBody.push([
+                { text: `ИТОГО: Выполнено ${completedInMachine}/${totalInMachine}`, colSpan: 3, style: 'totalRow', alignment: 'right' },
+                {}, {}
+            ]);
+            
+            content.push({
+                table: {
+                    headerRows: 1,
+                    widths: ['*', 30, '*'],
+                    body: tableBody
+                },
+                layout: {
+                    fillColor: function(rowIndex, node, columnIndex) {
+                        if (rowIndex === 0) return '#2c3e50';
+                        if (node.table.body[rowIndex][0].text && 
+                            node.table.body[rowIndex][0].text.toString().startsWith('ИТОГО:')) return '#f5f5f5';
+                        return null;
+                    },
+                    hLineWidth: function(i, node) { return 0.5; },
+                    vLineWidth: function(i, node) { return 0.5; },
+                    hLineColor: function(i, node) { return '#ddd'; },
+                    vLineColor: function(i, node) { return '#ddd'; },
+                    paddingLeft: function(i, node) { return 8; },
+                    paddingRight: function(i, node) { return 8; },
+                    paddingTop: function(i, node) { return 6; },
+                    paddingBottom: function(i, node) { return 6; }
+                }
+            });
+            
+            content.push({ text: ' ', margin: [0,5,0,5] });
+        });
+        
+        const totalPoints = Object.values(machinesData).flat().length;
+        const completedPoints = Object.values(machinesData).flat().filter(p => p.statusColor === '#4CAF50' || p.status === '✅').length;
+        
+        content.push({ text: `ОБЩИЙ ИТОГ: Выполнено ${completedPoints}/${totalPoints}`, style: 'totalStats', margin: [0,10,0,0] });
+        
+        if (record.upcomingProcedures && record.upcomingProcedures.length > 0) {
+            content.push({ text: 'ПРЕДСТОЯЩИЕ ПРОЦЕДУРЫ (на момент смены)', style: 'upcomingHeader', margin: [0,20,0,10] });
+            
+            let currentMachine = '';
+            record.upcomingProcedures.forEach(item => {
+                if (currentMachine !== item.machine) {
+                    currentMachine = item.machine;
+                    content.push({ text: item.machine, style: 'machineHeader', margin: [0,5,0,2] });
+                }
+                
+                const startDateStr = item.startDate.toLocaleDateString('ru-RU', {day:'numeric', month:'numeric'});
+                let periodText = '';
+                switch(item.period) {
+                    case 'weekly': periodText = 'еженед.'; break;
+                    case 'biweekly': periodText = '14 дн.'; break;
+                    case 'monthly': periodText = 'мес.'; break;
+                }
+                
+                content.push({ 
+                    text: `   • ${item.point} (${periodText}) — через ${item.daysUntil} дн. (начнётся ${startDateStr})`,
+                    style: 'upcomingItem',
+                    margin: [10,2,0,2]
+                });
+            });
+        }
+        
+        const docDefinition = {
+            pageSize: 'A4',
+            pageMargins: [40, 60, 40, 60],
+            header: { text: 'ДЕТАЛЬНЫЙ ОТЧЁТ ПО СМЕНЕ', alignment: 'center', fontSize: 16, margin: [0,20,0,10] },
+            footer: (pg, ct) => ({ text: `Страница ${pg}`, alignment: 'center', fontSize: 8 }),
+            content: content,
+            styles: {
+                mainHeader: { fontSize: 18, bold: true, margin: [0,0,0,10] },
+                employee: { fontSize: 12, italics: true, margin: [0,0,0,10] },
+                machineHeader: { fontSize: 14, bold: true, color: '#003b70', margin: [0,10,0,5] },
+                tableHeader: { fontSize: 10, bold: true, color: 'white', fillColor: '#2c3e50' },
+                totalRow: { fontSize: 10, bold: true, fillColor: '#f5f5f5' },
+                totalStats: { fontSize: 12, bold: true, margin: [0,20,0,0] },
+                upcomingHeader: { fontSize: 14, bold: true, color: '#f39c12', margin: [0,10,0,5] },
+                upcomingItem: { fontSize: 10, color: '#8a6d3b', margin: [10,2,0,2] },
+                small: { fontSize: 10, italics: true, color: '#666' }
+            }
+        };
+        
+        pdfMake.createPdf(docDefinition).download(`detail_${date}_smena${shiftNum}.pdf`);
+    };
+
+    // ---------- JSON ЭКСПОРТ ----------
+    window.exportToJSON = function() {
+        const data = {
+            version: "1.0",
+            exportDate: new Date().toISOString(),
+            shifts: shiftHistory,
+            lastCompleted: lastCompleted,
+            shiftClosed: shiftClosed
+        };
+
+        const jsonStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const existingData = JSON.parse(e.target.result);
+                    
+                    const mergedData = {
+                        version: "1.0",
+                        exportDate: new Date().toISOString(),
+                        shifts: { ...(existingData.shifts || {}), ...shiftHistory },
+                        lastCompleted: { ...(existingData.lastCompleted || {}), ...lastCompleted },
+                        shiftClosed: { ...(existingData.shiftClosed || {}), ...shiftClosed }
+                    };
+                    
+                    const mergedJson = JSON.stringify(mergedData, null, 2);
+                    const mergedBlob = new Blob([mergedJson], { type: 'application/json' });
+                    const url = URL.createObjectURL(mergedBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = file.name;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    
+                    alert(`Данные добавлены в файл. Всего смен: ${Object.keys(mergedData.shifts).length}`);
+                } catch (error) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `lubrication_${new Date().toISOString().slice(0,10)}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+            };
+            reader.readAsText(file);
+        };
+        
+        input.click();
+    };
+
+    // ---------- JSON ИМПОРТ ----------
+    window.importFromJSON = function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (importedData.version !== "1.0") {
+                        if (!confirm('Файл может быть несовместим. Загрузить всё равно?')) {
+                            document.getElementById('loadingOverlay').style.display = 'none';
+                            return;
+                        }
+                    }
+                    
+                    shiftHistory = importedData.shifts || {};
+                    lastCompleted = importedData.lastCompleted || {};
+                    shiftClosed = importedData.shiftClosed || {};
+                    
+                    saveStorage();
+                    
+                    if (selectedDateStr) renderDetailPanel(selectedDateStr);
+                    renderCalendar();
+                    window.loadHistory();
+                    
+                    alert(`Загружено ${Object.keys(shiftHistory).length} смен`);
+                } catch (error) {
+                    alert('Ошибка при загрузке файла');
+                }
+                document.getElementById('loadingOverlay').style.display = 'none';
+            };
+            reader.readAsText(file);
+        };
+        
+        input.click();
+    };
+
+    // ---------- ОЧИСТКА ИСТОРИИ ----------
+    window.clearHistory = function() {
+        if (confirm('Вы уверены, что хотите очистить всю историю? Это действие нельзя отменить.')) {
+            shiftHistory = {};
+            lastCompleted = {};
+            tempShiftState = {};
+            shiftClosed = {};
+            machineHours = {};
+            saveStorage();
+            
+            // Уведомляем портал об очистке
+            localStorage.setItem('lubrication_data_updated', Date.now().toString());
+            
+            window.loadHistory();
+            renderCalendar();
+            if (selectedDateStr) renderDetailPanel(selectedDateStr);
+            alert('История успешно очищена');
+        }
+    };
+
+    window.closeModal = function() {
+        if (window.currentModal) document.body.removeChild(window.currentModal);
+    };
+
+    function updateFilters() {
+        const empSel1 = document.getElementById('historyEmployeeFilter');
+        let options = '<option value="all">Все сотрудники</option>';
+        employees.forEach(e => options += `<option value="${e}">${e}</option>`);
+        if (empSel1) empSel1.innerHTML = options;
+    }
+
+    window.selectInitialJSONFile = function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (importedData.shifts) {
+                        shiftHistory = importedData.shifts || {};
+                        lastCompleted = importedData.lastCompleted || {};
+                        shiftClosed = importedData.shiftClosed || {};
+                        
+                        saveStorage();
+                        
+                        if (selectedDateStr) renderDetailPanel(selectedDateStr);
+                        renderCalendar();
+                        window.loadHistory();
+                        
+                        alert(`Данные успешно загружены. Всего смен: ${Object.keys(shiftHistory).length}`);
+                        closeLoadDataModal();
+                    } else {
+                        alert('Неверный формат файла. Ожидается файл с историей смен (содержащий поле "shifts").');
+                    }
+                } catch (error) {
+                    console.error('Ошибка загрузки:', error);
+                    alert('Ошибка при загрузке файла: ' + error.message);
+                }
+                document.getElementById('loadingOverlay').style.display = 'none';
+            };
+            reader.readAsText(file);
+        };
+        
+        input.click();
+    };
+
+    // Переопределяем обработчик клика на вкладки
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            const tab = btn.dataset.tab;
+            if (tab === 'calendar') {
+                document.getElementById('tabCalendar').classList.add('active');
+            }
+            if (tab === 'history') {
+                document.getElementById('tabHistory').classList.add('active');
+                window.loadHistory();
+            }
+        });
+    });
+
+    // Инициализация
+    loadEmployees();
+    loadStorage();
+    renderCalendar();
+    updateFilters();
+    
+    setTimeout(() => {
+        if (Object.keys(shiftHistory).length === 0) {
+            showLoadDataModal();
+        }
+    }, 500);
+    
+    document.getElementById('prevMonthBtn').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+    document.getElementById('nextMonthBtn').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+    document.getElementById('todayBtn').addEventListener('click', () => {
+        currentDate = new Date();
+        renderCalendar();
+        selectedDateStr = formatYMD(new Date());
+        renderDetailPanel(selectedDateStr);
+    });
+})();
+</script>
+</body>
+</html>
