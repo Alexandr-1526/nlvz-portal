@@ -1,0 +1,6123 @@
+{
+  "version": "1.0",
+  "timestamp": 1773833287021,
+  "employees": [
+    "Майстренко Александр Александрович. Сервисный инженер",
+    "Токалов Антон Геннадьевич, старший наладчик оборудования",
+    "Чевордаев Сергей Александрович, старший наладчик оборудования",
+    "Гец Владислав Олегович, старший наладчик оборудования",
+    "Смольянинов Игорь Алексеевич, старший наладчик оборудования"
+  ],
+  "lubricationData": {
+    "2026-03-12_shift1": {
+      "employee": "Токалов Антон Геннадьевич, старший наладчик оборудования",
+      "completed": [
+        "depal_left",
+        "depal_right",
+        "depal_chain"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {
+        "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384_shift1": "1"
+      },
+      "saves": [
+        {
+          "timestamp": "2026-03-12T10:26:28.990Z"
+        }
+      ],
+      "visiblePoints": [
+        "depal_left",
+        "depal_right",
+        "depal_chain",
+        "depal_bearings",
+        "palko_chain_d1",
+        "palko_bearings_d1",
+        "fill_distributor",
+        "fill_red",
+        "fill_air",
+        "fill_yellow",
+        "fill_screw",
+        "fill_mounts",
+        "fill_spindles",
+        "fill_fingers",
+        "fill_shafts",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "capper_stands",
+        "feeder_linear",
+        "feeder_bearings",
+        "pasteurizer_drive",
+        "label_red",
+        "label_yellow",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "multico_divider_chain",
+        "multico_bearings",
+        "pallet_auto_level",
+        "pallet_auto_refill",
+        "palko_chain_d2",
+        "palko_bearings_d2",
+        "synco_chain",
+        "synco_bearings"
+      ]
+    },
+    "2026-03-12_shift2": {
+      "employee": "Гец Владислав Олегович, старший наладчик оборудования",
+      "completed": [
+        "depal_bearings",
+        "palko_chain_d1",
+        "palko_bearings_d1",
+        "fill_distributor",
+        "fill_red",
+        "fill_air",
+        "fill_yellow",
+        "fill_screw",
+        "fill_mounts",
+        "fill_spindles",
+        "fill_fingers"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {
+        "Транспортёр поддонов Palko S KR57 D 02_shift2": "1",
+        "Паллетизатор MODULPAL 2AС KR63-617_shift2": "1",
+        "Блок розлива VOLUMETIC VOC K223-246_shift2": "1",
+        "Укупор банок Ferrum F708G C10-809400_shift2": ""
+      },
+      "saves": [
+        {
+          "timestamp": "2026-03-12T10:27:19.838Z"
+        },
+        {
+          "timestamp": "2026-03-12T10:27:25.022Z"
+        },
+        {
+          "timestamp": "2026-03-12T10:27:31.518Z"
+        },
+        {
+          "timestamp": "2026-03-12T10:27:46.854Z"
+        }
+      ],
+      "visiblePoints": [
+        "depal_bearings",
+        "palko_chain_d1",
+        "palko_bearings_d1",
+        "fill_distributor",
+        "fill_red",
+        "fill_air",
+        "fill_yellow",
+        "fill_screw",
+        "fill_mounts",
+        "fill_spindles",
+        "fill_fingers",
+        "fill_shafts",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "capper_stands",
+        "feeder_linear",
+        "feeder_bearings",
+        "pasteurizer_drive",
+        "label_red",
+        "label_yellow",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "multico_divider_chain",
+        "multico_bearings",
+        "pallet_auto_level",
+        "pallet_auto_refill",
+        "palko_chain_d2",
+        "palko_bearings_d2",
+        "synco_chain",
+        "synco_bearings"
+      ]
+    },
+    "2026-03-13_shift1": {
+      "employee": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_shafts",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_stands",
+        "feeder_linear",
+        "feeder_bearings",
+        "pasteurizer_drive",
+        "label_red",
+        "label_yellow",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "multico_divider_chain",
+        "multico_bearings",
+        "pallet_auto_level",
+        "pallet_auto_refill",
+        "palko_chain_d2",
+        "palko_bearings_d2",
+        "synco_chain",
+        "synco_bearings"
+      ],
+      "checks": {
+        "capper_pressure_in": "5",
+        "capper_pressure_out": "5"
+      },
+      "comments": {},
+      "hours": {
+        "Блок розлива VOLUMETIC VOC K223-246_shift1": "1",
+        "Укупор банок Ferrum F708G C10-809400_shift1": "1",
+        "Узел подачи крышки CSW Mini-Multifeeder_shift1": "1",
+        "Транспортёр ёмкостей SYNCO S K995RYS_shift1": "1",
+        "Пастеризатор LINAFLEX K578-031_shift1": "5",
+        "Этикетировочная машина AUTOCOL K747-965_shift1": "5",
+        "Упаковщик VARIOPAC PRO KR96-397_shift1": "5",
+        "Транспортёр упаковки MULTICO S KR67C54_shift1": "5",
+        "Паллетизатор MODULPAL 2AС KR63-617_shift1": "5",
+        "Транспортёр поддонов Palko S KR57 D 02_shift1": "5"
+      },
+      "saves": [
+        {
+          "timestamp": "2026-03-12T10:35:06.526Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_shafts",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "capper_stands",
+        "feeder_linear",
+        "feeder_bearings",
+        "pasteurizer_drive",
+        "label_red",
+        "label_yellow",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "multico_divider_chain",
+        "multico_bearings",
+        "pallet_auto_level",
+        "pallet_auto_refill",
+        "palko_chain_d2",
+        "palko_bearings_d2",
+        "synco_chain",
+        "synco_bearings"
+      ]
+    },
+    "2026-03-13_shift2": {
+      "employee": "Токалов Антон Геннадьевич, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_tunnel_level",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level"
+      ],
+      "checks": {
+        "capper_pressure_in": "5",
+        "capper_pressure_out": "5"
+      },
+      "comments": {},
+      "hours": {
+        "Блок розлива VOLUMETIC VOC K223-246_shift2": "1",
+        "Укупор банок Ferrum F708G C10-809400_shift2": "1",
+        "Узел подачи крышки CSW Mini-Multifeeder_shift2": "1",
+        "Транспортёр ёмкостей SYNCO S K995RYS_shift2": "1",
+        "Пастеризатор LINAFLEX K578-031_shift2": "1",
+        "Этикетировочная машина AUTOCOL K747-965_shift2": "1",
+        "Упаковщик VARIOPAC PRO KR96-397_shift2": "1",
+        "Транспортёр упаковки MULTICO S KR67C54_shift2": "1",
+        "Паллетизатор MODULPAL 2AС KR63-617_shift2": "1"
+      },
+      "saves": [
+        {
+          "timestamp": "2026-03-12T10:36:45.326Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ]
+    },
+    "2026-03-14_shift1": {
+      "employee": "Майстренко Александр Александрович. Сервисный инженер",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-12T14:47:35.597Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ]
+    },
+    "2026-03-14_shift2": {
+      "employee": "Чевордаев Сергей Александрович, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:22:25.264Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": []
+    },
+    "2026-03-15_shift1": {
+      "employee": "Гец Владислав Олегович, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:34:09.624Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Распределитель воздуха эл.шкаф верх",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Привод разделительного шнека",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с лева",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с права",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        }
+      ]
+    },
+    "2026-03-15_shift2": {
+      "employee": "Чевордаев Сергей Александрович, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:38:59.385Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Распределитель воздуха эл.шкаф верх",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Привод разделительного шнека",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с лева",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с права",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 2
+        }
+      ]
+    },
+    "2026-03-16_shift1": {
+      "employee": "Чевордаев Сергей Александрович, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:44:54.232Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Распределитель воздуха эл.шкаф верх",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Привод разделительного шнека",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с лева",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с права",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Этикетировочная машина AUTOCOL K747-965",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-17T21:00:00.000Z",
+          "daysUntil": 2
+        }
+      ]
+    },
+    "2026-03-16_shift2": {
+      "employee": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:45:22.768Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Распределитель воздуха эл.шкаф верх",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Блок розлива VOLUMETIC VOC K223-246",
+          "point": "Привод разделительного шнека",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с лева",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384",
+          "point": "Планка пресс-маслёнки с права",
+          "period": "weekly",
+          "startDate": "2026-03-16T21:00:00.000Z",
+          "daysUntil": 1
+        },
+        {
+          "machine": "Этикетировочная машина AUTOCOL K747-965",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-17T21:00:00.000Z",
+          "daysUntil": 2
+        }
+      ]
+    },
+    "2026-03-17_shift1": {
+      "employee": "Майстренко Александр Александрович. Сервисный инженер",
+      "completed": [
+        "depal_left",
+        "depal_right",
+        "fill_distributor",
+        "fill_red",
+        "fill_air",
+        "fill_yellow",
+        "fill_screw",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "checks": {
+        "capper_pressure_in": "5",
+        "capper_pressure_out": "5"
+      },
+      "comments": {},
+      "hours": {
+        "Укупор банок Ferrum F708G C10-809400_shift1": "1",
+        "Узел подачи крышки CSW Mini-Multifeeder_shift1": "1",
+        "Транспортёр ёмкостей SYNCO S K995RYS_shift1": "1",
+        "Блок розлива VOLUMETIC VOC K223-246_shift1": "1",
+        "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384_shift1": "1",
+        "Транспортёр поддонов Palko S KR57 D 01_shift1": "1",
+        "Пастеризатор LINAFLEX K578-031_shift1": "1",
+        "Этикетировочная машина AUTOCOL K747-965_shift1": "1",
+        "Упаковщик VARIOPAC PRO KR96-397_shift1": "1",
+        "Транспортёр упаковки MULTICO S KR67C54_shift1": "1",
+        "Паллетизатор MODULPAL 2AС KR63-617_shift1": "1",
+        "Транспортёр поддонов Palko S KR57 D 02_shift1": "1"
+      },
+      "saves": [
+        {
+          "timestamp": "2026-03-17T17:47:02.857Z"
+        }
+      ],
+      "visiblePoints": [
+        "depal_left",
+        "depal_right",
+        "fill_distributor",
+        "fill_red",
+        "fill_air",
+        "fill_yellow",
+        "fill_screw",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Этикетировочная машина AUTOCOL K747-965",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-17T21:00:00.000Z",
+          "daysUntil": 1
+        }
+      ]
+    }
+  },
+  "lastCompleted": {
+    "depal_left": "2026-03-17",
+    "depal_right": "2026-03-17",
+    "depal_chain": "2026-03-12",
+    "depal_bearings": "2026-03-12",
+    "palko_chain_d1": "2026-03-12",
+    "palko_bearings_d1": "2026-03-12",
+    "fill_distributor": "2026-03-17",
+    "fill_red": "2026-03-17",
+    "fill_air": "2026-03-17",
+    "fill_yellow": "2026-03-17",
+    "fill_screw": "2026-03-17",
+    "fill_mounts": "2026-03-12",
+    "fill_spindles": "2026-03-12",
+    "fill_fingers": "2026-03-12",
+    "fill_shafts": "2026-03-13",
+    "fill_cip": "2026-03-17",
+    "capper_level": "2026-03-17",
+    "capper_refill": "2026-03-17",
+    "capper_stands": "2026-03-13",
+    "feeder_linear": "2026-03-13",
+    "feeder_bearings": "2026-03-13",
+    "pasteurizer_drive": "2026-03-17",
+    "label_red": "2026-03-17",
+    "label_yellow": "2026-03-13",
+    "wrapper_former_level": "2026-03-17",
+    "wrapper_former_refill": "2026-03-17",
+    "wrapper_tunnel_level": "2026-03-17",
+    "wrapper_tunnel_refill": "2026-03-17",
+    "multico_divider": "2026-03-17",
+    "multico_rods": "2026-03-17",
+    "multico_divider_chain": "2026-03-13",
+    "multico_bearings": "2026-03-13",
+    "pallet_auto_level": "2026-03-17",
+    "pallet_auto_refill": "2026-03-17",
+    "palko_chain_d2": "2026-03-13",
+    "palko_bearings_d2": "2026-03-13",
+    "synco_chain": "2026-03-13",
+    "synco_bearings": "2026-03-13"
+  },
+  "shiftClosed": {
+    "2026-03-12_shift1": true,
+    "2026-03-12_shift2": true,
+    "2026-03-13_shift1": true,
+    "2026-03-13_shift2": true,
+    "2026-03-14_shift1": true,
+    "2026-03-14_shift2": true,
+    "2026-03-15_shift1": true,
+    "2026-03-15_shift2": true,
+    "2026-03-16_shift1": true,
+    "2026-03-16_shift2": true,
+    "2026-03-17_shift1": true
+  },
+  "servoData": [
+    {
+      "id": 1773815746227,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-18T06:35:46.227Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "copiedFrom": 1773769420481
+    },
+    {
+      "id": 1773814855347,
+      "date": "2025-12-29",
+      "time": "00:25",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2026-03-18T06:20:55.347Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "140",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "242",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "129",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "174",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "188",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "210",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "165",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "192",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "168",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773814293923,
+      "date": "2025-12-29",
+      "time": "00:25",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2026-03-18T06:11:33.923Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "140",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "242",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "129",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "174",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "188",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "210",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "165",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "192",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "168",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "copiedFrom": 1766991493499
+    },
+    {
+      "id": 1773771502121,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T18:18:22.121Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773771337921,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T18:15:37.921Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "copiedFrom": 1773769800608
+    },
+    {
+      "id": 1773771286353,
+      "date": "2025-12-29",
+      "time": "00:25",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2026-03-17T18:14:46.353Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "140",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "242",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "129",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "174",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "188",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "210",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "165",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "192",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "168",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773770776729,
+      "date": "2025-12-29",
+      "time": "00:25",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2026-03-17T18:06:16.729Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "140",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "242",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "129",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "174",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "188",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "210",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "165",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "192",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "168",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "copiedFrom": 1766991493499
+    },
+    {
+      "id": 1773770722314,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T18:05:22.314Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773769800608,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T17:50:00.609Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773769737160,
+      "date": "2026-03-17",
+      "time": "20:48",
+      "inspector": "Майстренко Александр Александрович. Сервисный инженер",
+      "created": "2026-03-17T17:48:57.161Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "1",
+          "current": "1",
+          "temperature": "1",
+          "hours": "1",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "1",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773769671961,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T17:47:51.962Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1773769420481,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-03-17T17:43:40.482Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ]
+    },
+    {
+      "id": 1771063949902,
+      "date": "2026-02-14",
+      "time": "13:11",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-02-14T10:12:29.896Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-02-14T10:12:29.902Z"
+    },
+    {
+      "id": 1770119452263,
+      "date": "2026-02-03",
+      "time": "14:50",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-02-03T11:50:52.260Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "",
+          "current": "",
+          "temperature": "",
+          "hours": "",
+          "serial": "",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-02-03T11:50:52.263Z"
+    },
+    {
+      "id": 1768840253769,
+      "date": "2026-01-19",
+      "time": "19:18",
+      "inspector": "Гец Владислав Олегович , старший наладчик оборудования",
+      "created": "2026-01-19T16:30:53.768Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "195",
+          "temperature": "37",
+          "hours": "20705",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "262",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "191",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "200",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "203",
+          "temperature": "35",
+          "hours": "20705",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "177",
+          "temperature": "38",
+          "hours": "20705",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "247",
+          "temperature": "37",
+          "hours": "20705",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "237",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "257",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "233",
+          "temperature": "37",
+          "hours": "20705",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "185",
+          "temperature": "39",
+          "hours": "20705",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "250",
+          "temperature": "35",
+          "hours": "20705",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "172",
+          "temperature": "38",
+          "hours": "20705",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "259",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "191",
+          "temperature": "38",
+          "hours": "20705",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "202",
+          "temperature": "37",
+          "hours": "20705",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "194",
+          "temperature": "35",
+          "hours": "20705",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "240",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "37",
+          "hours": "20705",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "39",
+          "hours": "20705",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "189",
+          "temperature": "36",
+          "hours": "20705",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-19T16:30:53.769Z"
+    },
+    {
+      "id": 1768623066721,
+      "date": "2026-01-17",
+      "time": "06:55",
+      "inspector": "Гец Владислав Олегович , старший наладчик оборудования",
+      "created": "2026-01-17T04:11:06.720Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "134",
+          "temperature": "42",
+          "hours": "20648",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "302",
+          "current": "143",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "302",
+          "current": "160",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "157",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "302",
+          "current": "160",
+          "temperature": "39",
+          "hours": "20648",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "171",
+          "temperature": "42",
+          "hours": "20648",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "302",
+          "current": "182",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "299",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "189",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "201",
+          "temperature": "43",
+          "hours": "20648",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "221",
+          "temperature": "42",
+          "hours": "20648",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "209",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "171",
+          "temperature": "43",
+          "hours": "20648",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "303",
+          "current": "201",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "238",
+          "temperature": "39",
+          "hours": "20648",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "251",
+          "temperature": "40",
+          "hours": "20648",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "196",
+          "temperature": "43",
+          "hours": "20648",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "192",
+          "temperature": "41",
+          "hours": "20648",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-17T04:11:06.721Z"
+    },
+    {
+      "id": 1768535459377,
+      "date": "2026-01-16",
+      "time": "06:38",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2026-01-16T03:50:59.369Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "183",
+          "temperature": "37",
+          "hours": "20625",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "173",
+          "temperature": "36",
+          "hours": "20625",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "161",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "183",
+          "temperature": "34",
+          "hours": "20625",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "301",
+          "current": "221",
+          "temperature": "37",
+          "hours": "20625",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "163",
+          "temperature": "36",
+          "hours": "20625",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "207",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "187",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "155",
+          "temperature": "36",
+          "hours": "20625",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "196",
+          "temperature": "38",
+          "hours": "20625",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "226",
+          "temperature": "34",
+          "hours": "20625",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "37",
+          "hours": "20625",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "209",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "301",
+          "current": "213",
+          "temperature": "37",
+          "hours": "20625",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "199",
+          "temperature": "36",
+          "hours": "20625",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "161",
+          "temperature": "34",
+          "hours": "20625",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "120",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "167",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "193",
+          "temperature": "37",
+          "hours": "20625",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "162",
+          "temperature": "35",
+          "hours": "20625",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-16T03:50:59.377Z"
+    },
+    {
+      "id": 1768493477900,
+      "date": "2026-01-15",
+      "time": "18:50",
+      "inspector": "Гец Владислав Олегович , старший наладчик оборудования",
+      "created": "2026-01-15T16:11:17.900Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "219",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "302",
+          "current": "187",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "302",
+          "current": "237",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "181",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "302",
+          "current": "172",
+          "temperature": "38",
+          "hours": "20614",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "230",
+          "temperature": "41",
+          "hours": "20614",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "302",
+          "current": "205",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "226",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "238",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "199",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "198",
+          "temperature": "42",
+          "hours": "20614",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "167",
+          "temperature": "38",
+          "hours": "20614",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "194",
+          "temperature": "41",
+          "hours": "20614",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "187",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "234",
+          "temperature": "41",
+          "hours": "20614",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "303",
+          "current": "175",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "226",
+          "temperature": "38",
+          "hours": "20614",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "199",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "167",
+          "temperature": "40",
+          "hours": "20614",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "234",
+          "temperature": "42",
+          "hours": "20614",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "197",
+          "temperature": "39",
+          "hours": "20614",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-15T16:11:17.900Z"
+    },
+    {
+      "id": 1768317336320,
+      "date": "2026-01-13",
+      "time": "18:14",
+      "inspector": "Токалов Антон Геннадьевич,  старший наладчик оборудования",
+      "created": "2026-01-13T15:15:36.319Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "163",
+          "temperature": "41",
+          "hours": "20564",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "302",
+          "current": "189",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "238",
+          "temperature": "39",
+          "hours": "20564",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "302",
+          "current": "197",
+          "temperature": "38",
+          "hours": "20564",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "191",
+          "temperature": "42",
+          "hours": "20564",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "302",
+          "current": "230",
+          "temperature": "41",
+          "hours": "20564",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "225",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "191",
+          "temperature": "39",
+          "hours": "20564",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "204",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "302",
+          "current": "201",
+          "temperature": "43",
+          "hours": "20564",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "286",
+          "temperature": "39",
+          "hours": "20564",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "205",
+          "temperature": "41",
+          "hours": "20564",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "303",
+          "current": "181",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "193",
+          "temperature": "42",
+          "hours": "20564",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "244",
+          "temperature": "41",
+          "hours": "20564",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "198",
+          "temperature": "39",
+          "hours": "20564",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "253",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "279",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "182",
+          "temperature": "42",
+          "hours": "20564",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "202",
+          "temperature": "40",
+          "hours": "20564",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-13T15:15:36.320Z"
+    },
+    {
+      "id": 1768232449226,
+      "date": "2026-01-12",
+      "time": "18:29",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2026-01-12T15:40:49.225Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "127",
+          "temperature": "39",
+          "hours": "20543",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "352",
+          "temperature": "37",
+          "hours": "20543",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "195",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "122",
+          "temperature": "37",
+          "hours": "20543",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "113",
+          "temperature": "36",
+          "hours": "20543",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "108",
+          "temperature": "39",
+          "hours": "20543",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "153",
+          "temperature": "39",
+          "hours": "20543",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "126",
+          "temperature": "37",
+          "hours": "20543",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "120",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "302",
+          "current": "187",
+          "temperature": "41",
+          "hours": "20543",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "133",
+          "temperature": "37",
+          "hours": "20543",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "138",
+          "temperature": "39",
+          "hours": "20543",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "303",
+          "current": "197",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "170",
+          "temperature": "40",
+          "hours": "20543",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "253",
+          "temperature": "36",
+          "hours": "20543",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "321",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "183",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "40",
+          "hours": "20543",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "284",
+          "temperature": "38",
+          "hours": "20543",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2026-01-12T15:40:49.226Z"
+    },
+    {
+      "id": 1767066407844,
+      "date": "2025-12-30",
+      "time": "06:46",
+      "inspector": "Токалов Антон Геннадьевич,  старший наладчик оборудования",
+      "created": "2025-12-30T03:46:47.843Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "250",
+          "temperature": "36",
+          "hours": "20486",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "302",
+          "current": "288",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "302",
+          "current": "181",
+          "temperature": "36",
+          "hours": "20486",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "203",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "302",
+          "current": "200",
+          "temperature": "34",
+          "hours": "20486",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "286",
+          "temperature": "37",
+          "hours": "20486",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "302",
+          "current": "191",
+          "temperature": "36",
+          "hours": "20486",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "215",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "254",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "343",
+          "temperature": "36",
+          "hours": "20486",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "302",
+          "current": "257",
+          "temperature": "38",
+          "hours": "20486",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "239",
+          "temperature": "34",
+          "hours": "20486",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "221",
+          "temperature": "37",
+          "hours": "20486",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "191",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "206",
+          "temperature": "37",
+          "hours": "20486",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "251",
+          "temperature": "36",
+          "hours": "20486",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "260",
+          "temperature": "34",
+          "hours": "20486",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "194",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "225",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "266",
+          "temperature": "37",
+          "hours": "20486",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "2010",
+          "temperature": "35",
+          "hours": "20486",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2025-12-30T03:46:47.844Z"
+    },
+    {
+      "id": 1767041838117,
+      "date": "2025-12-29",
+      "time": "23:57",
+      "inspector": "Токалов Антон Геннадьевич,  старший наладчик оборудования",
+      "created": "2025-12-29T20:57:18.109Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "198",
+          "temperature": "34",
+          "hours": "20480",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "199",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "219",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "258",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "189",
+          "temperature": "31",
+          "hours": "20480",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "301",
+          "current": "195",
+          "temperature": "34",
+          "hours": "20480",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "33",
+          "hours": "20480",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "206",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "244",
+          "temperature": "33",
+          "hours": "20480",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "279",
+          "temperature": "35",
+          "hours": "20480",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "219",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "216",
+          "temperature": "34",
+          "hours": "20480",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "185",
+          "temperature": "33",
+          "hours": "20480",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "301",
+          "current": "221",
+          "temperature": "35",
+          "hours": "20480",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20480",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "189",
+          "temperature": "31",
+          "hours": "20480",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "302",
+          "current": "180",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "216",
+          "temperature": "33",
+          "hours": "20480",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "214",
+          "temperature": "34",
+          "hours": "20480",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "189",
+          "temperature": "32",
+          "hours": "20480",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2025-12-29T20:57:18.117Z"
+    },
+    {
+      "id": 1767019649568,
+      "date": "2025-12-29",
+      "time": "17:30",
+      "inspector": "Смольянинов Игорь Алексеевич, старший наладчик оборудования",
+      "created": "2025-12-29T14:47:29.560Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "302",
+          "current": "291",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "211",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "251",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "301",
+          "current": "256",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "264",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "261",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "253",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "301",
+          "current": "207",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "301",
+          "current": "246",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "299",
+          "temperature": "36",
+          "hours": "20474",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "301",
+          "current": "224",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "301",
+          "current": "234",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "220",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "211",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "34",
+          "hours": "20474",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "301",
+          "current": "231",
+          "temperature": "32",
+          "hours": "20474",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "301",
+          "current": "240",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "301",
+          "current": "222",
+          "temperature": "35",
+          "hours": "20474",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "301",
+          "current": "236",
+          "temperature": "33",
+          "hours": "20474",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2025-12-29T14:47:29.568Z"
+    },
+    {
+      "id": 1766991493499,
+      "date": "2025-12-29",
+      "time": "00:25",
+      "inspector": "Чевордаев Сергей Александрович,  старший наладчик оборудования",
+      "created": "2025-12-29T06:58:13.499Z",
+      "servos": [
+        {
+          "number": 1,
+          "voltage": "301",
+          "current": "140",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "505220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 2,
+          "voltage": "301",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 3,
+          "voltage": "301",
+          "current": "197",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "503920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 4,
+          "voltage": "302",
+          "current": "224",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506220",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 5,
+          "voltage": "301",
+          "current": "242",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 6,
+          "voltage": "302",
+          "current": "186",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506420",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 7,
+          "voltage": "301",
+          "current": "129",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506720",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 8,
+          "voltage": "302",
+          "current": "174",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 9,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506820",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 10,
+          "voltage": "302",
+          "current": "188",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "506020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 11,
+          "voltage": "301",
+          "current": "248",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "506620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 12,
+          "voltage": "302",
+          "current": "210",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "506520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 13,
+          "voltage": "302",
+          "current": "176",
+          "temperature": "38",
+          "hours": "20457",
+          "serial": "506120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 14,
+          "voltage": "302",
+          "current": "227",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 15,
+          "voltage": "302",
+          "current": "147",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "505020",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 16,
+          "voltage": "302",
+          "current": "208",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505120",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 17,
+          "voltage": "302",
+          "current": "165",
+          "temperature": "35",
+          "hours": "20457",
+          "serial": "505320",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 18,
+          "voltage": "301",
+          "current": "192",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505520",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 19,
+          "voltage": "302",
+          "current": "168",
+          "temperature": "37",
+          "hours": "20457",
+          "serial": "505620",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 20,
+          "voltage": "302",
+          "current": "213",
+          "temperature": "39",
+          "hours": "20457",
+          "serial": "504920",
+          "notes": "",
+          "status": "normal"
+        },
+        {
+          "number": 21,
+          "voltage": "302",
+          "current": "184",
+          "temperature": "36",
+          "hours": "20457",
+          "serial": "505720",
+          "notes": "",
+          "status": "normal"
+        }
+      ],
+      "lastModified": "2025-12-29T06:58:13.499Z"
+    }
+  ]
+}
