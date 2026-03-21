@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": 1773833287021,
+  "timestamp": 1774114651458,
   "employees": [
     "Майстренко Александр Александрович. Сервисный инженер",
     "Токалов Антон Геннадьевич, старший наладчик оборудования",
@@ -791,6 +791,50 @@
           "daysUntil": 1
         }
       ]
+    },
+    "2026-03-17_shift2": {
+      "employee": "Чевордаев Сергей Александрович, старший наладчик оборудования",
+      "completed": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level"
+      ],
+      "checks": {},
+      "comments": {},
+      "hours": {},
+      "saves": [
+        {
+          "timestamp": "2026-03-21T17:28:22.362Z"
+        }
+      ],
+      "visiblePoints": [
+        "fill_distributor",
+        "fill_red",
+        "fill_cip",
+        "capper_level",
+        "capper_refill",
+        "capper_pressure",
+        "pasteurizer_drive",
+        "label_red",
+        "wrapper_former_level",
+        "wrapper_former_refill",
+        "wrapper_tunnel_level",
+        "wrapper_tunnel_refill",
+        "multico_divider",
+        "multico_rods",
+        "pallet_auto_level",
+        "pallet_auto_refill"
+      ],
+      "upcomingProcedures": [
+        {
+          "machine": "Этикетировочная машина AUTOCOL K747-965",
+          "point": "Планка пресс-маслёнки желтые",
+          "period": "weekly",
+          "startDate": "2026-03-17T21:00:00.000Z",
+          "daysUntil": 1
+        }
+      ]
     }
   },
   "lastCompleted": {
@@ -844,7 +888,8 @@
     "2026-03-15_shift2": true,
     "2026-03-16_shift1": true,
     "2026-03-16_shift2": true,
-    "2026-03-17_shift1": true
+    "2026-03-17_shift1": true,
+    "2026-03-17_shift2": true
   },
   "servoData": [
     {
