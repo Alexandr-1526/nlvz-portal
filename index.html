@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>НЛВЗ · Панель инструментов</title>
+    <title>НЛВЗ · Единый портал</title>
     <!-- Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Библиотеки для PDF (оставляем для будущего использования) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -104,401 +103,20 @@
             gap: 12px;
         }
 
-        /* Вкладки */
-        .tabs-container {
+        /* Панель навигации */
+        .nav-panel {
             background: #2d3e4f;
-            border-radius: 20px 20px 0 0;
-            overflow: hidden;
-            border: 1px solid #4e6b81;
-            border-bottom: none;
-        }
-
-        .tabs-header {
-            display: flex;
-            background: #1f2e3a;
-            border-bottom: 2px solid #3f5568;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 18px 30px;
-            background: none;
-            border: none;
-            color: #b0c7db;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-right: 1px solid #3f5568;
-        }
-
-        .tab-btn:hover {
-            background: #3a5068;
-            color: white;
-        }
-
-        .tab-btn.active {
-            background: #2d3e4f;
-            color: white;
-            position: relative;
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #3498db;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 30px;
-            background: #2d3e4f;
-            border-radius: 0 0 20px 20px;
-            border: 1px solid #4e6b81;
-            border-top: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Карточки приложений */
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .app-card {
-            background: #2d3e4f;
-            border-radius: 40px;
-            padding: 28px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            border: 1px solid #4e6b81;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .app-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-            border-color: #7aa5c2;
-        }
-
-        .app-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            opacity: 0.7;
-        }
-
-        .card-icon {
-            font-size: 60px;
-            color: white;
-            background: rgba(255,255,255,0.1);
-            width: 90px;
-            height: 90px;
             border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .app-card h2 {
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .app-card h2 .version {
-            font-size: 16px;
-            background: #1e2f3a;
-            padding: 5px 15px;
-            border-radius: 30px;
-            color: #b0d4f0;
-            font-weight: 400;
-            border: 1px solid #3f5e74;
-        }
-
-        .app-desc {
-            color: #cbdbe9;
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
-        .features {
-            margin: 15px 0 20px;
-            list-style: none;
-        }
-
-        .features li {
-            color: #b8d4e3;
-            font-size: 14px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .features li i {
-            color: #2ecc71;
-            width: 20px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex: 1 1 auto;
-            text-decoration: none;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background: #3498db;
-            color: white;
-            box-shadow: 0 5px 0 #1f618d;
-        }
-
-        .btn-primary:hover {
-            background: #5faee3;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 0 #1f618d;
-        }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-            box-shadow: 0 5px 0 #1a6840;
-        }
-
-        .btn-success:hover {
-            background: #4abe7a;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 0 #1a6840;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-            box-shadow: 0 5px 0 #a82315;
-        }
-
-        .btn-danger:hover {
-            background: #ec7063;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 0 #a82315;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #4e6b81;
-            color: white;
-        }
-
-        .btn-outline:hover {
-            background: #3e5569;
-            border-color: #7aa5c2;
-        }
-
-        .btn-warning {
-            background: #f39c12;
-            color: white;
-            box-shadow: 0 5px 0 #b26b00;
-        }
-
-        .btn-warning:hover {
-            background: #f5b556;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 0 #b26b00;
-        }
-
-        .btn-info {
-            background: #3498db;
-            color: white;
-            box-shadow: 0 5px 0 #1f618d;
-        }
-
-        .btn-info:hover {
-            background: #5faee3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 0 #1f618d;
-        }
-
-        /* Стили для отчётов */
-        .report-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 15px 25px;
             margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             flex-wrap: wrap;
-            gap: 15px;
+            border: 1px solid #4e6b81;
         }
 
-        .report-title {
-            color: white;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .json-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .json-btn {
-            background: #f39c12;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 25px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-            box-shadow: 0 3px 0 #b26b00;
-        }
-
-        .json-btn:hover {
-            background: #f5b556;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 0 #b26b00;
-        }
-
-        .json-btn.import {
-            background: #27ae60;
-            box-shadow: 0 3px 0 #1a6840;
-        }
-
-        .json-btn.import:hover {
-            background: #4abe7a;
-            box-shadow: 0 5px 0 #1a6840;
-        }
-
-        .json-btn.danger {
-            background: #e74c3c;
-            box-shadow: 0 3px 0 #a82315;
-        }
-
-        .json-btn.danger:hover {
-            background: #ec7063;
-            box-shadow: 0 5px 0 #a82315;
-        }
-
-        .json-btn.info {
-            background: #3498db;
-            box-shadow: 0 3px 0 #1f618d;
-        }
-
-        .json-btn.info:hover {
-            background: #5faee3;
-            box-shadow: 0 5px 0 #1f618d;
-        }
-
-        /* Карточка сотрудника */
-        .employee-card {
-            background: #1f2e3a;
-            border-radius: 25px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid #3f5568;
-        }
-
-        .employee-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #3f5568;
-        }
-
-        .employee-header i {
-            font-size: 40px;
-            color: #3498db;
-        }
-
-        .employee-header h2 {
-            color: white;
-            font-size: 22px;
-            font-weight: 600;
-        }
-
-        .shift-card {
-            background: #2d3e4f;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 6px solid;
-        }
-
-        .shift-card.lubrication-shift {
-            border-left-color: #3498db;
-        }
-
-        .shift-card.servo-shift {
-            border-left-color: #27ae60;
-        }
-
-        .shift-card.both-shift {
-            border-left-color: #9b59b6;
-            background: linear-gradient(145deg, #2d3e4f 0%, #2a3a4a 100%);
-        }
-
-        .shift-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .shift-date {
+        .nav-title {
             color: white;
             font-size: 18px;
             font-weight: 600;
@@ -507,1349 +125,1087 @@
             gap: 10px;
         }
 
-        .shift-badge {
-            padding: 5px 15px;
-            border-radius: 30px;
-            font-size: 14px;
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 40px;
             font-weight: 600;
-        }
-
-        .badge-s1 {
-            background: #f39c12;
-            color: white;
-        }
-
-        .badge-s2 {
-            background: #2c3e50;
-            color: white;
-        }
-
-        .shift-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-mini {
-            background: #1f2e3a;
-            border-radius: 15px;
-            padding: 15px;
-        }
-
-        .stat-mini.lubrication {
-            border-left: 4px solid #3498db;
-        }
-
-        .stat-mini.servo {
-            border-left: 4px solid #27ae60;
-        }
-
-        .stat-mini h4 {
-            color: #a1bbd0;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stat-mini .value {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .details-btn {
-            background: transparent;
-            border: 2px solid #4e6b81;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
+            font-size: 15px;
             cursor: pointer;
-            font-weight: 600;
             transition: 0.2s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
+            background: #1f2e3a;
+            color: #b0c7db;
+            border: 1px solid #3f5568;
         }
 
-        .details-btn:hover {
-            background: #3e5569;
+        .nav-btn:hover {
+            background: #3a5068;
+            color: white;
             border-color: #7aa5c2;
         }
 
-        .details-content {
-            display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px dashed #3f5568;
+        .nav-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+            box-shadow: 0 3px 0 #1f618d;
         }
 
-        .details-content.active {
-            display: block;
+        .nav-btn.active i {
+            color: white;
         }
 
-        .details-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #e0eaf2;
+        /* Индикатор статуса */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: #1f2e3a;
+            border: 1px solid #3f5568;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #27ae60;
+            box-shadow: 0 0 10px #27ae60;
+        }
+
+        .status-text {
+            color: #a1bbd0;
             font-size: 14px;
         }
 
-        .details-table th {
-            background: #1f2e3a;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .details-table td {
-            padding: 8px;
-            border: 1px solid #3f5568;
-            text-align: center;
-        }
-
-        /* Админка */
-        .admin-panel {
-            background: #1f2e3a;
-            border-radius: 30px;
-            padding: 30px;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            color: white;
-            border-bottom: 2px solid #3f5568;
-            padding-bottom: 20px;
-        }
-
-        .admin-header h2 {
-            font-size: 28px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .employee-list {
+        /* Контейнер для iframe */
+        .iframe-container {
             background: #2d3e4f;
             border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 3px;
+            border: 1px solid #4e6b81;
+            flex: 1;
+            min-height: 700px;
+            position: relative;
         }
 
-        .employee-item {
+        #appFrame {
+            width: 100%;
+            height: 100%;
+            min-height: 700px;
+            border: none;
+            border-radius: 17px;
+            background: white;
+        }
+
+        .iframe-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #2d3e4f;
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #3f5568;
             color: white;
+            font-size: 18px;
+            gap: 15px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .employee-item:last-child {
-            border-bottom: none;
+        .iframe-container.loading .iframe-loading {
+            opacity: 1;
         }
 
-        .employee-info {
+        /* Нижняя панель */
+        .footer-panel {
+            background: #1f2e3a;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 25px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
             gap: 15px;
         }
 
-        .employee-actions {
+        .contact-info {
             display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #a1bbd0;
+        }
+
+        .contact-info i {
+            color: #f39c12;
+            font-size: 24px;
+        }
+
+        .contact-email {
+            color: #f1c40f;
+            font-size: 18px;
+        }
+
+        .storage-info {
+            color: #a1bbd0;
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
 
-        .add-employee-form {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .add-employee-form input {
-            flex: 1;
-            min-width: 300px;
-            padding: 15px 20px;
+        .storage-badge {
+            background: #27ae60;
+            color: white;
+            padding: 5px 15px;
             border-radius: 30px;
-            border: 1px solid #3f637c;
-            background: #2d3e4f;
-            color: white;
-            font-size: 16px;
-        }
-
-        .add-employee-form input:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #3f5568;
-        }
-
-        .sync-info {
-            background: #2d3e4f;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
-            color: #a1bbd0;
-            border-left: 6px solid #f39c12;
-        }
-
-        .github-sync-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #3f5568;
-        }
-        .github-sync-section h3 {
-            color: white;
-            margin-bottom: 15px;
-        }
-        .github-sync-section .btn {
-            margin-right: 10px;
-            margin-bottom: 10px;
+            font-size: 13px;
         }
 
         .footer-note {
             text-align: center;
             color: #7f8c8d;
-            margin-top: 25px;
+            margin-top: 15px;
             font-size: 14px;
         }
 
-        /* Уведомления */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 50px;
-            background: #27ae60;
-            color: white;
-            font-weight: 600;
-            z-index: 10000;
-            animation: slideIn 0.3s ease-out;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .notification.error {
-            background: #e74c3c;
-        }
-
-        .notification.warning {
-            background: #f39c12;
-        }
-
-        .notification.info {
-            background: #3498db;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
+        /* Адаптация для мобильных */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .portal-header { flex-direction: column; align-items: stretch; }
-            .tab-btn { padding: 15px; font-size: 14px; }
-            .report-header { flex-direction: column; align-items: flex-start; }
-            .json-actions { width: 100%; }
-            .json-btn { flex: 1; }
-            .shift-header { flex-direction: column; align-items: flex-start; }
+            .nav-panel { flex-direction: column; align-items: stretch; }
+            .nav-buttons { justify-content: center; }
+            .status-indicator { justify-content: center; }
+            .footer-panel { flex-direction: column; text-align: center; }
+            #appFrame { min-height: 500px; }
         }
     </style>
 </head>
 <body>
-<div class="portal">
-    <!-- Шапка -->
-    <header class="portal-header">
-        <div class="logo-area">
-            <div class="nlvz-logo">НЛВЗ</div>
-            <div class="title-box">
-                <h1>Панель инструментов <span>· Техническая диагностика</span></h1>
-                <p>
-                    <i class="fas fa-map-marker-alt"></i> НЛВЗ · ЛИНИЯ К 596-568
-                </p>
+    <div class="portal">
+        <!-- Шапка -->
+        <header class="portal-header">
+            <div class="logo-area">
+                <div class="nlvz-logo">НЛВЗ</div>
+                <div class="title-box">
+                    <h1>Единый портал <span>· Техническая диагностика</span></h1>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> НЛВЗ · ЛИНИЯ К 596-568
+                        <i class="fas fa-calendar-alt" style="margin-left: 15px;"></i> 19.03.2026
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="system-badge">
-            <i class="fas fa-microchip"></i> Portal v2.0
-        </div>
-    </header>
+            <div class="system-badge">
+                <i class="fas fa-microchip"></i> Portal v3.0
+            </div>
+        </header>
 
-    <!-- Вкладки -->
-    <div class="tabs-container">
-        <div class="tabs-header">
-            <button class="tab-btn active" data-tab="main">
-                <i class="fas fa-home"></i> Главная
-            </button>
-            <button class="tab-btn" data-tab="reports">
-                <i class="fas fa-chart-bar"></i> Отчёты
-            </button>
-            <button class="tab-btn" data-tab="admin">
-                <i class="fas fa-cog"></i> Администрирование
-            </button>
-        </div>
-
-        <!-- Главная -->
-        <div class="tab-content active" id="tabMain">
-            <div class="apps-grid">
-                <div class="app-card">
-                    <div class="card-icon"><i class="fas fa-oil-can"></i></div>
-                    <h2>График смазки <span class="version">v7.0</span></h2>
-                    <div class="app-desc">Планирование и учёт смазки оборудования</div>
-                    <ul class="features">
-                        <li><i class="fas fa-calendar-check"></i> Календарь с цветовой индикацией</li>
-                        <li><i class="fas fa-history"></i> История выполнения</li>
-                    </ul>
-                    <div class="btn-group">
-                        <button class="btn btn-primary" onclick="openApp('lubrication')">
-                            <i class="fas fa-play"></i> Открыть
-                        </button>
-                    </div>
-                </div>
-
-                <div class="app-card">
-                    <div class="card-icon"><i class="fas fa-microchip"></i></div>
-                    <h2>Сервоприводы <span class="version">v1.2</span></h2>
-                    <div class="app-desc">Диагностика AUTOCOL K747-965</div>
-                    <ul class="features">
-                        <li><i class="fas fa-tachometer-alt"></i> Контроль температуры, тока</li>
-                        <li><i class="fas fa-temperature-high"></i> Цветовая индикация</li>
-                    </ul>
-                    <div class="btn-group">
-                        <button class="btn btn-success" onclick="openApp('servo')">
-                            <i class="fas fa-play"></i> Открыть
-                        </button>
-                    </div>
-                </div>
+        <!-- Панель навигации -->
+        <div class="nav-panel">
+            <div class="nav-title">
+                <i class="fas fa-bars"></i>
+                <span>Приложения:</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="switchApp('portal')" id="btnPortal">
+                    <i class="fas fa-home"></i> Главный портал
+                </button>
+                <button class="nav-btn" onclick="switchApp('lubrication')" id="btnLubrication">
+                    <i class="fas fa-oil-can"></i> График смазки
+                </button>
+                <button class="nav-btn" onclick="switchApp('servo')" id="btnServo">
+                    <i class="fas fa-microchip"></i> Диагностика сервоприводов
+                </button>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text" id="statusText">Все системы в норме</span>
             </div>
         </div>
 
-        <!-- Отчёты -->
-        <div class="tab-content" id="tabReports">
-            <div class="report-header">
-                <div class="report-title">
-                    <i class="fas fa-chart-pie" style="color: #3498db;"></i>
-                    <span>Полный отчёт по всем сотрудникам</span>
-                </div>
-                <div class="json-actions">
-                    <button class="json-btn" onclick="exportToJSON()">
-                        <i class="fas fa-download"></i> Экспорт в JSON
-                    </button>
-                    <button class="json-btn import" onclick="importFromJSON()">
-                        <i class="fas fa-upload"></i> Импорт из JSON
-                    </button>
-                    <button class="json-btn danger" onclick="clearAllHistory()">
-                        <i class="fas fa-trash"></i> Очистить историю
-                    </button>
-                    <button class="json-btn info" onclick="checkServoData()">
-                        <i class="fas fa-search"></i> Проверить данные
-                    </button>
-                    <button class="json-btn info" onclick="debugServoDisplay()">
-                        <i class="fas fa-bug"></i> Детальная диагностика
-                    </button>
-                </div>
-            </div>
-
-            <!-- Контейнер для отчёта -->
-            <div id="reportContainer">
-                <!-- Динамически заполняется -->
+        <!-- Контейнер для приложений -->
+        <div class="iframe-container" id="iframeContainer">
+            <iframe id="appFrame" src="portal_main.html" title="Приложение"></iframe>
+            <div class="iframe-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Загрузка...</span>
             </div>
         </div>
 
-        <!-- Администрирование -->
-        <div class="tab-content" id="tabAdmin">
-            <div class="admin-panel">
-                <div class="admin-header">
-                    <h2><i class="fas fa-users-cog"></i> Управление сотрудниками</h2>
-                    <div>
-                        <span class="btn btn-outline" onclick="syncEmployeesToApps()">
-                            <i class="fas fa-sync-alt"></i> Синхронизировать
-                        </span>
-                    </div>
-                </div>
-
-                <div class="add-employee-form">
-                    <input type="text" id="newEmployeeName" placeholder="Введите ФИО и должность сотрудника">
-                    <button class="btn btn-success" onclick="addEmployee()">
-                        <i class="fas fa-plus"></i> Добавить
-                    </button>
-                </div>
-
-                <div class="employee-list" id="employeeList"></div>
-
-                <div class="admin-actions">
-                    <button class="btn btn-primary" onclick="exportEmployees()">
-                        <i class="fas fa-download"></i> Экспорт сотрудников
-                    </button>
-                    <button class="btn btn-primary" onclick="importEmployees()">
-                        <i class="fas fa-upload"></i> Импорт сотрудников
-                    </button>
-                    <button class="btn btn-danger" onclick="resetToDefault()">
-                        <i class="fas fa-undo"></i> Сброс
-                    </button>
-                </div>
-
-                <!-- ========== GitHub СИНХРОНИЗАЦИЯ ========== -->
-                <div class="github-sync-section">
-                    <h3><i class="fab fa-github"></i> GitHub синхронизация (db_portal.json)</h3>
-                    <div>
-                        <button class="btn btn-primary" onclick="exportToGitHub()">
-                            <i class="fab fa-github"></i> Сохранить в GitHub
-                        </button>
-                        <button class="btn btn-info" onclick="importFromGitHub()">
-                            <i class="fab fa-github"></i> Загрузить из GitHub
-                        </button>
-                    </div>
-                    <div class="sync-info" style="margin-top: 15px;">
-                        <i class="fas fa-info-circle"></i>
-                        <strong>Синхронизация через GitHub</strong> — сохраните данные в репозиторий, чтобы другие пользователи могли их загрузить.
-                    </div>
-                </div>
-                <!-- ========== КОНЕЦ GitHub СИНХРОНИЗАЦИИ ========== -->
-
-                <div class="sync-info">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Единый список сотрудников</strong> — изменения автоматически применяются в приложениях.
-                </div>
+        <!-- Нижняя панель -->
+        <div class="footer-panel">
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                <span class="contact-email">teh1@nlvz.opvz.ru</span>
             </div>
+            <div class="storage-info">
+                <i class="fas fa-database"></i>
+                <span>Данные синхронизированы</span>
+                <span class="storage-badge">Yjs + IndexedDB</span>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            © 2026 ОПВЗ НЛВЗ · Все права защищены · Версия портала 3.0.0
         </div>
     </div>
 
-    <!-- Нижняя панель -->
-    <div style="background: #1f2e3a; border-radius: 20px; padding: 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <i class="fas fa-envelope" style="color: #f39c12; font-size: 24px;"></i>
-            <span style="color: #f1c40f; font-size: 18px;">teh1@nlvz.opvz.ru</span>
-        </div>
-        <div style="color: #a1bbd0;">
-            <i class="fas fa-database"></i> Данные из локального хранилища
-        </div>
-    </div>
-
-    <div class="footer-note">
-        © 2026 ОПВЗ НЛВЗ · Все права защищены · Версия портала 2.0.3
-    </div>
-</div>
-
-<script>
-    // ==================== НОРМАЛИЗАЦИЯ ИМЁН ====================
-    function normalizeName(name) {
-        if (!name) return '';
-        return name
-            .replace(/\s+/g, ' ')           // заменяем multiple пробелы на один
-            .replace(/\s*,\s*/g, ', ')       // форматируем запятые
-            .replace(/\s*\.\s*/g, '. ')      // форматируем точки
-            .trim();                         // убираем пробелы в начале и конце
-    }
-
-    // ==================== КОНФИГУРАЦИЯ ====================
-    const apps = {
-        lubrication: { name: 'График смазки', file: 'График-смазки7.html' },
-        servo: { name: 'Диагностика сервоприводов', file: 'Диагностика серво двигателей.html' }
-    };
-
-    // ==================== ИМЕНА ФАЙЛОВ ====================
-    const DB_FILE = 'db_portal.json';      // Основная база данных (смазка + сервоприводы)
-    const EMPLOYEES_FILE = 'data.json';    // Файл с сотрудниками
-
-    // ==================== МАШИНЫ И ТОЧКИ СМАЗКИ ====================
-    const machines = [
-        { name: "Депаллетизатор PRESSANT UNIVERSAL 1A KR74-384", points: [
-            { id: "depal_left", desc: "Планка пресс-маслёнки с лева" },
-            { id: "depal_right", desc: "Планка пресс-маслёнки с права" },
-            { id: "depal_chain", desc: "Приводные цепи" },
-            { id: "depal_bearings", desc: "Опорные подшипники" }
-        ]},
-        { name: "Транспортёр поддонов Palko S KR57 D 01", points: [
-            { id: "palko_chain_d1", desc: "Приводные цепи" },
-            { id: "palko_bearings_d1", desc: "Опорные подшипники" }
-        ]},
-        { name: "Блок розлива VOLUMETIC VOC K223-246", points: [
-            { id: "fill_distributor", desc: "Распределитель продукта" },
-            { id: "fill_red", desc: "Планка пресс-маслёнки красные" },
-            { id: "fill_air", desc: "Распределитель воздуха эл.шкаф верх" },
-            { id: "fill_yellow", desc: "Планка пресс-маслёнки желтые" },
-            { id: "fill_screw", desc: "Привод разделительного шнека" },
-            { id: "fill_mounts", desc: "Крепление, направляющие оснастки" },
-            { id: "fill_spindles", desc: "Шпиндели установки по высоте" },
-            { id: "fill_fingers", desc: "Пальцы кулачка подъёма конусов" },
-            { id: "fill_shafts", desc: "Шарнирные валы главного привода" },
-            { id: "fill_cip", desc: "Распределитель продукта (после CIP)" }
-        ]},
-        { name: "Укупор банок Ferrum F708G C10-809400", points: [
-            { id: "capper_level", desc: "Уровень масла" },
-            { id: "capper_refill", desc: "Доливка масла" },
-            { id: "capper_pressure", desc: "Давление масла" },
-            { id: "capper_stands", desc: "Смазка стоек домкратов" }
-        ]},
-        { name: "Узел подачи крышки CSW Mini-Multifeeder", points: [
-            { id: "feeder_linear", desc: "Линейные подшипники" },
-            { id: "feeder_bearings", desc: "Опорные подшипники" }
-        ]},
-        { name: "Пастеризатор LINAFLEX K578-031", points: [
-            { id: "pasteurizer_drive", desc: "Смазка главного привода" }
-        ]},
-        { name: "Этикетировочная машина AUTOCOL K747-965", points: [
-            { id: "label_red", desc: "Планка пресс-маслёнки красные" },
-            { id: "label_yellow", desc: "Планка пресс-маслёнки желтые" }
-        ]},
-        { name: "Упаковщик VARIOPAC PRO KR96-397", points: [
-            { id: "wrapper_former_level", desc: "Формирователь. Уровень масла" },
-            { id: "wrapper_former_refill", desc: "Формирователь. Доливка масла" },
-            { id: "wrapper_tunnel_level", desc: "Термотунель. Уровень масла" },
-            { id: "wrapper_tunnel_refill", desc: "Термотунель. Доливка масла" }
-        ]},
-        { name: "Транспортёр упаковки MULTICO S KR67C54", points: [
-            { id: "multico_divider", desc: "Делитель упаковки. Планка" },
-            { id: "multico_rods", desc: "Смазать несущие стержни" },
-            { id: "multico_divider_chain", desc: "Делитель упаковки. Приводные цепи" },
-            { id: "multico_bearings", desc: "Опорные подшипники" }
-        ]},
-        { name: "Паллетизатор MODULPAL 2AС KR63-617", points: [
-            { id: "pallet_auto_level", desc: "Автоматическая смазка (уровень)" },
-            { id: "pallet_auto_refill", desc: "Автоматическая смазка, доливка" }
-        ]},
-        { name: "Транспортёр поддонов Palko S KR57 D 02", points: [
-            { id: "palko_chain_d2", desc: "Приводные цепи" },
-            { id: "palko_bearings_d2", desc: "Опорные подшипники" }
-        ]},
-        { name: "Транспортёр ёмкостей SYNCO S K995RYS", points: [
-            { id: "synco_chain", desc: "Приводные цепи" },
-            { id: "synco_bearings", desc: "Опорные подшипники" }
-        ]}
-    ];
-
-    // ==================== УПРАВЛЕНИЕ СОТРУДНИКАМИ ====================
-    const STORAGE_KEY = 'nlvz_employees';
-    const DEFAULT_EMPLOYEES = [
-        "Майстренко Александр Александрович. Сервисный инженер",
-        "Токалов Антон Геннадьевич, старший наладчик оборудования",
-        "Чевордаев Сергей Александрович, старший наладчик оборудования",
-        "Гец Владислав Олегович, старший наладчик оборудования",
-        "Смольянинов Игорь Алексеевич, старший наладчик оборудования"
-    ];
-
-    let employees = [];
-
-    function loadEmployees() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        employees = saved ? JSON.parse(saved) : [...DEFAULT_EMPLOYEES];
-        employees = employees.map(normalizeName);
-        renderEmployeeList();
-    }
-
-    function saveEmployees() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-        renderEmployeeList();
-    }
-
-    function renderEmployeeList() {
-        const list = document.getElementById('employeeList');
-        if (!list) return;
-        if (employees.length === 0) {
-            list.innerHTML = '<div style="color: #a1bbd0; text-align: center; padding: 40px;">Список сотрудников пуст</div>';
-            return;
-        }
-        list.innerHTML = employees.map((emp, index) => `
-            <div class="employee-item">
-                <div class="employee-info">
-                    <i class="fas fa-user" style="color: #3498db;"></i>
-                    <span>${emp}</span>
-                </div>
-                <div class="employee-actions">
-                    <button class="btn btn-danger" style="padding: 8px 15px;" onclick="removeEmployee(${index})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    window.addEmployee = function() {
-        const input = document.getElementById('newEmployeeName');
-        const name = input.value.trim();
-        if (!name) { alert('Введите ФИО сотрудника'); return; }
-        employees.push(normalizeName(name));
-        saveEmployees();
-        input.value = '';
-    };
-
-    window.removeEmployee = function(index) {
-        if (confirm('Удалить сотрудника из списка?')) {
-            employees.splice(index, 1);
-            saveEmployees();
-        }
-    };
-
-    window.resetToDefault = function() {
-        if (confirm('Восстановить стандартный список?')) {
-            employees = [...DEFAULT_EMPLOYEES].map(normalizeName);
-            saveEmployees();
-        }
-    };
-
-    window.exportEmployees = function() {
-        const data = employees;
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = EMPLOYEES_FILE;
-        a.click();
-        URL.revokeObjectURL(url);
-        showNotification(`Экспортировано в ${EMPLOYEES_FILE}`);
-    };
-
-    window.importEmployees = function() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json';
-        input.onchange = function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            if (file.name !== EMPLOYEES_FILE) {
-                if (!confirm(`Ожидается файл ${EMPLOYEES_FILE}. Загрузить ${file.name}?`)) {
-                    return;
-                }
+    <script>
+        // Конфигурация приложений
+        const apps = {
+            portal: {
+                name: 'Главный портал',
+                file: 'portal_main.html',
+                icon: 'home',
+                color: '#3498db'
+            },
+            lubrication: {
+                name: 'График смазки',
+                file: 'График-смазки7.html',
+                icon: 'oil-can',
+                color: '#3498db'
+            },
+            servo: {
+                name: 'Диагностика сервоприводов',
+                file: 'Диагностика серво двигателей.html',
+                icon: 'microchip',
+                color: '#27ae60'
             }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (Array.isArray(data)) {
-                        employees = data.map(normalizeName);
-                        saveEmployees();
-                        showNotification(`Загружено ${employees.length} сотрудников из ${file.name}`);
-                    } else {
-                        showNotification('Неверный формат файла', 'error');
-                    }
-                } catch (error) {
-                    showNotification('Ошибка при чтении файла', 'error');
-                }
-            };
-            reader.readAsText(file);
         };
-        input.click();
-    };
 
-    window.syncEmployeesToApps = function() {
-        localStorage.setItem('portal_employees', JSON.stringify(employees));
-        showNotification('✅ Список сотрудников сохранён для приложений');
-    };
+        let currentApp = 'portal';
+        let loadingTimeout = null;
 
-    window.openApp = function(appId) {
-        const app = apps[appId];
-        if (!app) return;
-        syncEmployeesToApps();
-        const link = document.createElement('a');
-        link.href = app.file;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+        function switchApp(appId) {
+            if (!apps[appId]) return;
 
-    // ==================== ДАННЫЕ ИЗ ПРИЛОЖЕНИЙ ====================
-    let lubricationData = {};
-    let servoData = [];
-
-    function loadDataFromApps() {
-        console.log('📥 Загрузка данных из localStorage...');
-        
-        try {
-            const lubricationHistory = localStorage.getItem('lubrication_history_v28');
-            if (lubricationHistory) {
-                lubricationData = JSON.parse(lubricationHistory);
-                console.log('✅ Загружено смен смазки:', Object.keys(lubricationData).length);
-            } else {
-                lubricationData = {};
-                console.log('ℹ️ Нет данных смазки');
-            }
-
-            const servoChecks = localStorage.getItem('servoChecks');
-            if (servoChecks) {
-                servoData = JSON.parse(servoChecks);
-                console.log('✅ Загружено проверок сервоприводов:', servoData.length);
-            } else {
-                servoData = [];
-                console.log('ℹ️ Нет данных сервоприводов');
-            }
-        } catch (e) {
-            console.error('❌ Ошибка загрузки данных:', e);
-        }
-    }
-
-    // ==================== ФУНКЦИЯ ПРОВЕРКИ ДАННЫХ ====================
-    window.checkServoData = function() {
-        console.log('🔍 Проверка данных сервоприводов:');
-        console.log('servoData (массив):', servoData);
-        console.log('Количество записей:', servoData.length);
-        
-        if (servoData.length > 0) {
-            console.log('Первая запись:', servoData[0]);
-            console.log('Поля первой записи:', Object.keys(servoData[0]));
-            
-            const requiredFields = ['id', 'date', 'inspector', 'servos'];
-            const missingFields = requiredFields.filter(f => !(f in servoData[0]));
-            if (missingFields.length > 0) {
-                console.warn('⚠️ Отсутствуют поля:', missingFields);
-            } else {
-                console.log('✅ Все обязательные поля присутствуют');
-                console.log('Количество сервоприводов в первой записи:', servoData[0].servos.length);
-            }
-        }
-        
-        const raw = localStorage.getItem('servoChecks');
-        console.log('📦 Данные в localStorage:', raw ? JSON.parse(raw) : 'пусто');
-        
-        alert(`В портале ${servoData.length} записей сервоприводов\n\nСмотрите консоль (F12) для деталей`);
-    };
-
-    window.debugServoDisplay = function() {
-        console.log('🔍 ДЕТАЛЬНАЯ ДИАГНОСТИКА');
-        console.log('1. Данные из localStorage:');
-        const raw = localStorage.getItem('servoChecks');
-        console.log('   сырые данные:', raw ? raw.substring(0, 200) + '...' : 'пусто');
-        
-        console.log('2. servoData в памяти:');
-        console.log('   длина:', servoData.length);
-        if (servoData.length > 0) {
-            console.log('   первая запись:', servoData[0]);
-            console.log('   поля:', Object.keys(servoData[0]));
-        }
-        
-        console.log('3. Сотрудники в портале (нормализованные):');
-        console.log('   список:', employees);
-        
-        console.log('4. Пытаемся найти совпадения:');
-        let matches = 0;
-        servoData.forEach(check => {
-            const normalizedInspector = normalizeName(check.inspector);
-            const employeeMatch = employees.some(emp => emp === normalizedInspector);
-            console.log(`   ${check.date} | ${check.inspector}`);
-            console.log(`      нормализовано: ${normalizedInspector}`);
-            console.log(`      совпадение: ${employeeMatch ? '✅' : '❌'}`);
-            if (employeeMatch) matches++;
-        });
-        console.log(`   Всего совпадений: ${matches} из ${servoData.length}`);
-        
-        console.log('5. Результат buildReportData():');
-        const report = buildReportData();
-        console.log('   отчёт содержит сотрудников:', report.length);
-        report.forEach(emp => {
-            console.log(`   👤 ${emp.name} | смен: ${emp.shifts.length}`);
-            emp.shifts.forEach(shift => {
-                console.log(`      📅 ${shift.date} | серво: ${shift.servo.exists ? '✅' : '❌'}`);
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            document.getElementById(`btn${appId.charAt(0).toUpperCase() + appId.slice(1)}`).classList.add('active');
+
+            const container = document.getElementById('iframeContainer');
+            container.classList.add('loading');
+
+            if (loadingTimeout) clearTimeout(loadingTimeout);
+
+            loadingTimeout = setTimeout(() => {
+                container.classList.remove('loading');
+            }, 1000);
+
+            const frame = document.getElementById('appFrame');
+            frame.src = apps[appId].file;
+
+            document.getElementById('statusText').textContent = `Активно: ${apps[appId].name}`;
+            currentApp = appId;
+        }
+
+        document.getElementById('appFrame').addEventListener('load', function() {
+            const container = document.getElementById('iframeContainer');
+            if (container.classList.contains('loading')) {
+                setTimeout(() => {
+                    container.classList.remove('loading');
+                }, 500);
+            }
         });
-    };
 
-    window.addEventListener('storage', (event) => {
-        console.log('📢 Событие storage:', event.key, '→', event.newValue ? event.newValue.substring(0, 50) + '...' : 'null');
-        
-        if (event.key === 'lubrication_data_updated') {
-            console.log('🔄 Данные смазки обновлены, перезагружаем...');
-            loadDataFromApps();
-            renderReport();
-            showNotification('📊 Данные смазки обновлены', 'info');
-        }
-        
-        if (event.key === 'servo_data_updated') {
-            console.log('🔄 Данные сервоприводов обновлены, перезагружаем...');
-            loadDataFromApps();
-            renderReport();
-            showNotification('🔧 Данные сервоприводов обновлены', 'info');
-        }
-    });
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'lubrication_data_updated' || event.key === 'servo_data_updated') {
+                document.getElementById('statusText').textContent = 'Данные обновлены';
+                setTimeout(() => {
+                    document.getElementById('statusText').textContent = `Активно: ${apps[currentApp].name}`;
+                }, 3000);
+            }
+        });
 
-    function getPointDescription(pointId) {
-        for (const machine of machines) {
-            const point = machine.points.find(p => p.id === pointId);
-            if (point) {
-                return {
-                    machine: machine.name,
-                    operation: point.desc
-                };
+        function checkFiles() {
+            const files = [
+                'portal_main.html',
+                'График-смазки7.html',
+                'Диагностика серво двигателей.html'
+            ];
+
+            files.forEach(file => {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            console.warn(`⚠️ Файл ${file} не найден`);
+                            document.getElementById('statusText').textContent = 'Некоторые файлы отсутствуют';
+                        }
+                    })
+                    .catch(() => {
+                        console.warn(`⚠️ Файл ${file} недоступен`);
+                    });
+            });
+        }
+
+        window.addEventListener('load', () => {
+            checkFiles();
+            document.getElementById('statusText').textContent = `Активно: ${apps.portal.name}`;
+        });
+    </script>
+
+    <!-- EmailJS инициализация -->
+    <script>
+        // ВСТАВЬТЕ ВАШ PUBLIC KEY ЗДЕСЬ
+        emailjs.init("suEEouec9N_SIlzFs");
+        
+        // Service ID из EmailJS
+        const SERVICE_ID = "service_xowrit5";
+        // Template ID - вставьте ваш после создания шаблона
+        const TEMPLATE_ID = "template_fgb64hb";
+    </script>
+
+    <!-- AI-виджет помощник -->
+    <div id="aiWidget" class="ai-widget">
+        <div class="ai-header" onclick="toggleAIWidget()">
+            <div>
+                <i class="fas fa-robot"></i> 
+                <span>AI-ассистент</span>
+            </div>
+            <div class="ai-status" id="aiStatusDot">●</div>
+        </div>
+        <div class="ai-body" id="aiBody">
+            <div class="ai-loading" id="aiLoading">
+                <i class="fas fa-spinner fa-spin"></i> Анализ данных...
+            </div>
+            <div class="ai-content" id="aiContent" style="display: none;"></div>
+            <div class="ai-footer" id="aiFooter">
+                <button class="ai-btn" onclick="refreshAIAnalysis()">🔄 Обновить</button>
+                <button class="ai-btn" onclick="toggleWidgetTheme()">🌓 Тема</button>
+                <button class="ai-btn" onclick="sendYandexReport()" style="background: #fc0; color: #000;">📧 Отчёт</button>
+                <button class="ai-btn" onclick="toggleAIWidget()">✖</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .ai-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 340px;
+            background: #2d3e4f;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 9999;
+            border: 2px solid #3498db;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .ai-widget.dark-theme {
+            background: #1a1a1a;
+            border-color: #9b59b6;
+        }
+
+        .ai-widget.minimized .ai-body {
+            display: none;
+        }
+
+        .ai-widget.minimized {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .ai-widget.minimized .ai-header {
+            padding: 18px;
+        }
+
+        .ai-widget.minimized .ai-header span,
+        .ai-widget.minimized .ai-status {
+            display: none;
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 13px 13px 0 0;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .ai-widget.dark-theme .ai-header {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .ai-status {
+            font-size: 24px;
+            line-height: 1;
+            animation: pulse 2s infinite;
+        }
+
+        .ai-status.green { color: #27ae60; }
+        .ai-status.yellow { color: #f39c12; }
+        .ai-status.red { color: #e74c3c; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .ai-body {
+            padding: 15px;
+            background: #2d3e4f;
+            border-radius: 0 0 13px 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ai-widget.dark-theme .ai-body {
+            background: #1a1a1a;
+        }
+
+        .ai-loading {
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .ai-content {
+            color: white;
+        }
+
+        .ai-message {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .ai-message.critical {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid #e74c3c;
+        }
+
+        .ai-message.warning {
+            background: rgba(243, 156, 18, 0.2);
+            border-left: 4px solid #f39c12;
+        }
+
+        .ai-message.info {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 4px solid #3498db;
+        }
+
+        .ai-message.success {
+            background: rgba(39, 174, 96, 0.2);
+            border-left: 4px solid #27ae60;
+        }
+
+        .ai-tip {
+            background: rgba(155, 89, 182, 0.2);
+            border-left: 4px solid #9b59b6;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #ecf0f1;
+        }
+
+        .ai-footer {
+            display: flex;
+            gap: 5px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #3f5568;
+        }
+
+        .ai-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: #34495e;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .ai-btn:hover {
+            background: #3f5568;
+        }
+
+        .ai-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .urgent-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 10000;
+            animation: slideDown 0.5s;
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        }
+
+        @keyframes slideDown {
+            from { top: -100px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .ai-widget {
+                width: 280px;
+                bottom: 10px;
+                right: 10px;
+            }
+            .urgent-alert {
+                width: 90%;
+                font-size: 14px;
+                padding: 12px 20px;
             }
         }
-        return { machine: 'Неизвестно', operation: pointId };
-    }
+    </style>
 
-    function buildReportData() {
-        const report = [];
+    <script>
+        // Состояние виджета
+        let aiWidgetMinimized = localStorage.getItem('aiWidgetMinimized') === 'true';
 
-        employees.forEach(employee => {
-            const normalizedEmp = normalizeName(employee);
-            const employeeData = {
-                name: employee,
-                shifts: []
-            };
+        document.addEventListener('DOMContentLoaded', function() {
+            createAIWidget();
+            setTimeout(analyzeWithAI, 1000);
+            setupReminders();
+        });
 
-            const servoChecksForEmployee = servoData.filter(s => 
-                s && s.inspector && normalizeName(s.inspector) === normalizedEmp
-            );
+        function createAIWidget() {
+            const widget = document.getElementById('aiWidget');
+            if (aiWidgetMinimized) {
+                widget.classList.add('minimized');
+            }
+            
+            const savedTheme = localStorage.getItem('aiWidgetTheme');
+            if (savedTheme === 'dark') {
+                widget.classList.add('dark-theme');
+            }
+        }
 
-            const lubricationShifts = [];
-            Object.entries(lubricationData).forEach(([key, shift]) => {
-                if (shift && shift.employee === employee) {
-                    const [date, shiftKey] = key.split('_');
-                    const shiftNum = shiftKey === 'shift1' ? 1 : 2;
-                    lubricationShifts.push({ 
-                        date, 
-                        shift: shiftNum, 
-                        data: shift 
-                    });
+        function toggleAIWidget() {
+            const widget = document.getElementById('aiWidget');
+            widget.classList.toggle('minimized');
+            localStorage.setItem('aiWidgetMinimized', widget.classList.contains('minimized'));
+            
+            if (!widget.classList.contains('minimized')) {
+                analyzeWithAI();
+            }
+        }
+
+        function toggleWidgetTheme() {
+            const widget = document.getElementById('aiWidget');
+            widget.classList.toggle('dark-theme');
+            localStorage.setItem('aiWidgetTheme', widget.classList.contains('dark-theme') ? 'dark' : 'light');
+        }
+
+        function analyzeMissedOperations() {
+            const lubeData = localStorage.getItem('lubrication_history_v28');
+            if (!lubeData) return { total: 0, byEmployee: {}, lastWeek: 0 };
+            
+            try {
+                const shifts = JSON.parse(lubeData);
+                const missed = {
+                    total: 0,
+                    byEmployee: {},
+                    lastWeek: 0
+                };
+                
+                const today = new Date();
+                const weekAgo = new Date(today.setDate(today.getDate() - 7)).toISOString().split('T')[0];
+                
+                Object.entries(shifts).forEach(([key, shift]) => {
+                    if (!shift.completed || !shift.employee) return;
+                    
+                    const total = shift.visiblePoints?.length || 0;
+                    const completed = shift.completed.length || 0;
+                    const missedCount = total - completed;
+                    
+                    if (missedCount > 0) {
+                        missed.total += missedCount;
+                        missed.byEmployee[shift.employee] = (missed.byEmployee[shift.employee] || 0) + missedCount;
+                        
+                        const [date] = key.split('_');
+                        if (date >= weekAgo) {
+                            missed.lastWeek += missedCount;
+                        }
+                    }
+                });
+                
+                return missed;
+            } catch (e) {
+                return { total: 0, byEmployee: {}, lastWeek: 0 };
+            }
+        }
+
+        function getEmployeeRatings() {
+            const missed = analyzeMissedOperations();
+            const lubeData = JSON.parse(localStorage.getItem('lubrication_history_v28') || '{}');
+            
+            const completed = {};
+            Object.values(lubeData).forEach(shift => {
+                if (shift.employee && shift.completed) {
+                    completed[shift.employee] = (completed[shift.employee] || 0) + shift.completed.length;
                 }
             });
+            
+            const ratings = [];
+            const allEmployees = new Set([...Object.keys(missed.byEmployee), ...Object.keys(completed)]);
+            
+            allEmployees.forEach(name => {
+                const m = missed.byEmployee[name] || 0;
+                const c = completed[name] || 0;
+                const total = m + c;
+                
+                ratings.push({
+                    name: name,
+                    missed: m,
+                    completed: c,
+                    efficiency: total > 0 ? Math.round((c / total) * 100) : 0
+                });
+            });
+            
+            return ratings.sort((a, b) => b.efficiency - a.efficiency);
+        }
 
-            const allDates = new Set();
-            lubricationShifts.forEach(d => d.date && allDates.add(d.date));
-            servoChecksForEmployee.forEach(s => s.date && allDates.add(s.date));
+        function getTomorrowPrediction() {
+            const missed = analyzeMissedOperations();
+            const lubeData = JSON.parse(localStorage.getItem('lubrication_history_v28') || '{}');
+            
+            const last7Days = [];
+            for (let i = 1; i <= 7; i++) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                
+                let dayMissed = 0;
+                Object.entries(lubeData).forEach(([key, shift]) => {
+                    if (key.startsWith(dateStr) && shift.completed) {
+                        const total = shift.visiblePoints?.length || 0;
+                        const completed = shift.completed.length || 0;
+                        dayMissed += (total - completed);
+                    }
+                });
+                last7Days.push(dayMissed);
+            }
+            
+            const avgMissed = last7Days.reduce((a, b) => a + b, 0) / last7Days.length;
+            const trend = avgMissed > missed.total ? 'растёт' : 'снижается';
+            
+            let recommendation = '';
+            if (avgMissed > 80) {
+                recommendation = '🔴 Критический тренд! Нужно срочно действовать!';
+            } else if (avgMissed > 50) {
+                recommendation = '🟡 Требуется внимание руководства';
+            } else {
+                recommendation = '🟢 Ситуация стабилизируется';
+            }
+            
+            return {
+                predictedMissed: Math.round(avgMissed),
+                trend: trend,
+                recommendation: recommendation
+            };
+        }
 
-            const sortedDates = Array.from(allDates).sort((a, b) => b.localeCompare(a));
+        function showUrgentAlerts(analysis) {
+            const missed = analyzeMissedOperations();
+            
+            document.querySelectorAll('.urgent-alert').forEach(el => el.remove());
+            
+            if (missed.total > 80) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'urgent-alert';
+                alertDiv.innerHTML = `
+                    🔴 КРИТИЧЕСКАЯ СИТУАЦИЯ! ${missed.total} пропусков!
+                    <button onclick="this.parentElement.remove()" style="margin-left: 20px; background: none; border: none; color: white; cursor: pointer; font-size: 18px;">✖</button>
+                `;
+                document.body.appendChild(alertDiv);
+                
+                setTimeout(() => alertDiv.remove(), 10000);
+            }
+        }
 
-            sortedDates.forEach(date => {
-                const lubricationShift = lubricationShifts.find(d => d.date === date);
-                const servoCheck = servoChecksForEmployee.find(s => s.date === date);
-                const shiftNum = lubricationShift ? lubricationShift.shift : 1;
+        function setupReminders() {
+            setInterval(() => {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const today = now.toISOString().split('T')[0];
+                
+                const lubeData = JSON.parse(localStorage.getItem('lubrication_history_v28') || '{}');
+                const hasTodayData = lubeData[`${today}_shift1`] || lubeData[`${today}_shift2`];
+                
+                if (hours === 19 && minutes === 55 && !hasTodayData) {
+                    const reminder = document.createElement('div');
+                    reminder.className = 'urgent-alert';
+                    reminder.style.background = '#f39c12';
+                    reminder.innerHTML = `
+                        ⏰ Напоминание: через 5 минут смена 2! Внесите данные за сегодня
+                        <button onclick="this.parentElement.remove()" style="margin-left: 20px; background: none; border: none; color: white; cursor: pointer;">✖</button>
+                    `;
+                    document.body.appendChild(reminder);
+                    setTimeout(() => reminder.remove(), 10000);
+                }
+                
+                if (hours === 8 && minutes === 5 && !hasTodayData) {
+                    const reminder = document.createElement('div');
+                    reminder.className = 'urgent-alert';
+                    reminder.style.background = '#3498db';
+                    reminder.innerHTML = `
+                        🌅 Доброе утро! Не забудьте внести данные по смазке за сегодня
+                        <button onclick="this.parentElement.remove()" style="margin-left: 20px; background: none; border: none; color: white; cursor: pointer;">✖</button>
+                    `;
+                    document.body.appendChild(reminder);
+                    setTimeout(() => reminder.remove(), 10000);
+                }
+            }, 60000);
+        }
 
-                const operations = [];
-                let lubricationHours = [];
-                let lubricationCompleted = 0;
-                let lubricationTotal = 0;
+        function analyzeWithAI() {
+            const loading = document.getElementById('aiLoading');
+            const content = document.getElementById('aiContent');
+            const statusDot = document.getElementById('aiStatusDot');
+            
+            loading.style.display = 'flex';
+            content.style.display = 'none';
+            
+            setTimeout(() => {
+                const analysis = collectDataForAI();
+                displayAIAnalysis(analysis);
+                updateBadge(analysis);
+                showUrgentAlerts(analysis);
+                
+                if (analysis.critical > 0) {
+                    statusDot.className = 'ai-status red';
+                } else if (analysis.warning > 0) {
+                    statusDot.className = 'ai-status yellow';
+                } else {
+                    statusDot.className = 'ai-status green';
+                }
+                
+                loading.style.display = 'none';
+                content.style.display = 'block';
+            }, 500);
+        }
 
-                if (lubricationShift) {
-                    const shift = lubricationShift.data;
-                    if (shift && shift.visiblePoints) {
-                        shift.visiblePoints.forEach(pointId => {
-                            const { machine, operation } = getPointDescription(pointId);
-                            const completed = shift.completed?.includes(pointId) || false;
-                            let status = completed ? '✅' : '❌';
-                            let details = '';
-
-                            if (pointId.includes('pressure')) {
-                                const inVal = shift.checks?.[`${pointId}_in`];
-                                const outVal = shift.checks?.[`${pointId}_out`];
-                                if (inVal || outVal) {
-                                    details = `${inVal || '—'}/${outVal || '—'} bar`;
-                                    if (parseFloat(inVal) < 4.5 || parseFloat(outVal) < 4.5) {
-                                        status = '⚠️';
-                                    }
-                                }
+        function collectDataForAI() {
+            const analysis = {
+                critical: 0,
+                warning: 0,
+                info: 0,
+                messages: [],
+                tips: [],
+                timestamp: new Date().toLocaleString()
+            };
+            
+            try {
+                const servoData = localStorage.getItem('servoChecks');
+                if (servoData) {
+                    const checks = JSON.parse(servoData);
+                    if (checks.length > 0) {
+                        const lastCheck = checks[0];
+                        const daysSince = Math.floor((Date.now() - new Date(lastCheck.created).getTime()) / 86400000);
+                        
+                        if (daysSince > 7) {
+                            analysis.warning++;
+                            analysis.messages.push({
+                                type: 'warning',
+                                text: `⚠️ Давно не проверяли сервоприводы (${daysSince} дней)`
+                            });
+                        }
+                        
+                        if (lastCheck.servos) {
+                            const criticalServos = lastCheck.servos.filter(s => s.status === 'critical');
+                            if (criticalServos.length > 0) {
+                                analysis.critical += criticalServos.length;
+                                analysis.messages.push({
+                                    type: 'critical',
+                                    text: `🔴 ${criticalServos.length} сервоприводов в критическом состоянии!`
+                                });
                             }
-
-                            operations.push({
-                                machine,
-                                operation,
-                                status,
-                                details,
-                                comment: shift.comments?.[pointId] || shift.comments?.[`${pointId}_in`] || ''
+                        }
+                    }
+                }
+            } catch (e) {}
+            
+            try {
+                const lubeData = localStorage.getItem('lubrication_history_v28');
+                if (lubeData) {
+                    const shifts = JSON.parse(lubeData);
+                    const today = new Date().toISOString().split('T')[0];
+                    
+                    if (!shifts[`${today}_shift1`] && !shifts[`${today}_shift2`]) {
+                        analysis.warning++;
+                        analysis.messages.push({
+                            type: 'warning',
+                            text: '⚠️ Сегодня ещё не внесены данные по смазке'
+                        });
+                    }
+                    
+                    const missedAnalysis = analyzeMissedOperations();
+                    if (missedAnalysis.total > 0) {
+                        analysis.info++;
+                        analysis.messages.push({
+                            type: 'info',
+                            text: `📊 Всего пропущено: ${missedAnalysis.total}`
+                        });
+                        
+                        if (missedAnalysis.lastWeek > 0) {
+                            analysis.messages.push({
+                                type: 'info',
+                                text: `📅 За неделю: ${missedAnalysis.lastWeek}`
+                            });
+                        }
+                        
+                        const topOffenders = Object.entries(missedAnalysis.byEmployee)
+                            .sort((a, b) => b[1] - a[1])
+                            .slice(0, 2);
+                        
+                        topOffenders.forEach(([name, count]) => {
+                            const shortName = name.split(' ').slice(0, 2).join(' ');
+                            analysis.messages.push({
+                                type: 'warning',
+                                text: `👤 ${shortName}: ${count} пропусков`
                             });
                         });
                     }
-
-                    const shiftKey = shiftNum === 1 ? 'shift1' : 'shift2';
-                    if (shift && shift.hours) {
-                        Object.entries(shift.hours).forEach(([key, value]) => {
-                            if (key.endsWith(`_${shiftKey}`)) {
-                                const machineName = key.replace(`_${shiftKey}`, '');
-                                lubricationHours.push({ machine: machineName, hours: value });
-                            }
+                    
+                    const prediction = getTomorrowPrediction();
+                    analysis.messages.push({
+                        type: 'info',
+                        text: `🔮 Прогноз на завтра: ${prediction.predictedMissed} (${prediction.trend})`
+                    });
+                    
+                    const ratings = getEmployeeRatings();
+                    if (ratings.length > 0) {
+                        let ratingText = '🏆 Доска почёта:\n';
+                        ratings.slice(0, 3).forEach((r, i) => {
+                            const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉';
+                            const name = r.name.split(' ')[0];
+                            ratingText += `${medal} ${name}: ${r.efficiency}%\n`;
+                        });
+                        analysis.messages.push({
+                            type: 'success',
+                            text: ratingText
                         });
                     }
-
-                    lubricationTotal = operations.length;
-                    lubricationCompleted = operations.filter(op => op.status === '✅').length;
                 }
-
-                employeeData.shifts.push({
-                    date,
-                    shift: shiftNum,
-                    lubrication: {
-                        exists: !!lubricationShift,
-                        operations,
-                        hours: lubricationHours,
-                        total: lubricationTotal,
-                        completed: lubricationCompleted
-                    },
-                    servo: servoCheck ? {
-                        exists: true,
-                        time: servoCheck.time || '',
-                        servos: servoCheck.servos || [],
-                        stats: {
-                            total: servoCheck.servos?.length || 0,
-                            normal: servoCheck.servos?.filter(s => s && s.status === 'normal').length || 0,
-                            warning: servoCheck.servos?.filter(s => s && s.status === 'warning').length || 0,
-                            critical: servoCheck.servos?.filter(s => s && s.status === 'critical').length || 0
-                        }
-                    } : { exists: false }
-                });
-            });
-
-            employeeData.shifts.sort((a, b) => b.date.localeCompare(a.date) || b.shift - a.shift);
+            } catch (e) {}
             
-            if (employeeData.shifts.length > 0) {
-                report.push(employeeData);
+            try {
+                const employees = localStorage.getItem('nlvz_employees');
+                if (employees) {
+                    const empList = JSON.parse(employees);
+                    analysis.info++;
+                    analysis.messages.push({
+                        type: 'success',
+                        text: `👥 Активных сотрудников: ${empList.length}`
+                    });
+                }
+            } catch (e) {}
+            
+            const prediction = getTomorrowPrediction();
+            analysis.tips.push(prediction.recommendation);
+            
+            if (analysis.critical > 0) {
+                analysis.tips.push('🚨 Немедленно проверьте критичные сервоприводы!');
             }
-        });
+            
+            return analysis;
+        }
 
-        return report;
-    }
-
-    function renderReport() {
-        console.log('📊 Рендеринг отчёта...');
-        const reportData = buildReportData();
-        const container = document.getElementById('reportContainer');
-        
-        if (reportData.length === 0) {
-            container.innerHTML = `
-                <div style="background: #1f2e3a; border-radius: 25px; padding: 60px; text-align: center;">
-                    <i class="fas fa-database" style="font-size: 60px; color: #3498db; margin-bottom: 20px;"></i>
-                    <h3 style="color: white; margin-bottom: 10px;">Нет данных для отображения</h3>
-                    <p style="color: #a1bbd0;">Заполните данные в приложениях "График смазки" и "Диагностика сервоприводов"</p>
+        function displayAIAnalysis(analysis) {
+            const content = document.getElementById('aiContent');
+            
+            let html = `
+                <div style="font-size: 12px; color: #a1bbd0; margin-bottom: 10px;">
+                    🕐 ${analysis.timestamp}
                 </div>
             `;
-            return;
-        }
-
-        let html = '';
-
-        reportData.forEach(employee => {
-            html += `
-                <div class="employee-card">
-                    <div class="employee-header">
-                        <i class="fas fa-user-circle"></i>
-                        <h2>${employee.name}</h2>
+            
+            analysis.messages.forEach(msg => {
+                html += `<div class="ai-message ${msg.type}">${msg.text}</div>`;
+            });
+            
+            if (analysis.tips.length > 0) {
+                html += `<div class="ai-tip">💡 <strong>Совет:</strong> ${analysis.tips[0]}</div>`;
+            }
+            
+            if (analysis.messages.length === 0) {
+                html += `
+                    <div class="ai-message success">
+                        ✅ Все системы работают нормально. Отличная работа!
                     </div>
-            `;
-
-            employee.shifts.forEach((shift) => {
-                const shiftType = shift.lubrication.exists && shift.servo.exists ? 'both-shift' :
-                                 shift.lubrication.exists ? 'lubrication-shift' : 'servo-shift';
-                const shiftText = shift.shift === 1 ? 'Смена 1 (08:00–20:00)' : 'Смена 2 (20:00–08:00)';
-                const badgeClass = shift.shift === 1 ? 'badge-s1' : 'badge-s2';
-
-                html += `
-                    <div class="shift-card ${shiftType}">
-                        <div class="shift-header">
-                            <div class="shift-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                ${shift.date} · ${shiftText}
-                                <span class="shift-badge ${badgeClass}">Смена ${shift.shift}</span>
-                            </div>
-                            <button class="details-btn" onclick="toggleDetails('${employee.name.replace(/'/g, "\\'")}', '${shift.date}', ${shift.shift})">
-                                <i class="fas fa-eye"></i> Показать детали
-                            </button>
-                        </div>
-
-                        <div class="shift-stats">
                 `;
-
-                if (shift.lubrication.exists) {
-                    html += `
-                        <div class="stat-mini lubrication">
-                            <h4>🛢️ Смазка</h4>
-                            <div class="value">${shift.lubrication.completed}/${shift.lubrication.total}</div>
-                            <div style="color: #a1bbd0; font-size: 12px;">выполнено операций</div>
-                        </div>
-                    `;
-                }
-
-                if (shift.servo.exists) {
-                    html += `
-                        <div class="stat-mini servo">
-                            <h4>⚙️ Сервоприводы</h4>
-                            <div class="value">${shift.servo.stats.normal}/${shift.servo.stats.warning}/${shift.servo.stats.critical}</div>
-                            <div style="color: #a1bbd0; font-size: 12px; display: flex; gap: 10px;">
-                                <span style="color: #27ae60;">✅ ${shift.servo.stats.normal}</span>
-                                <span style="color: #f39c12;">⚠️ ${shift.servo.stats.warning}</span>
-                                <span style="color: #e74c3c;">🔴 ${shift.servo.stats.critical}</span>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                html += `</div>`;
-
-                html += `<div id="details-${employee.name.replace(/\s/g, '_')}-${shift.date}-${shift.shift}" class="details-content"></div>`;
-
-                html += `</div>`;
-            });
-
-            html += `</div>`;
-        });
-
-        container.innerHTML = html;
-    }
-
-    window.toggleDetails = function(employeeName, date, shift) {
-        const detailsId = `details-${employeeName.replace(/\s/g, '_')}-${date}-${shift}`;
-        const detailsDiv = document.getElementById(detailsId);
-        
-        if (detailsDiv.classList.contains('active')) {
-            detailsDiv.classList.remove('active');
-            detailsDiv.innerHTML = '';
-            return;
-        }
-
-        const reportData = buildReportData();
-        const employee = reportData.find(e => e.name === employeeName);
-        const shiftData = employee?.shifts.find(s => s.date === date && s.shift === shift);
-
-        if (!shiftData) return;
-
-        let html = '<div style="color: white;">';
-
-        if (shiftData.lubrication.exists && shiftData.lubrication.operations.length > 0) {
-            html += `
-                <h4 style="color: #3498db; margin: 15px 0 10px;">
-                    <i class="fas fa-oil-can"></i> Операции смазки
-                </h4>
-                <table class="details-table">
-                    <thead>
-                        <tr>
-                            <th>Машина</th>
-                            <th>Операция</th>
-                            <th>Статус</th>
-                            <th>Н/Ч</th>
-                            <th>Комментарий</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            shiftData.lubrication.operations.forEach(op => {
-                const hours = shiftData.lubrication.hours.find(h => h.machine === op.machine)?.hours || '';
-                html += `
-                    <tr>
-                        <td>${op.machine}</td>
-                        <td>${op.operation}</td>
-                        <td>${op.status} ${op.details}</td>
-                        <td>${hours}</td>
-                        <td>${op.comment}</td>
-                    </tr>
-                `;
-            });
-
-            html += `</tbody></table>`;
-        }
-
-        if (shiftData.servo.exists && shiftData.servo.servos.length > 0) {
-            html += `
-                <h4 style="color: #27ae60; margin: 20px 0 10px;">
-                    <i class="fas fa-microchip"></i> Диагностика сервоприводов
-                </h4>
-                <table class="details-table">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Серийный</th>
-                            <th>Темп,°C</th>
-                            <th>Ток,мА</th>
-                            <th>Статус</th>
-                            <th>Примечания</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            shiftData.servo.servos.forEach(servo => {
-                let statusSymbol = '✅';
-                if (servo.status === 'warning') statusSymbol = '⚠️';
-                if (servo.status === 'critical') statusSymbol = '🔴';
-                
-                html += `
-                    <tr>
-                        <td>${servo.number}</td>
-                        <td>${servo.serial || '—'}</td>
-                        <td>${servo.temperature || '—'}</td>
-                        <td>${servo.current || '—'}</td>
-                        <td>${statusSymbol} ${servo.status}</td>
-                        <td>${servo.notes || ''}</td>
-                    </tr>
-                `;
-            });
-
-            html += `</tbody></table>`;
-        }
-
-        html += '</div>';
-        detailsDiv.innerHTML = html;
-        detailsDiv.classList.add('active');
-    };
-
-    window.exportToJSON = function() {
-        const reportData = buildReportData();
-        
-        const exportData = {
-            version: "1.0",
-            exportDate: new Date().toISOString(),
-            employees: employees,
-            lubricationData: lubricationData,
-            servoData: servoData,
-            report: reportData
-        };
-
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = DB_FILE;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        showNotification(`Данные экспортированы в ${DB_FILE}`);
-    };
-
-    window.importFromJSON = function() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json';
-        input.onchange = function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+            }
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (data.shifts) {
-                        console.log('📥 Загружен файл из графика смазки');
-                        
-                        lubricationData = data.shifts;
-                        localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
-                        
-                        if (data.lastCompleted) {
-                            localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
-                        }
-                        
-                        if (data.shiftClosed) {
-                            localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
-                        }
-                        
-                        showNotification(`✅ Загружено ${Object.keys(lubricationData).length} смен из графика смазки`);
-                    }
-                    
-                    else if (data.lubricationData || data.servoData) {
-                        console.log('📥 Загружен файл из портала');
-                        
-                        if (data.employees && Array.isArray(data.employees)) {
-                            employees = data.employees.map(normalizeName);
-                            saveEmployees();
-                        }
-                        
-                        if (data.lubricationData) {
-                            lubricationData = data.lubricationData;
-                            localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
-                        }
-                        
-                        if (data.servoData) {
-                            servoData = data.servoData;
-                            localStorage.setItem('servoChecks', JSON.stringify(servoData));
-                        }
-                        
-                        showNotification(`
-                            ✅ Загружено из портала<br>
-                            📊 Смазка: ${Object.keys(lubricationData).length} смен<br>
-                            🔧 Серво: ${servoData.length} проверок
-                        `);
-                    }
-                    
-                    else {
-                        showNotification('❌ Неизвестный формат файла', 'error');
-                        return;
-                    }
-                    
-                    renderReport();
-                    syncEmployeesToApps();
-                    
-                    localStorage.setItem('lubrication_data_updated', Date.now().toString());
-                    localStorage.setItem('servo_data_updated', Date.now().toString());
-                    
-                } catch (error) {
-                    console.error('Ошибка импорта:', error);
-                    showNotification('Ошибка при чтении файла', 'error');
-                }
-            };
-            reader.readAsText(file);
-        };
-        input.click();
-    };
-
-    window.clearAllHistory = function() {
-        if (!confirm('⚠️ ВНИМАНИЕ!\n\nВы уверены, что хотите очистить ВСЮ историю?\n\nЭто удалит:\n• Все данные из графика смазки\n• Все данные из диагностики сервоприводов\n\nЭто действие нельзя отменить!')) {
-            return;
+            html += `
+                <div style="display: flex; gap: 10px; margin-top: 15px; font-size: 12px; color: #a1bbd0;">
+                    <span>🔴 ${analysis.critical}</span>
+                    <span>🟡 ${analysis.warning}</span>
+                    <span>🔵 ${analysis.info}</span>
+                </div>
+            `;
+            
+            content.innerHTML = html;
         }
 
-        lubricationData = {};
-        servoData = [];
-        
-        localStorage.removeItem('lubrication_history_v28');
-        localStorage.removeItem('lubrication_last_v28');
-        localStorage.removeItem('lubrication_closed_v27');
-        localStorage.removeItem('servoChecks');
-        
-        localStorage.setItem('lubrication_data_updated', Date.now().toString());
-        localStorage.setItem('servo_data_updated', Date.now().toString());
-        
-        renderReport();
-        
-        showNotification('✅ Вся история полностью очищена');
-    };
-
-    function showNotification(message, type = 'success') {
-        const notif = document.createElement('div');
-        notif.className = `notification ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : type === 'info' ? 'info' : ''}`;
-        notif.innerHTML = `<i class="fas ${type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-check-circle'}"></i> ${message}`;
-        document.body.appendChild(notif);
-        
-        setTimeout(() => {
-            notif.style.animation = 'slideOut 0.3s ease-out';
-            setTimeout(() => notif.remove(), 300);
-        }, 3000);
-    }
-
-    // ==================== GitHub СИНХРОНИЗАЦИЯ ====================
-    const GITHUB_CONFIG = {
-        OWNER: 'alexandr-1526',
-        REPO: 'nlvz-portal',
-        FILE_PATH: 'db_portal.json',
-        BRANCH: 'main',
-        TOKEN: 'ghp_ваш_токен'  // ВСТАВЬТЕ ВАШ ТОКЕН
-    };
-
-    // Сохранение данных в GitHub
-    window.exportToGitHub = async function() {
-        showNotification('Сохраняем в GitHub...', 'info');
-        try {
-            const data = {
-                version: "1.0",
-                timestamp: Date.now(),
-                employees: employees,
-                lubricationData: lubricationData,
-                lastCompleted: JSON.parse(localStorage.getItem('lubrication_last_v28') || '{}'),
-                shiftClosed: JSON.parse(localStorage.getItem('lubrication_closed_v27') || '{}'),
-                servoData: servoData
-            };
+        function updateBadge(analysis) {
+            const totalIssues = analysis.critical + analysis.warning;
+            const header = document.querySelector('.ai-header');
+            if (!header) return;
             
-            let sha = null;
+            let badge = document.querySelector('.ai-badge');
+            if (!badge && totalIssues > 0) {
+                badge = document.createElement('span');
+                badge.className = 'ai-badge';
+                header.appendChild(badge);
+            }
+            
+            if (badge) {
+                if (totalIssues > 0) {
+                    badge.textContent = totalIssues > 9 ? '9+' : totalIssues;
+                    badge.style.display = 'inline';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        function refreshAIAnalysis() {
+            analyzeWithAI();
+        }
+
+        // Функция отправки отчёта на Яндекс.Почту
+        async function sendYandexReport() {
+            const loading = document.getElementById('aiLoading');
+            loading.style.display = 'flex';
+            
             try {
-                const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`, {
-                    headers: { 'Authorization': `token ${GITHUB_CONFIG.TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
-                });
-                if (getResponse.ok) {
-                    const fileData = await getResponse.json();
-                    sha = fileData.sha;
-                }
-            } catch (e) {
-                console.log('Файл не существует, будет создан новый');
+                const missed = analyzeMissedOperations();
+                const ratings = getEmployeeRatings();
+                const prediction = getTomorrowPrediction();
+                
+                // Формируем список сотрудников для письма
+                let employeeList = '';
+                Object.entries(missed.byEmployee)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10)
+                    .forEach(([name, count]) => {
+                        employeeList += `
+                            <div class="employee-item">
+                                <span class="employee-name">${name}</span>
+                                <span class="employee-count">${count} проп.</span>
+                            </div>
+                        `;
+                    });
+                
+                // Получаем имя сотрудника (если есть)
+                const inspectorName = localStorage.getItem('lastInspector') || 'Сотрудник';
+                
+                // Параметры для шаблона
+                const templateParams = {
+                    to_email: 'nlzvopvz@yandex.ru',
+                    employee: inspectorName,
+                    date: new Date().toLocaleDateString('ru-RU'),
+                    time: new Date().toLocaleTimeString('ru-RU'),
+                    total_missed: missed.total,
+                    week_missed: missed.lastWeek,
+                    employees_count: Object.keys(missed.byEmployee).length || 1,
+                    employee_list: employeeList,
+                    prediction: prediction.recommendation
+                };
+                
+                // Отправка через EmailJS
+                const response = await emailjs.send(
+                    SERVICE_ID,
+                    TEMPLATE_ID,
+                    templateParams
+                );
+                
+                alert('✅ Отчёт отправлен на nlzvopvz@yandex.ru!\n\n' +
+                      `📊 Пропусков: ${missed.total}\n` +
+                      `📅 За неделю: ${missed.lastWeek}\n` +
+                      `🔮 Прогноз: ${prediction.recommendation}`);
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('❌ Ошибка при отправке. Проверьте:\n' +
+                      '1. Public Key в emailjs.init()\n' +
+                      '2. Template ID\n' +
+                      '3. Интернет-соединение');
+            } finally {
+                loading.style.display = 'none';
             }
-            
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-            const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`, {
-                method: 'PUT',
-                headers: { 'Authorization': `token ${GITHUB_CONFIG.TOKEN}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
-                body: JSON.stringify({ message: `Синхронизация данных ${new Date().toLocaleString()}`, content: content, sha: sha, branch: GITHUB_CONFIG.BRANCH })
-            });
-            
-            if (response.ok) {
-                showNotification('✅ Данные сохранены в GitHub!', 'success');
-            } else {
-                const error = await response.json();
-                throw new Error(error.message);
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showNotification('❌ Ошибка сохранения: ' + error.message, 'error');
         }
-    };
 
-    // Загрузка данных из GitHub
-    window.importFromGitHub = async function() {
-        showNotification('Загружаем из GitHub...', 'info');
-        try {
-            const url = `https://raw.githubusercontent.com/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/${GITHUB_CONFIG.BRANCH}/${GITHUB_CONFIG.FILE_PATH}`;
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            
-            if (data.lubricationData) {
-                lubricationData = data.lubricationData;
-                localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
+        // Кнопка в навигацию
+        function addAIToNav() {
+            const navPanel = document.querySelector('.nav-panel');
+            if (navPanel) {
+                const aiNavBtn = document.createElement('button');
+                aiNavBtn.className = 'nav-btn';
+                aiNavBtn.innerHTML = '<i class="fas fa-robot"></i> AI-анализ';
+                aiNavBtn.onclick = function() {
+                    if (document.getElementById('aiWidget').classList.contains('minimized')) {
+                        toggleAIWidget();
+                    }
+                    analyzeWithAI();
+                };
+                navPanel.querySelector('.nav-buttons').appendChild(aiNavBtn);
             }
-            if (data.servoData) {
-                servoData = data.servoData;
-                localStorage.setItem('servoChecks', JSON.stringify(servoData));
-            }
-            if (data.employees && Array.isArray(data.employees)) {
-                employees = data.employees.map(normalizeName);
-                saveEmployees();
-            }
-            if (data.lastCompleted) {
-                localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
-            }
-            if (data.shiftClosed) {
-                localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
-            }
-            
-            renderReport();
-            showNotification('✅ Данные загружены из GitHub!', 'success');
-        } catch (error) {
-            console.error('Ошибка:', error);
-            showNotification('❌ Ошибка загрузки: ' + error.message, 'error');
         }
-    };
 
-    // ==================== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ====================
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const tabId = btn.dataset.tab;
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            if (tabId === 'main') {
-                document.getElementById('tabMain').classList.add('active');
-            } else if (tabId === 'reports') {
-                document.getElementById('tabReports').classList.add('active');
-                loadDataFromApps();
-                renderReport();
-            } else if (tabId === 'admin') {
-                document.getElementById('tabAdmin').classList.add('active');
-                renderEmployeeList();
-            }
-        });
-    });
+        window.addEventListener('load', addAIToNav);
 
-    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
-    window.addEventListener('load', () => {
-        loadEmployees();
-        loadDataFromApps();
-    });
-</script>
+        // Для вызова из консоли
+        window.sendYandexReport = sendYandexReport;
+    </script>
 </body>
 </html>
