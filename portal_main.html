@@ -704,6 +704,20 @@
             border-left: 6px solid #f39c12;
         }
 
+        .github-sync-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #3f5568;
+        }
+        .github-sync-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        .github-sync-section .btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
         .footer-note {
             text-align: center;
             color: #7f8c8d;
@@ -752,52 +766,14 @@
             }
         }
 
-        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .btn, .json-btn, .tab-btn {
-                padding: 8px 15px !important;
-                font-size: 13px !important;
-                min-width: auto !important;
-            }
-
-            .btn-group {
-                gap: 8px;
-            }
-
-            .json-actions {
-                gap: 5px;
-            }
-
-            .employee-card {
-                padding: 15px;
-            }
-
-            .shift-card {
-                padding: 12px;
-            }
-
-            .report-title {
-                font-size: 20px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .btn, .json-btn {
-                padding: 6px 10px !important;
-                font-size: 12px !important;
-            }
-
-            .report-title {
-                font-size: 18px;
-            }
+            body { padding: 10px; }
+            .portal-header { flex-direction: column; align-items: stretch; }
+            .tab-btn { padding: 15px; font-size: 14px; }
+            .report-header { flex-direction: column; align-items: flex-start; }
+            .json-actions { width: 100%; }
+            .json-btn { flex: 1; }
+            .shift-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -932,6 +908,24 @@
                         <i class="fas fa-undo"></i> Сброс
                     </button>
                 </div>
+
+                <!-- ========== GitHub СИНХРОНИЗАЦИЯ ========== -->
+                <div class="github-sync-section">
+                    <h3><i class="fab fa-github"></i> GitHub синхронизация (db_portal.json)</h3>
+                    <div>
+                        <button class="btn btn-primary" onclick="exportToGitHub()">
+                            <i class="fab fa-github"></i> Сохранить в GitHub
+                        </button>
+                        <button class="btn btn-info" onclick="importFromGitHub()">
+                            <i class="fab fa-github"></i> Загрузить из GitHub
+                        </button>
+                    </div>
+                    <div class="sync-info" style="margin-top: 15px;">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Синхронизация через GitHub</strong> — сохраните данные в репозиторий, чтобы другие пользователи могли их загрузить.
+                    </div>
+                </div>
+                <!-- ========== КОНЕЦ GitHub СИНХРОНИЗАЦИИ ========== -->
 
                 <div class="sync-info">
                     <i class="fas fa-info-circle"></i>
@@ -1199,9 +1193,6 @@
             if (servoChecks) {
                 servoData = JSON.parse(servoChecks);
                 console.log('✅ Загружено проверок сервоприводов:', servoData.length);
-                if (servoData.length > 0) {
-                    console.log('📋 Пример первой записи:', servoData[0]);
-                }
             } else {
                 servoData = [];
                 console.log('ℹ️ Нет данных сервоприводов');
@@ -1237,7 +1228,6 @@
         alert(`В портале ${servoData.length} записей сервоприводов\n\nСмотрите консоль (F12) для деталей`);
     };
 
-    // ==================== ДЕТАЛЬНАЯ ДИАГНОСТИКА ====================
     window.debugServoDisplay = function() {
         console.log('🔍 ДЕТАЛЬНАЯ ДИАГНОСТИКА');
         console.log('1. Данные из localStorage:');
@@ -1277,7 +1267,6 @@
         });
     };
 
-    // ==================== СЛУШАТЕЛЬ ОБНОВЛЕНИЙ ====================
     window.addEventListener('storage', (event) => {
         console.log('📢 Событие storage:', event.key, '→', event.newValue ? event.newValue.substring(0, 50) + '...' : 'null');
         
@@ -1296,7 +1285,6 @@
         }
     });
 
-    // ==================== ПОЛУЧЕНИЕ ОПИСАНИЯ ОПЕРАЦИИ ПО ID ====================
     function getPointDescription(pointId) {
         for (const machine of machines) {
             const point = machine.points.find(p => p.id === pointId);
@@ -1310,7 +1298,6 @@
         return { machine: 'Неизвестно', operation: pointId };
     }
 
-    // ==================== ФОРМИРОВАНИЕ ДАННЫХ ОТЧЁТА ====================
     function buildReportData() {
         const report = [];
 
@@ -1432,7 +1419,6 @@
         return report;
     }
 
-    // ==================== ОТОБРАЖЕНИЕ ОТЧЁТА ====================
     function renderReport() {
         console.log('📊 Рендеринг отчёта...');
         const reportData = buildReportData();
@@ -1519,7 +1505,6 @@
         container.innerHTML = html;
     }
 
-    // ==================== ПОКАЗ ДЕТАЛЕЙ ====================
     window.toggleDetails = function(employeeName, date, shift) {
         const detailsId = `details-${employeeName.replace(/\s/g, '_')}-${date}-${shift}`;
         const detailsDiv = document.getElementById(detailsId);
@@ -1616,20 +1601,16 @@
         detailsDiv.classList.add('active');
     };
 
-    // ==================== ЭКСПОРТ JSON ====================
     window.exportToJSON = function() {
-        // Загружаем последние данные из localStorage для экспорта
-        const lastCompleted = JSON.parse(localStorage.getItem('lubrication_last_v28') || '{}');
-        const shiftClosed = JSON.parse(localStorage.getItem('lubrication_closed_v27') || '{}');
+        const reportData = buildReportData();
         
         const exportData = {
             version: "1.0",
             exportDate: new Date().toISOString(),
             employees: employees,
             lubricationData: lubricationData,
-            lastCompleted: lastCompleted,
-            shiftClosed: shiftClosed,
-            servoData: servoData
+            servoData: servoData,
+            report: reportData
         };
 
         const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -1643,7 +1624,6 @@
         showNotification(`Данные экспортированы в ${DB_FILE}`);
     };
 
-    // ==================== ИМПОРТ JSON (ИСПРАВЛЕННЫЙ) ====================
     window.importFromJSON = function() {
         const input = document.createElement('input');
         input.type = 'file';
@@ -1657,99 +1637,36 @@
                 try {
                     const data = JSON.parse(e.target.result);
                     
-                    // ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ПЕРЕСЧЁТА lastCompleted =====
-                    function recalculateLastCompleted(shiftData) {
-                        const lastCompleted = {};
-                        Object.entries(shiftData).forEach(([key, shift]) => {
-                            const [date] = key.split('_');
-                            if (shift.completed && Array.isArray(shift.completed)) {
-                                shift.completed.forEach(pointId => {
-                                    if (!lastCompleted[pointId] || date > lastCompleted[pointId]) {
-                                        lastCompleted[pointId] = date;
-                                    }
-                                });
-                            }
-                        });
-                        return lastCompleted;
-                    }
-
-                    // ===== ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ИНИЦИАЛИЗАЦИИ shiftClosed =====
-                    function initShiftClosed(shiftData) {
-                        const shiftClosed = {};
-                        Object.keys(shiftData).forEach(key => {
-                            shiftClosed[key] = false; // По умолчанию все смены открыты
-                        });
-                        return shiftClosed;
-                    }
-
-                    // ===== ФОРМАТ 1: ИЗ ГРАФИКА СМАЗКИ =====
                     if (data.shifts) {
                         console.log('📥 Загружен файл из графика смазки');
                         
-                        // Основные данные смен
                         lubricationData = data.shifts;
                         localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
                         
-                        // lastCompleted
                         if (data.lastCompleted) {
                             localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
-                            console.log('✅ Восстановлены lastCompleted из файла');
-                        } else {
-                            const lastCompleted = recalculateLastCompleted(lubricationData);
-                            localStorage.setItem('lubrication_last_v28', JSON.stringify(lastCompleted));
-                            console.log('✅ lastCompleted пересчитаны автоматически');
                         }
                         
-                        // shiftClosed
                         if (data.shiftClosed) {
                             localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
-                            console.log('✅ Восстановлены shiftClosed из файла');
-                        } else {
-                            const shiftClosed = initShiftClosed(lubricationData);
-                            localStorage.setItem('lubrication_closed_v27', JSON.stringify(shiftClosed));
-                            console.log('✅ shiftClosed инициализированы (все смены открыты)');
                         }
                         
                         showNotification(`✅ Загружено ${Object.keys(lubricationData).length} смен из графика смазки`);
                     }
                     
-                    // ===== ФОРМАТ 2: ИЗ ПОРТАЛА =====
                     else if (data.lubricationData || data.servoData) {
                         console.log('📥 Загружен файл из портала');
                         
-                        // Сотрудники
                         if (data.employees && Array.isArray(data.employees)) {
                             employees = data.employees.map(normalizeName);
                             saveEmployees();
                         }
                         
-                        // Данные смазки
                         if (data.lubricationData) {
                             lubricationData = data.lubricationData;
                             localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
-                            
-                            // lastCompleted
-                            if (data.lastCompleted) {
-                                localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
-                                console.log('✅ Восстановлены lastCompleted из файла');
-                            } else {
-                                const lastCompleted = recalculateLastCompleted(lubricationData);
-                                localStorage.setItem('lubrication_last_v28', JSON.stringify(lastCompleted));
-                                console.log('✅ lastCompleted пересчитаны автоматически');
-                            }
-                            
-                            // shiftClosed
-                            if (data.shiftClosed) {
-                                localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
-                                console.log('✅ Восстановлены shiftClosed из файла');
-                            } else {
-                                const shiftClosed = initShiftClosed(lubricationData);
-                                localStorage.setItem('lubrication_closed_v27', JSON.stringify(shiftClosed));
-                                console.log('✅ shiftClosed инициализированы (все смены открыты)');
-                            }
                         }
                         
-                        // Данные сервоприводов
                         if (data.servoData) {
                             servoData = data.servoData;
                             localStorage.setItem('servoChecks', JSON.stringify(servoData));
@@ -1762,17 +1679,14 @@
                         `);
                     }
                     
-                    // ===== НЕИЗВЕСТНЫЙ ФОРМАТ =====
                     else {
                         showNotification('❌ Неизвестный формат файла', 'error');
                         return;
                     }
                     
-                    // ===== ОБЩИЕ ДЕЙСТВИЯ =====
                     renderReport();
                     syncEmployeesToApps();
                     
-                    // Уведомляем приложения
                     localStorage.setItem('lubrication_data_updated', Date.now().toString());
                     localStorage.setItem('servo_data_updated', Date.now().toString());
                     
@@ -1786,7 +1700,6 @@
         input.click();
     };
 
-    // ==================== ОЧИСТКА ВСЕЙ ИСТОРИИ ====================
     window.clearAllHistory = function() {
         if (!confirm('⚠️ ВНИМАНИЕ!\n\nВы уверены, что хотите очистить ВСЮ историю?\n\nЭто удалит:\n• Все данные из графика смазки\n• Все данные из диагностики сервоприводов\n\nЭто действие нельзя отменить!')) {
             return;
@@ -1808,7 +1721,6 @@
         showNotification('✅ Вся история полностью очищена');
     };
 
-    // ==================== УВЕДОМЛЕНИЯ ====================
     function showNotification(message, type = 'success') {
         const notif = document.createElement('div');
         notif.className = `notification ${type === 'error' ? 'error' : type === 'warning' ? 'warning' : type === 'info' ? 'info' : ''}`;
@@ -1820,6 +1732,97 @@
             setTimeout(() => notif.remove(), 300);
         }, 3000);
     }
+
+    // ==================== GitHub СИНХРОНИЗАЦИЯ ====================
+    const GITHUB_CONFIG = {
+        OWNER: 'alexandr-1526',
+        REPO: 'nlvz-portal',
+        FILE_PATH: 'db_portal.json',
+        BRANCH: 'main',
+        TOKEN: 'ghp_ваш_токен'  // ВСТАВЬТЕ ВАШ ТОКЕН
+    };
+
+    // Сохранение данных в GitHub
+    window.exportToGitHub = async function() {
+        showNotification('Сохраняем в GitHub...', 'info');
+        try {
+            const data = {
+                version: "1.0",
+                timestamp: Date.now(),
+                employees: employees,
+                lubricationData: lubricationData,
+                lastCompleted: JSON.parse(localStorage.getItem('lubrication_last_v28') || '{}'),
+                shiftClosed: JSON.parse(localStorage.getItem('lubrication_closed_v27') || '{}'),
+                servoData: servoData
+            };
+            
+            let sha = null;
+            try {
+                const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`, {
+                    headers: { 'Authorization': `token ${GITHUB_CONFIG.TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (getResponse.ok) {
+                    const fileData = await getResponse.json();
+                    sha = fileData.sha;
+                }
+            } catch (e) {
+                console.log('Файл не существует, будет создан новый');
+            }
+            
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${GITHUB_CONFIG.TOKEN}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+                body: JSON.stringify({ message: `Синхронизация данных ${new Date().toLocaleString()}`, content: content, sha: sha, branch: GITHUB_CONFIG.BRANCH })
+            });
+            
+            if (response.ok) {
+                showNotification('✅ Данные сохранены в GitHub!', 'success');
+            } else {
+                const error = await response.json();
+                throw new Error(error.message);
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            showNotification('❌ Ошибка сохранения: ' + error.message, 'error');
+        }
+    };
+
+    // Загрузка данных из GitHub
+    window.importFromGitHub = async function() {
+        showNotification('Загружаем из GitHub...', 'info');
+        try {
+            const url = `https://raw.githubusercontent.com/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/${GITHUB_CONFIG.BRANCH}/${GITHUB_CONFIG.FILE_PATH}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            
+            if (data.lubricationData) {
+                lubricationData = data.lubricationData;
+                localStorage.setItem('lubrication_history_v28', JSON.stringify(lubricationData));
+            }
+            if (data.servoData) {
+                servoData = data.servoData;
+                localStorage.setItem('servoChecks', JSON.stringify(servoData));
+            }
+            if (data.employees && Array.isArray(data.employees)) {
+                employees = data.employees.map(normalizeName);
+                saveEmployees();
+            }
+            if (data.lastCompleted) {
+                localStorage.setItem('lubrication_last_v28', JSON.stringify(data.lastCompleted));
+            }
+            if (data.shiftClosed) {
+                localStorage.setItem('lubrication_closed_v27', JSON.stringify(data.shiftClosed));
+            }
+            
+            renderReport();
+            showNotification('✅ Данные загружены из GitHub!', 'success');
+        } catch (error) {
+            console.error('Ошибка:', error);
+            showNotification('❌ Ошибка загрузки: ' + error.message, 'error');
+        }
+    };
 
     // ==================== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ====================
     document.querySelectorAll('.tab-btn').forEach(btn => {
