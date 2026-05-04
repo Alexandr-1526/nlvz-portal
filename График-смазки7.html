@@ -572,35 +572,7 @@ loadTheme();
         input.click();
     };
 
-    // ========== АВТОЗАГРУЗКА ИЗ ЛОКАЛЬНОГО ФАЙЛА db_portal.json ==========
-    async function autoLoadLocalData() {
-        console.log('🔄 Автозагрузка из db_portal.json...');
-        try {
-            const response = await fetch('db_portal.json');
-            if (response.ok) {
-                const data = await response.json();
-                const shifts = data.lubricationData || data.shifts;
-                if (shifts && Object.keys(shifts).length > 0) {
-                    shiftHistory = shifts;
-                    lastCompleted = data.lastCompleted || {};
-                    shiftClosed = data.shiftClosed || {};
-                    saveStorage();
-                    renderCalendar();
-                    if (selectedDateStr) renderDetailPanel(selectedDateStr);
-                    if (typeof loadHistory === 'function') loadHistory();
-                    console.log(`✅ Автозагрузка: загружено ${Object.keys(shifts).length} смен`);
-                } else {
-                    console.log('ℹ️ В файле db_portal.json нет данных смазки');
-                }
-            } else {
-                console.log('ℹ️ Файл db_portal.json не найден, работаем с локальными данными');
-            }
-        } catch(e) {
-            console.log('Ошибка автозагрузки:', e);
-        }
-    }
-    // ========== КОНЕЦ АВТОЗАГРУЗКИ ==========
-
+    // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ ИМПОРТА С ПЕРЕРИСОВКОЙ КАЛЕНДАРЯ ==========
     window.importFromJSON = function() {
         const input = document.createElement('input');
         input.type = 'file';
@@ -614,42 +586,44 @@ loadTheme();
                 try {
                     const importedData = JSON.parse(e.target.result);
                     
+                    let convertedShifts = null;
+                    let convertedLastCompleted = {};
+                    let convertedShiftClosed = {};
+                    
                     if (importedData.lubricationData || importedData.shifts) {
-                        console.log('📥 Обнаружен файл из портала');
-                        const convertedShifts = importedData.lubricationData || importedData.shifts;
-                        const convertedLastCompleted = importedData.lastCompleted || {};
-                        const convertedShiftClosed = importedData.shiftClosed || {};
-                        
+                        convertedShifts = importedData.lubricationData || importedData.shifts;
+                        convertedLastCompleted = importedData.lastCompleted || {};
+                        convertedShiftClosed = importedData.shiftClosed || {};
+                    } else if (importedData.shifts) {
+                        convertedShifts = importedData.shifts;
+                        convertedLastCompleted = importedData.lastCompleted || {};
+                        convertedShiftClosed = importedData.shiftClosed || {};
+                    }
+                    
+                    if (convertedShifts && Object.keys(convertedShifts).length > 0) {
                         shiftHistory = convertedShifts;
                         lastCompleted = convertedLastCompleted;
                         shiftClosed = convertedShiftClosed;
                         
-                        localStorage.setItem('lubrication_history_v28', JSON.stringify(shiftHistory));
-                        localStorage.setItem('lubrication_last_v28', JSON.stringify(lastCompleted));
-                        localStorage.setItem('lubrication_closed_v27', JSON.stringify(shiftClosed));
-                        
                         saveStorage();
-                        renderCalendar();
-                        if (selectedDateStr) renderDetailPanel(selectedDateStr);
-                        if (typeof loadHistory === 'function') loadHistory();
                         
-                        alert(`✅ Загружено ${Object.keys(shiftHistory).length} смен из портала`);
-                    }
-                    else if (importedData.shifts) {
-                        shiftHistory = importedData.shifts || {};
-                        lastCompleted = importedData.lastCompleted || {};
-                        shiftClosed = importedData.shiftClosed || {};
-                        saveStorage();
-                        if (selectedDateStr) renderDetailPanel(selectedDateStr);
+                        // ========== ГЛАВНОЕ ИСПРАВЛЕНИЕ ==========
+                        // Перерисовываем календарь и детали после импорта
                         renderCalendar();
-                        window.loadHistory();
-                        alert(`Загружено ${Object.keys(shiftHistory).length} смен`);
-                    }
-                    else {
-                        alert('Неверный формат файла. Ожидается файл с историей смен (содержащий поле "shifts" или "lubricationData").');
+                        if (selectedDateStr) {
+                            renderDetailPanel(selectedDateStr);
+                        }
+                        if (typeof loadHistory === 'function') {
+                            loadHistory();
+                        }
+                        // =========================================
+                        
+                        alert(`✅ Загружено ${Object.keys(shiftHistory).length} смен. Календарь обновлён!`);
+                    } else {
+                        alert('❌ В файле нет данных смазки');
                     }
                 } catch(error) {
-                    console.error('Ошибка загрузки:', error);
+                    console.error('Ошибка:', error);
                     alert('Ошибка при загрузке файла: ' + error.message);
                 }
                 document.getElementById('loadingOverlay').style.display = 'none';
@@ -658,6 +632,7 @@ loadTheme();
         };
         input.click();
     };
+    // ========== КОНЕЦ ИСПРАВЛЕННОЙ ФУНКЦИИ ==========
 
     window.clearHistory = function() {
         if (confirm('Вы уверены, что хотите очистить всю историю? Это действие нельзя отменить.')) {
@@ -736,9 +711,7 @@ loadTheme();
     renderCalendar();
     updateFilters();
     
-    // ЗАПУСКАЕМ АВТОЗАГРУЗКУ ПРИ СТАРТЕ
     setTimeout(() => {
-        autoLoadLocalData();
         if (Object.keys(shiftHistory).length === 0) showLoadDataModal();
     }, 500);
     
